@@ -1,0 +1,41 @@
+:root {
+    --purpleNavy: #424874;
+    --lavenderWeb: #DCD6F7;
+    --maximumBluePurple: #A6B1E1;
+    --lightGray: #CACFD6;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: var(--maximumBluePurple);
+}
+
+h2 {
+    color: black;
+    font-size: 2rem;
+}
+
+.outside-box {
+    color: black;
+    background-color: var(--lightGray);
+    padding: 2rem 2rem 2rem 2rem;
+    border-style: solid;
+    border-width: 0.5px;
+}
+
+.reset-button {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#list {
+    font-size: 1.5rem;
+}
+
+.btn {
+    font-size: 1.5rem;
+}
