@@ -28,7 +28,7 @@ function makeList() {
     const existingData = JSON.parse(localStorage.getItem('count'));
     if (existingData.length == 0) {return};
     
-    ul = document.getElementById('list');
+    var ul = document.getElementById('list');
     
     existingData.forEach(element => {
         var li = document.createElement('li');
@@ -39,6 +39,8 @@ function makeList() {
 
 function resetCounter() {
     localStorage.removeItem('count');
+    var ul = document.getElementById('list');
+    ul.innerHTML = '';
     
 }
 
