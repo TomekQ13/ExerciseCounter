@@ -1,0 +1,23 @@
+{
+  "name": "PresikCounter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TomekQ13/ExerciseCounter.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TomekQ13/ExerciseCounter/issues"
+  },
+  "homepage": "https://github.com/TomekQ13/ExerciseCounter#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
