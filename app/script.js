@@ -22,8 +22,8 @@ function newExHTML(exName) {
     `;
     // makeList is called to fill out the content if some exists
     // called to enable to use this also on load of the site
-    makeList(exName)
-}
+    makeList(exName);
+};
 
 function newEx() {
     const exName = document.getElementById("newExName");
@@ -34,7 +34,7 @@ function newEx() {
     newExHTML(exName.value);
     
     closeModalNewExercise();
-}
+};
 
 function saveData(exName) {
     const input = document.getElementById('count-' + exName);
@@ -68,23 +68,23 @@ function makeList(exName) {
         ol.appendChild(li);
         li.innerHTML += element
     });
-}
+};
 
 function makeLists() {
     for (var i in Object.keys(localStorage)) {
         newExHTML(localStorage.key(i));
     };
-}
+};
 
 function resetCounter(exName) {
     localStorage.setItem(exName, JSON.stringify([]));
     var ul = document.getElementById('list-' + exName);
     ul.innerHTML = '';    
-}
+};
 
 function closeModalNewExercise() {
     modalNewExercise.style.display = "none";
-}
+};
 
 var modalNewExercise = document.getElementById("modalNewExercise");
 var btnAddExercise = document.getElementById("btnAddExercise");
@@ -92,8 +92,9 @@ var spanCloseModal = document.getElementById("modalAddExClose");
 
 btnAddExercise.onclick = () => {
     modalNewExercise.style.display = "block";
-}
+};
 
-spanCloseModal.onclick = closeModalNewExercise()
+spanCloseModal.onclick = closeModalNewExercise();
+window.addEventListener('load', makeLists());
 
-window.addEventListener('load', makeLists())
+localStorage.setItem('exercises', JSON.stringify([]));
