@@ -1,4 +1,5 @@
 function newExHTML(exName) {
+    if (exName === undefined) {return};
     const main = document.getElementsByTagName("main")[0];
     exBox = document.createElement('div');
     main.appendChild(exBox);
@@ -17,7 +18,7 @@ function newExHTML(exName) {
             <ol id="list-${exName}"></ol>
         </div>
         <div class="reset-button">
-            <button id='reset-counter-${exName}' class='btn' onclick="resetCounter('${exName}')">Reset</button>            
+            <button id='reset-counter-${exName}' class='btn' onclick="appendToCounter('${exName}', undefined, true)">Reset</button>            
         </div>   
     `;
     // makeList is called to fill out the content if some exists
@@ -25,11 +26,54 @@ function newExHTML(exName) {
     makeList(exName);
 };
 
+function appendToStorage(key, value) {
+    var existingData = JSON.parse(localStorage.getItem(key));
+    existingData.push(value);
+    localStorage.setItem(key, JSON.stringify(existingData));
+};
+
+function getExercise(exName) {
+    const exercises = JSON.parse(localStorage.getItem('exercises'));
+    const exercise = exercises.find(ex => ex.name === exName);
+    return exercise;
+};
+
+function appendToCounter(exName, value=undefined, reset=false) {
+    // replaces an exercise in the local storage
+    if (value == undefined && reset == false) {
+        throw 'appendToCounter function requires either value to be specified or reset true.'
+    };
+
+    var existingData = getExercise(exName).count; 
+    existingData.push(value);
+    if (reset == true) {
+        existingData = [];
+    };
+
+    var exercises = JSON.parse(localStorage.exercises);
+
+    exercises.find((ex, i) => {
+        if (ex.name === exName) {
+            exercises[i] = {name: exName, count: existingData};
+            return true;
+        };
+    });
+
+    localStorage.setItem('exercises', JSON.stringify(exercises));
+    if (reset) {
+        resetListHTML(exName);
+    };
+};
+
 function newEx() {
     const exName = document.getElementById("newExName");
     if (exName.value.length == 0) {return};
 
-    localStorage.setItem(exName.value, JSON.stringify([]));
+    exercise = {
+        name: exName.value,
+        count: []
+    };
+    appendToStorage('exercises', exercise)
 
     newExHTML(exName.value);
     
@@ -40,11 +84,8 @@ function saveData(exName) {
     const input = document.getElementById('count-' + exName);
     if (input.value.length == 0) {return};
 
-    var existingData = JSON.parse(localStorage.getItem(exName));
-    existingData.push(input.value);
-    localStorage.setItem(exName, JSON.stringify(existingData));
-
-    appendToList(input.value, 'list-' + exName)
+    appendToCounter(exName, input.value);
+    appendToList(input.value, 'list-' + exName);
 };
 
 function appendToList(element, listId) {
@@ -57,7 +98,7 @@ function appendToList(element, listId) {
 };
 
 function makeList(exName) {
-    const existingData = JSON.parse(localStorage.getItem(exName));
+    const existingData = getExercise(exName).count;
     if (existingData == null ) {return};
     if (existingData.length == 0 ) {return};
 
@@ -71,13 +112,12 @@ function makeList(exName) {
 };
 
 function makeLists() {
-    for (var i in Object.keys(localStorage)) {
-        newExHTML(localStorage.key(i));
+    for (var i in localStorage.exercises) {
+        newExHTML(localStorage.exercises[i].name);
     };
 };
 
-function resetCounter(exName) {
-    localStorage.setItem(exName, JSON.stringify([]));
+function resetListHTML(exName) {
     var ul = document.getElementById('list-' + exName);
     ul.innerHTML = '';    
 };
