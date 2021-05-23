@@ -81,11 +81,13 @@ function newEx() {
 };
 
 function saveData(exName) {
-    const input = document.getElementById('count-' + exName);
-    if (input.value.length == 0) {return};
+    var input = document.getElementById('count-' + exName);
+    if (input.value.length == 0) {return};    
 
     appendToCounter(exName, input.value);
     appendToList(input.value, 'list-' + exName);
+
+    input.value = '';
 };
 
 function appendToList(element, listId) {
@@ -135,11 +137,10 @@ var modalNewExercise = document.getElementById("modalNewExercise");
 var btnAddExercise = document.getElementById("btnAddExercise");
 var spanCloseModal = document.getElementById("modalAddExClose");
 
-btnAddExercise.onclick = () => {
+btnAddExercise.addEventListener('click', () => {
     modalNewExercise.style.display = "block";
-};
-
-spanCloseModal.onclick = closeModalNewExercise();
-window.addEventListener('load', makeLists());
+});
+spanCloseModal.addEventListener('click', closeModalNewExercise);
+window.addEventListener('load', makeLists);
 
 
