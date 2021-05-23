@@ -46,7 +46,7 @@ function appendToCounter(exName, value=undefined, reset=false) {
 
     var existingData = getExercise(exName).count; 
     existingData.push(value);
-    if (reset == true) {
+    if (reset) {
         existingData = [];
     };
 
@@ -112,8 +112,9 @@ function makeList(exName) {
 };
 
 function makeLists() {
-    for (var i in localStorage.exercises) {
-        newExHTML(localStorage.exercises[i].name);
+    const  exercises = JSON.parse(localStorage.exercises);
+    for (var i in exercises) {
+        newExHTML(exercises[i].name);
     };
 };
 
@@ -124,6 +125,10 @@ function resetListHTML(exName) {
 
 function closeModalNewExercise() {
     modalNewExercise.style.display = "none";
+};
+
+if (localStorage.getItem('exercises') == undefined) {
+    localStorage.setItem('exercises', JSON.stringify([]));
 };
 
 var modalNewExercise = document.getElementById("modalNewExercise");
@@ -137,4 +142,4 @@ btnAddExercise.onclick = () => {
 spanCloseModal.onclick = closeModalNewExercise();
 window.addEventListener('load', makeLists());
 
-localStorage.setItem('exercises', JSON.stringify([]));
+
