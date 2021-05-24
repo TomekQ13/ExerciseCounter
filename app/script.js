@@ -78,6 +78,8 @@ function newEx() {
     newExHTML(exName.value);
     
     closeModalNewExercise();
+
+    exName.value = '';
 };
 
 function saveData(exName) {
@@ -86,8 +88,6 @@ function saveData(exName) {
 
     appendToCounter(exName, input.value);
     appendToList(input.value, 'list-' + exName);
-
-    input.value = '';
 };
 
 function appendToList(element, listId) {
