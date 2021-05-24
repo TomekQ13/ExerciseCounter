@@ -35,6 +35,19 @@ nav {
     align-self: flex-start;
 }
 
+span {
+    height: 100%;
+}
+
+ol {
+    font-size: 1.4rem;
+}
+
+li {
+    margin: 5px 0px 5px 0px;
+    padding: 8px 0;
+}
+
 .mainHeader {
     display: flex;
     align-items: center;
@@ -84,8 +97,7 @@ nav {
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
   
-  /* Modal Content/Box */
-  .modal-content {
+.modal-content {
     background-color: #fefefe;
     margin: 10% auto; /* 15% from the top and centered */
     padding: 20px;
@@ -93,27 +105,72 @@ nav {
     width: 50%;
   }
   
-  /* The Close Button */
-  .close {
+.close {
     color: rgb(187, 54, 54);
     float: right;
-    font-size: 28px;
+    font-size: 2rem;
     font-weight: bold;
+    margin: 0px 0px 0px 0px;
   }
-  
-  .close:hover, .close:focus {
+
+.close:hover, .close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
   }
 
-  .addEx {
+.addEx {
       position:fixed;
       bottom: 50px;
       width: 80%;
   }
 
-  #btnAddExercise {
+.btn-delete {
+    width: 100%;
+}
+
+.btn-delete:hover {
+    background-color: rgb(204, 90, 90);
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.btn-delete:active {
+    background-color: rgb(246, 165, 165);
+    color: #ffffff;
+}
+
+.btn-add:hover {
+    background-color: rgb(79, 170, 92);
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.btn-add:active {
+    background-color: rgb(141, 187, 148);
+    color: #ffffff;
+}
+
+.add-repetitions-form {
+    width: 100%;
+    display: flex;
+    justify-content: baseline;
+}
+
+.btn-count {
+    width: 75%;
+}
+
+.btn-add-ex {
+    width: 25%;
+}
+
+.remove-rep {
+    position: relative;
+    bottom: 5px;
+}
+
+#btnAddExercise {
       width: 100%;
       height: 50px;
   }

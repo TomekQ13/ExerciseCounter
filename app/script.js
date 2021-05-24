@@ -5,20 +5,20 @@ function newExHTML(exName) {
     main.appendChild(exBox);
     exBox.className = 'exercise-box';
     exBox.innerHTML = `
-        <header>
-            <h2 class="box-title">${exName}</h2>
-        </header>
-        <div class='adding-menu'>
-            <form>
-                <input type="text" class="btn" id="count-${exName}" name="count-${exName}">
-                <input type="button" class="btn" value="Dodaj" onclick="saveData('${exName}')">
-            </form>
-        </div>
-        <div id="stored-list" class="stored-list">
-            <ol id="list-${exName}"></ol>
-        </div>
-        <div class="reset-button">
-            <button id='reset-counter-${exName}' class='btn' onclick="appendToCounter('${exName}', undefined, true)">Reset</button>            
+        <div class="inside-box">
+            <header>
+                <h2 class="box-title">${exName}</h2>
+            </header>
+            <div class='adding-menu'>
+                <form class="add-repetitions-form">
+                    <input type="text" class="btn btn-count" id="count-${exName}" name="count-${exName}">
+                    <input type="button" class="btn btn-add btn-add-ex" value="Dodaj" onclick="saveData('${exName}')">
+                </form>
+            </div>
+            <div id="stored-list" class="stored-list">
+                <ol id="list-${exName}"></ol>
+            </div>
+                <button id='delete-exercise-${exName}' class='btn btn-delete' onclick="deleteExercise('${exName}')">Usuń ćwiczenie</button>
         </div>   
     `;
     // makeList is called to fill out the content if some exists
@@ -87,16 +87,24 @@ function saveData(exName) {
     if (input.value.length == 0) {return};    
 
     appendToCounter(exName, input.value);
-    appendToList(input.value, 'list-' + exName);
+    appendToListHTML(input.value, exName);
 };
 
-function appendToList(element, listId) {
+function appendToListHTML(element, exName) {
     if (element.length == 0) {return};
 
-    var ol = document.getElementById(listId);
+    var ol = document.getElementById('list-' + exName);
     var li = document.createElement('li');
     ol.appendChild(li);
     li.innerHTML += element;
+
+    const rep_index = getExercise(exName).count.length - 1;
+    var span = document.createElement('span');
+    span.innerHTML = '&times;';
+    span.className = 'close remove-rep';
+    span.setAttribute('onclick', `deleteRepetition('${exName}', ${rep_index})`);
+    // span.onclick = `deleteRepetition('${exName}', ${rep_index})`;
+    li.appendChild(span);
 };
 
 function makeList(exName) {
@@ -107,9 +115,7 @@ function makeList(exName) {
     var ol = document.getElementById('list-' + exName);
     
     existingData.forEach(element => {
-        var li = document.createElement('li');
-        ol.appendChild(li);
-        li.innerHTML += element
+        appendToListHTML(element, exName);
     });
 };
 
@@ -127,6 +133,28 @@ function resetListHTML(exName) {
 
 function closeModalNewExercise() {
     modalNewExercise.style.display = "none";
+};
+
+function deleteExercise(exName) {
+    var existingData = JSON.parse(localStorage.getItem('exercises'));
+    // the callback function can get two additional parameters - index and the full array
+    var newData = existingData.filter((value) => {
+        return value.name !== exName;
+    });
+    localStorage.setItem('exercises', JSON.stringify(newData));  
+    window.location.reload();
+};
+
+function deleteRepetition(exName, repIndex) {
+    var existingData = JSON.parse(localStorage.getItem('exercises'));
+    for (var i = 0; i < existingData.length; i++) {
+        if (existingData[i].name === exName) {
+            existingData[i].count.splice(repIndex, 1);
+            break;
+        };
+    };
+    localStorage.setItem('exercises', JSON.stringify(existingData));  
+    window.location.reload();
 };
 
 if (localStorage.getItem('exercises') == undefined) {
