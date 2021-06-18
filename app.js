@@ -14,9 +14,10 @@ app.use(express.static('public'));
 
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_API_HOST, {
-  userNewUrlParser: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 });
-const db = mongoose.connect
+const db = mongoose.connection
 db.on('error', error => console.error(error));
 db.once('open', error => console.log('Connected to mongoose.'));
 
