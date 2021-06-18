@@ -13,7 +13,7 @@ app.use(expressLayouts);
 app.use(express.static('public'));
 
 const mongoose = require('mongoose');
-mongoose.connect(process.env.MONGO_API_HOST, {
+mongoose.connect(process.env.DATABASE_MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
