@@ -56,6 +56,10 @@ label {
     font-size: 3rem;
 }
 
+input {
+    display: block;
+}
+
 .mainHeader {
     display: flex;
     align-items: center;

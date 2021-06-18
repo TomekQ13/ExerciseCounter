@@ -131,10 +131,6 @@ function resetListHTML(exName) {
     ul.innerHTML = '';    
 };
 
-function closeModalNewExercise() {
-    modalNewExercise.style.display = "none";
-};
-
 function deleteExercise(exName) {
     var existingData = JSON.parse(localStorage.getItem('exercises'));
     // the callback function can get two additional parameters - index and the full array
@@ -161,6 +157,26 @@ if (localStorage.getItem('exercises') == undefined) {
     localStorage.setItem('exercises', JSON.stringify([]));
 };
 
+async function saveTraining() {
+    const saveTrainingName = document.getElementById("newTrainingName");
+    const saveTrainingUsername = document.getElementById("newTrainingUsername");
+    if (saveTrainingName.value.length == 0 || saveTrainingUsername.value.length == 0) {return};
+
+    const exercises = JSON.parse(localStorage.getItem('exercises'));
+    const resp = await fetch(url='/training', {
+        method: "POST", 
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: saveTrainingName.value,
+            username: saveTrainingUsername.value,
+            exercises: exercises
+        })
+    });
+    
+};
+
 var modalNewExercise = document.getElementById("modalNewExercise");
 var btnAddExercise = document.getElementById("btnAddExercise");
 var spanCloseModal = document.getElementById("modalAddExClose");
@@ -168,7 +184,23 @@ var spanCloseModal = document.getElementById("modalAddExClose");
 btnAddExercise.addEventListener('click', () => {
     modalNewExercise.style.display = "block";
 });
-spanCloseModal.addEventListener('click', closeModalNewExercise);
+
+spanCloseModal.addEventListener('click', () => {
+    modalNewExercise.style.display = "none";
+});
+
+var modalSaveTraining = document.getElementById("modalSaveTraining");
+var btnSaveTraining = document.getElementById("btnSaveTraining");
+var spanSaveTrainingClose = document.getElementById("modalSaveTrainingClose");
+
+btnSaveTraining.addEventListener('click', () => {
+    modalSaveTraining.style.display = "block";
+});
+
+spanSaveTrainingClose.addEventListener('click', () => {
+    modalSaveTraining.style.display = "none";
+})
+
 window.addEventListener('load', makeLists);
 
 
