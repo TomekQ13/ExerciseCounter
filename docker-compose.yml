@@ -4,9 +4,9 @@ services:
         build:
             context: .
         volumes: 
-             - ./app:/app
+         - ./app:/app
         ports:
-        - '3000:3000'
+         - '3000:3000'
         restart: always
         environment: 
-        - DATABASE_MONGO_URI
+         - DATABASE_MONGO_URI
