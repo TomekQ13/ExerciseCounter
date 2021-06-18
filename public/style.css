@@ -7,9 +7,16 @@
 
 body {
     background-color: #424874;
+    background-image: url("background.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 main {
@@ -69,6 +76,8 @@ label {
     width: 80%;
     margin: 1rem 1rem 1rem 1rem;
     height: fit-content;
+    border-radius: 25px;
+    opacity: 0.9;
 }
 
 .reset-button {
@@ -86,6 +95,8 @@ label {
 
 .btn {
     font-size: 3rem;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 20px;
 }
 
 .modal {

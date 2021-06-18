@@ -2,9 +2,10 @@
   "name": "PresikCounter",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "devStart": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,13 @@
   },
   "homepage": "https://github.com/TomekQ13/ExerciseCounter#readme",
   "dependencies": {
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.1",
+    "mongoose": "^5.12.14",
     "nodemon": "^2.0.7"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0"
   }
 }
