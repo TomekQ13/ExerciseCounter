@@ -195,6 +195,7 @@ modalBtnAddExercise.addEventListener('click', () => {
 var modalSaveTraining = document.getElementById("modalSaveTraining");
 var btnSaveTraining = document.getElementById("btnSaveTraining");
 var spanSaveTrainingClose = document.getElementById("modalSaveTrainingClose");
+const modalBtnSaveTraining = document.getElementById("modalBtnSaveTraining");
 
 btnSaveTraining.addEventListener('click', () => {
     modalSaveTraining.style.display = "block";
@@ -202,7 +203,12 @@ btnSaveTraining.addEventListener('click', () => {
 
 spanSaveTrainingClose.addEventListener('click', () => {
     modalSaveTraining.style.display = "none";
-})
+});
+
+modalBtnSaveTraining.addEventListener('click', () => {
+    saveTraining();
+    modalSaveTraining.style.display = "none";
+});
 
 window.addEventListener('load', makeLists);
 
