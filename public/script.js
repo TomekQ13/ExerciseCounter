@@ -77,8 +77,6 @@ function newEx() {
 
     newExHTML(exName.value);
     
-    closeModalNewExercise();
-
     exName.value = '';
 };
 
@@ -180,7 +178,7 @@ async function saveTraining() {
 var modalNewExercise = document.getElementById("modalNewExercise");
 var btnAddExercise = document.getElementById("btnAddExercise");
 var spanCloseModal = document.getElementById("modalAddExClose");
-
+var modalBtnAddExercise = document.getElementById("modalBtnAddExercise");
 btnAddExercise.addEventListener('click', () => {
     modalNewExercise.style.display = "block";
 });
@@ -188,6 +186,11 @@ btnAddExercise.addEventListener('click', () => {
 spanCloseModal.addEventListener('click', () => {
     modalNewExercise.style.display = "none";
 });
+
+modalBtnAddExercise.addEventListener('click', () => {
+    newEx();
+    modalNewExercise.style.display = "none";
+})
 
 var modalSaveTraining = document.getElementById("modalSaveTraining");
 var btnSaveTraining = document.getElementById("btnSaveTraining");
