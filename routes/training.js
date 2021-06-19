@@ -21,8 +21,8 @@ router.post('/',  (req, res) => {
     training.save((err) => {
         if (err) {
             res.send(JSON.stringify({message: 'There was an error'}))
-        }
-    })
-})
+        };
+    });
+});
 
 module.exports = router
