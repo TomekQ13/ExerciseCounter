@@ -158,7 +158,7 @@ if (localStorage.getItem('exercises') == undefined) {
 async function saveTraining() {
     const saveTrainingName = document.getElementById("newTrainingName");
     const saveTrainingUsername = document.getElementById("newTrainingUsername");
-    if (saveTrainingName.value.length == 0 || saveTrainingUsername.value.length == 0) {return};
+    if (saveTrainingName.value.length == 0 ) {return};
 
     const exercises = JSON.parse(localStorage.getItem('exercises'));
     const resp = await fetch(url='/training', {
@@ -166,9 +166,9 @@ async function saveTraining() {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify({
             name: saveTrainingName.value,
-            username: saveTrainingUsername.value,
             exercises: exercises
         })
     });
@@ -197,9 +197,11 @@ var btnSaveTraining = document.getElementById("btnSaveTraining");
 var spanSaveTrainingClose = document.getElementById("modalSaveTrainingClose");
 const modalBtnSaveTraining = document.getElementById("modalBtnSaveTraining");
 
-btnSaveTraining.addEventListener('click', () => {
-    modalSaveTraining.style.display = "block";
-});
+if (btnSaveTraining != null) {
+    btnSaveTraining.addEventListener('click', () => {
+        modalSaveTraining.style.display = "block";
+    });
+};
 
 spanSaveTrainingClose.addEventListener('click', () => {
     modalSaveTraining.style.display = "none";

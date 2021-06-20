@@ -1,23 +1,20 @@
-const express = require('express')
+const express = require('express');
+const auth = require('../auth');
 const router = express.Router()
 const Training = require('../models/training')
 
-// router.get("/", (req, res) => {
-//     res.render('index');
-//   });
+router.get("/", auth.checkAuthenticated, async (req, res) => {
+    const trainings = await Training.find({ username: req.user.username });
+    res.render('training/training', { trainings: trainings, isAuthenticated: true });
+  });
 
-// router.get("/new", (req, res) => {
-//     res.render('training/new')
-// })
 
-// create training route
-router.post('/',  (req, res) => {
-    console.log(req.body)
+router.post('/', auth.checkAuthenticated, (req, res) => {   
     const training = new Training({
         name: req.body.name,
-        username: req.body.username,
+        username: req.user.username,
         exercises: req.body.exercises
-    })
+    });
     training.save((err) => {
         if (err) {
             res.send(JSON.stringify({message: 'There was an error'}))

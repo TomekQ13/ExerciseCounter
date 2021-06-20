@@ -1,8 +1,9 @@
-const express = require('express')
+const express = require('express');
+const checkAuthenticated = require('../auth');
 const router = express.Router()
 
 router.get("/", (req, res) => {
-    res.render('index');
+    res.render('index', { isAuthenticated: req.isAuthenticated() });
   });
 
 

@@ -1,4 +1,23 @@
 <header class="mainHeader">
     <h1>Licznik!</h1>
-    <button id="btnSaveTraining" class="btn">Zapisz trening</button>
+    <nav>
+        <form action='/' method='GET'>
+            <button type="submit" class="btn">Strona główna</button>
+        </form>
+        <% if (isAuthenticated) { %>
+            <form action='/user/logout' method='POST'>
+                <button type="submit" class="btn">Wyloguj</button>
+            </form>
+            <form action='/training' method='GET'>
+                <button type="submit" class="btn">Moje treningi</button>
+            </form>
+        <% } else { %>
+            <form action='/user/login' method='GET'>
+                <button type="submit" class="btn">Zaloguj się</button>
+            </form>
+            <form action='/user/register' method='GET'>
+                <button type="submit" class="btn">Zarejestruj się</button>
+            </form>
+        <% } %>
+    </nav>
 </header>
