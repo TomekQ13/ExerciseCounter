@@ -11,7 +11,7 @@ function newExHTML(exName) {
             </header>
             <div class='adding-menu'>
                 <form class="add-repetitions-form">
-                    <input type="text" class="btn btn-count" id="count-${exName}" name="count-${exName}">
+                    <input type="text" class="input-text" id="count-${exName}" name="count-${exName}">
                     <input type="button" class="btn btn-add btn-add-ex" value="Dodaj" onclick="saveData('${exName}')">
                 </form>
             </div>

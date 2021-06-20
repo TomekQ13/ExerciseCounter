@@ -1,12 +1,13 @@
 :root {
-    --purpleNavy: #424874;
-    --lavenderWeb: #DCD6F7;
-    --maximumBluePurple: #A6B1E1;
-    --lightGray: #CACFD6;
+    --background: #F7F7FF;
+    --button: #0C8DE9;
+    --button-hover: #0B81D5;
+    --error: #A3142E;
+    --mainBlack: #070600;
 }
 
 body {
-    background-color: #424874;
+    background: var(--background);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,7 +25,7 @@ main {
 }
 
 h1 {
-    color: #ff9100;
+    color: var(--mainBlack);
     font-size: 3rem;
 }
 
@@ -53,7 +54,7 @@ li {
 }
 
 label {
-    font-size: 3rem;
+    font-size: 1.5rem;
 }
 
 input {
@@ -68,10 +69,8 @@ input {
 
 .exercise-box {
     color: black;
-    background-color: var(--lightGray);
+    background-color: var(--background);
     padding: 1rem 2rem 2rem 2rem;
-    border-style: solid;
-    border-width: 0.5px;
     width: 80%;
     margin: 1rem 1rem 1rem 1rem;
     height: fit-content;
@@ -94,9 +93,19 @@ input {
 
 
 .btn {
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
     border-radius: 5px;
+    border: none;
+    background-color: var(--button);
+    color: var(--background);
+    padding: 0.6rem 0.5rem 0.6rem 0.5rem;
+}
+
+.btn:hover {
+    background-color: var(--button-hover);
+    cursor: pointer;
 }
 
 .modal {
@@ -121,7 +130,7 @@ input {
   }
   
 .close {
-    color: rgb(187, 54, 54);
+    color: var(--error);
     float: right;
     font-size: 2rem;
     font-weight: bold;
@@ -143,28 +152,6 @@ input {
 .btn-delete {
     width: 100%;
     min-width: 100px;
-}
-
-.btn-delete:hover {
-    background-color: rgb(204, 90, 90);
-    color: #ffffff;
-    cursor: pointer;
-}
-
-.btn-delete:active {
-    background-color: rgb(246, 165, 165);
-    color: #ffffff;
-}
-
-.btn-add:hover {
-    background-color: rgb(79, 170, 92);
-    color: #ffffff;
-    cursor: pointer;
-}
-
-.btn-add:active {
-    background-color: rgb(141, 187, 148);
-    color: #ffffff;
 }
 
 .add-repetitions-form {
