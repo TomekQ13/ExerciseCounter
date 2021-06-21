@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 
 const Training = new mongoose.Schema({
     name: {
-        type:String,
-        required: true
-    },
-    name_url: {
         type: String,
         required: true
     },

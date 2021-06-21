@@ -5,19 +5,24 @@ const Training = require('../models/training')
 
 router.get("/", auth.checkAuthenticated, async (req, res) => {
     const trainings = await Training.find({ username: req.user.username });
-    res.render('training/training', { trainings: trainings, isAuthenticated: true });
+    res.render('training/trainings', { trainings: trainings, isAuthenticated: true });
   });
 
 router.get("/:name", auth.checkAuthenticated, async (req, res) => {
-    const training = await Training.findOne({ username: req.user.username, name_url: req.params.name})
-    /**to finsish */
+    const training = await Training.findOne({ 'username': req.user.username, 'name': req.params.name});
+    if (training == null) {
+        req.flash('warning', 'Training not found');
+        console.log('redirecting to' + req.baseUrl)
+        res.redirect('/training');
+        return
+    };
+    res.render('training/training', {training: training, isAuthenticated: true});
 });
 
 
 router.post('/', auth.checkAuthenticated, (req, res) => {   
     const training = new Training({
         name: req.body.name,
-        name_url: encodeURIComponent(req.body.name),
         username: req.user.username,
         exercises: req.body.exercises,
     });

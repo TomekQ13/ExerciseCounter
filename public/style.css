@@ -57,10 +57,6 @@ label {
     font-size: 1.5rem;
 }
 
-input {
-    display: block;
-}
-
 .mainHeader {
     display: flex;
     align-items: center;
@@ -157,7 +153,7 @@ input {
 .add-repetitions-form {
     width: 100%;
     display: flex;
-    justify-content: baseline;
+    justify-content: center;
 }
 
 .btn-count {
@@ -173,6 +169,10 @@ input {
 .remove-rep {
     position: relative;
     bottom: 5px;
+}
+
+.input-text {
+    width: 100%;
 }
 
 #btnAddExercise {
