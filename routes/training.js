@@ -8,12 +8,18 @@ router.get("/", auth.checkAuthenticated, async (req, res) => {
     res.render('training/training', { trainings: trainings, isAuthenticated: true });
   });
 
+router.get("/:name", auth.checkAuthenticated, async (req, res) => {
+    const training = await Training.findOne({ username: req.user.username, name_url: req.params.name})
+    /**to finsish */
+});
+
 
 router.post('/', auth.checkAuthenticated, (req, res) => {   
     const training = new Training({
         name: req.body.name,
+        name_url: encodeURIComponent(req.body.name),
         username: req.user.username,
-        exercises: req.body.exercises
+        exercises: req.body.exercises,
     });
     training.save((err) => {
         if (err) {

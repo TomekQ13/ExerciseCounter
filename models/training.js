@@ -5,6 +5,10 @@ const Training = new mongoose.Schema({
         type:String,
         required: true
     },
+    name_url: {
+        type: String,
+        required: true
+    },
     username: {
         type: String,
         required: true
