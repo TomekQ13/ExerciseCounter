@@ -12,7 +12,6 @@ router.get("/:name", auth.checkAuthenticated, async (req, res) => {
     const training = await Training.findOne({ 'username': req.user.username, 'name': req.params.name});
     if (training == null) {
         req.flash('warning', 'Training not found');
-        console.log('redirecting to' + req.baseUrl)
         res.redirect('/training');
         return
     };
@@ -20,11 +19,15 @@ router.get("/:name", auth.checkAuthenticated, async (req, res) => {
 });
 
 
-router.post('/', auth.checkAuthenticated, (req, res) => {   
-    const training = new Training({
+router.post('/', auth.checkAuthenticated, (req, res) => {  
+    let training = new Training({
         name: req.body.name,
         username: req.user.username,
-        exercises: req.body.exercises,
+        exercises: req.body.exercises
+    });
+    // add lowercase property for easier querying
+    training.exercises.forEach(el => {
+        el.nameLowerCase = el.name.toLowerCase()
     });
     training.save((err) => {
         if (err) {

@@ -17,6 +17,7 @@ const session = require('express-session');
 const indexRouter = require('./routes/index');
 const trainingRouter = require('./routes/training');
 const userRouter = require('./routes/user');
+const exerciseRouter = require('./routes/exercise');
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
@@ -47,6 +48,7 @@ db.once('open', error => console.log('Connected to mongoose.'));
 app.use('/', indexRouter)
 app.use('/training', trainingRouter)
 app.use('/user', userRouter)
+app.use('/exercise', exerciseRouter)
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("Application started and Listening on port 3000");
