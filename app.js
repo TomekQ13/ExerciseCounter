@@ -9,7 +9,7 @@ const passport = require('passport');
 const initializePassport = require('./passport-config');
 initializePassport(
   passport,
-  username => User.findOne({ username: username }));
+  username => User.findOne({ username: username.trim() }));
 
 const flash = require('express-flash');
 const session = require('express-session');

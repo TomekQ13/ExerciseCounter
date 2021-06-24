@@ -57,6 +57,11 @@ label {
     font-size: 1.5rem;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+}
+
 .mainHeader {
     display: flex;
     align-items: center;
@@ -152,8 +157,8 @@ label {
 
 .add-repetitions-form {
     width: 100%;
-    display: flex;
     justify-content: center;
+    flex-direction: row;
 }
 
 .btn-count {

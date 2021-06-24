@@ -3,8 +3,10 @@
         <li>
             <div>
                 <p><%= trainings[i].name %> </p>
-                <p><%= trainings[i].exercises.name %> </p>
-                <p><%= trainings[i].exercises.count %> </p>
+                <% for( let j = 0; j < trainings[i].exercises.length; j++ ) { %>
+                    <p><%= trainings[i].exercises[j].name %> </p>
+                    <p><%= trainings[i].exercises[j].count %> </p>
+                <% } %>
             </div>
         </li>
     <% } %>

@@ -8,11 +8,11 @@
             <form action='/user/logout' method='POST'>
                 <button type="submit" class="btn">Wyloguj</button>
             </form>
-            <a href="/training" class="btn">Treningi</a>
-            <a href="/exercise" class="btn">Ćwiczenia</a>
+            <a href="/training/training" class="btn">Treningi</a>
+            <a href="/exercise/exercise" class="btn">Ćwiczenia</a>
         <% } else { %>
-            <a href="/training" class="btn">Zaloguj się</a>
-            <a href="/training" class="btn">Zarejestruj się</a>
+            <a href="/user/login" class="btn">Zaloguj się</a>
+            <a href="/user/register" class="btn">Zarejestruj się</a>
         <% } %>
     </nav>
 </header>
