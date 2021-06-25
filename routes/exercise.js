@@ -27,7 +27,6 @@ router.get("/:name", auth.checkAuthenticated, async (req, res) => {
             element.nameLowerCase === req.params.name.toLowerCase()
         });
     }); //here still the array needs to be filtered to contain only request exercise
-    console.log(trainings);
     res.render('exercise/exercise', {trainings: trainings, isAuthenticated: true});
 });
 
