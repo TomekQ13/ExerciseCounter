@@ -62,6 +62,11 @@ form {
     flex-direction: column;
 }
 
+nav .btn {
+    margin-left: 10px;
+    text-decoration: none;
+}
+
 .mainHeader {
     display: flex;
     align-items: center;
@@ -174,6 +179,10 @@ form {
 .remove-rep {
     position: relative;
     bottom: 5px;
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
 }
 
 .input-text {
@@ -188,4 +197,10 @@ form {
 
 #newExName {
     width: 75%;
+}
+
+#btnSaveTraining {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 50%;
 }

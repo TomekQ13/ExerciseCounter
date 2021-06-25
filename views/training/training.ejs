@@ -1,27 +1,35 @@
 <h2><%= training.name %> </h2>
-<% for( let i = 0; i < training.exercises.length; i++ ) { %>
-    <div class="exercise-box">
-        <div class="inside-box">
-            <header>
-                <h2 class="box-title"><%= training.exercises[i].name %></h2>
-            </header>
-            <div class='adding-menu'>
-                <form class="add-repetitions-form">
-                    <input type="text" class="input-text" id="count-<%= training.exercises[i].name %>" name="count-<%= training.exercises[i].name %>">
-                    <input type="button" class="btn btn-add btn-add-ex" value="Dodaj" onclick="saveData('<%= training.exercises[i].name %>')">
-                </form>
-            </div>
-            <div id="stored-list" class="stored-list">
-                <ol id="list-<%= training.exercises[i].name %>">
-                    <% for( let j = 0; j < training.exercises[i].count.length; j++ ) { %>
-                        <li>
-                            <%= training.exercises[i].count[j] %> 
-                            <span class="close remove-rep" onclick="deleteRepetition('<%= training.exercises[i].name %>')">×</span>                        
-                        </li>
-                    <% } %>
-                </ol>
-            </div>
-                <button id='delete-exercise-<%= training.exercises[i].name %>' class='btn btn-delete' onclick="deleteExercise('<%= training.exercises[i].name %>')">Usuń ćwiczenie</button>
-        </div> 
-    </div>
-<% } %>
+<small><%= training.added_dttm %> </small>
+<button id="btnSaveTraining" class="btn">Zapisz trening</button>
+<main>
+    <% for( let i = 0; i < training.exercises.length; i++ ) { %>
+        <div class="exercise-box">
+            <div class="inside-box">
+                <header>
+                    <h2 class="box-title"><%= training.exercises[i].name %></h2>
+                </header>
+                <div class='adding-menu'>
+                    <form class="add-repetitions-form">
+                        <input type="text" class="input-text" id="count-<%= training.exercises[i].name %>" name="count-<%= training.exercises[i].name %>">
+                        <input type="button" class="btn btn-add btn-add-ex" value="Dodaj" onclick="saveData('<%= training.exercises[i].name %>')">
+                    </form>
+                </div>
+                <div id="stored-list" class="stored-list">
+                    <ol id="list-<%= training.exercises[i].name %>">
+                        <% for( let j = 0; j < training.exercises[i].count.length; j++ ) { %>
+                            <li>
+                                <%= training.exercises[i].count[j] %>
+                                <form method="POST" action="/training/rep/<%= encodeURIComponent(training.name) %>/<%= encodeURIComponent(training.exercises[i].name) %>/<%= i %>?_method=DELETE">
+                                    <button type="submit" class='close remove-rep'>x</button>
+                                </form>                     
+                            </li>
+                        <% } %>
+                    </ol>
+                </div>
+                    <form method="POST" action="/training/exercise/<%= encodeURIComponent(training.name) %>/<%= encodeURIComponent(training.exercises[i].name) %>?_method=DELETE">
+                        <button type="submit" class='btn btn-delete'>Usuń ćwiczenie</button>
+                    </form>
+            </div> 
+        </div>
+    <% } %>
+</main>
