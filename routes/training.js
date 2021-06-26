@@ -139,4 +139,32 @@ router.post('/exercise/:trainingName/', auth.checkAuthenticated, async (req, res
     return res.redirect('/training/'+ encodeURIComponent(req.params.trainingName));
 });
 
+// add new repetition
+router.post('/rep/:trainingName/:exerciseName', auth.checkAuthenticated, async (req, res) => {
+    if (req.body.rep.trim().length === 0) {
+        flash('info', 'Wpisz powtórzenie');
+        return res.redirect('/training/' + encodeURIComponent(req.params.trainingName)); 
+    };
+
+
+    var training = await Training.findOne({ 'name': req.params.trainingName, 'username': req.user.username });
+    if (!training) {
+        flash('error', 'Taki trening nie istnieje');
+        return res.redirect('/training/' + encodeURIComponent(req.params.trainingName));
+    };
+
+    var exIndex = training.exercises.map(item => item.name).indexOf(req.params.exerciseName);
+    if (exIndex == -1) {
+        flash('error', 'Takie ćwiczenie nie istnieje w treningu o takiej nazwie');
+        return res.redirect('/training/' + encodeURIComponent(req.params.trainingName))
+    };
+
+    training.exercises[exIndex].count.push(req.body.rep);
+    training.markModified('exercises'); // this may probably be improved by making the model more detailed so that less changes have to be made
+    await training.save();
+
+    flash('success', 'Powtórzenie dodane');
+    return res.redirect('/training/' + encodeURIComponent(req.params.trainingName));
+});
+
 module.exports = router

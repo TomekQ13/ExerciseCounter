@@ -8,12 +8,12 @@
                 <header>
                     <h2 class="box-title"><%= training.exercises[i].name %></h2>
                 </header>
-                <!-- <div class='adding-menu'>
-                    <form class="add-repetitions-form">
-                        <input type="text" class="input-text" id="count-<%= training.exercises[i].name %>" name="count-<%= training.exercises[i].name %>">
-                        <input type="button" class="btn btn-add btn-add-ex" value="Dodaj" onclick="saveData('<%= training.exercises[i].name %>')">
+                <div class='adding-menu'>
+                    <form class="add-repetitions-form" method="POST" action="/training/rep/<%= encodeURIComponent(training.name) %>/<%= encodeURIComponent(training.exercises[i].name) %>">
+                        <input type="text" class="input-text" id="count-<%= training.exercises[i].name %>" name="rep" required>
+                        <input type="submit" class="btn btn-add btn-add-ex" value="Dodaj">
                     </form>
-                </div> -->
+                </div>
                 <div id="stored-list" class="stored-list">
                     <ol id="list-<%= training.exercises[i].name %>">
                         <% for( let j = 0; j < training.exercises[i].count.length; j++ ) { %>
