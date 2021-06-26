@@ -2,19 +2,8 @@
 <main>
     
 </main>
-<div class="addEx">
-    <button class="btn btn-add" id="btnAddExercise">Dodaj ćwiczenie</button>
-</div>
-<div id="modalNewExercise" class="modal">
-    <div class="modal-content">
-        <span class="close" id="modalAddExClose">&times;</span>
-        <form>
-            <label for="newExName">Podaj nazwę ćwiczenia</label><br>
-            <input type="text" class="" id="newExName" name="newExName">
-            <input id="modalBtnAddExercise" type="button" class="btn btn-add" value="Dodaj">
-        </form>
-    </div>
-</div>
+<%- include('./partials/addExBtn.ejs') %> 
+<%- include('./partials/modalAddEx.ejs') %>
 <div id="modalSaveTraining" class="modal">
     <div class="modal-content">
         <span class="close" id="modalSaveTrainingClose">&times;</span>
