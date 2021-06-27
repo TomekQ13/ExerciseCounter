@@ -24,7 +24,7 @@ router.get("/:name", auth.checkAuthenticated, async (req, res) => {
 router.post('/', auth.checkAuthenticated, (req, res) => {
     const existingTraining = Training.findOne({ 'name': req.body.name });
     if (!existingTraining) {
-        flash('info', 'Trening o takiej nazwie już istnieje');
+        req.flash('info', 'Trening o takiej nazwie już istnieje');
         return res.redirect('/');
     };
     
@@ -47,13 +47,13 @@ router.post('/', auth.checkAuthenticated, (req, res) => {
 router.delete('/:name', auth.checkAuthenticated, async (req, res) => {
     const training = await Training.findOne({ 'name': req.params.name });
     if (req.user.username != training.username) {
-        flash('error', 'Niewystarczające uprawnienia');
+        req.flash('error', 'Niewystarczające uprawnienia');
         return res.redirect('/');
     };
 
     await training.remove();
 
-    flash('success', 'Trening usunięty');
+    req.flash('success', 'Trening usunięty');
     return res.redirect('/');
 });
 
@@ -62,21 +62,21 @@ router.delete('/exercise/:trainingName/:exerciseName', auth.checkAuthenticated, 
     var training = await Training.findOne({ 'name': req.params.trainingName });
     if (req.user.username != training.username) {
         console.log('wrong user');
-        flash('error', 'Niewystarczające uprawnienia');
+        req.flash('error', 'Niewystarczające uprawnienia');
         return res.redirect('/training');
 
     };
     var removeIndex = training.exercises.map(item => item.name).indexOf(req.params.exerciseName);
     if (removeIndex == -1) {
         console.log('wrong exercise');
-        flash('error', 'Takie ćwiczenie nie istnieje w treningu o takiej nazwie');
+        req.flash('error', 'Takie ćwiczenie nie istnieje w treningu o takiej nazwie');
         return res.redirect('/training')
     };
 
     training.exercises.splice(removeIndex, 1);
     await training.save();
 
-    flash('success', 'Trening usunięty');
+    req.flash('success', 'Trening usunięty');
     return res.redirect('/training/' + encodeURIComponent(training.name));
 });
 
@@ -85,19 +85,19 @@ router.delete('/rep/:trainingName/:exerciseName/:repetitionIndex', auth.checkAut
 
     var training = await Training.findOne({ 'name': req.params.trainingName, 'username': req.user.username });
     if (!training) {
-        flash('error', 'Taki trening nie istnieje');
+        req.flash('error', 'Taki trening nie istnieje');
         return res.redirect('/training/' + encodeURIComponent(req.params.trainingName));
 
     };
 
     var exIndex = training.exercises.map(item => item.name).indexOf(req.params.exerciseName);
     if (exIndex == -1) {
-        flash('error', 'Takie ćwiczenie nie istnieje w treningu o takiej nazwie');
+        req.flash('error', 'Takie ćwiczenie nie istnieje w treningu o takiej nazwie');
         return res.redirect('/training/' + encodeURIComponent(req.params.trainingName))
     };
 
     if (training.exercises[exIndex].count[req.params.repetitionIndex] ==  undefined) {
-        flash('error', 'To powtórzenie nie istnieje w tym ćwiczeniu');
+        req.flash('error', 'To powtórzenie nie istnieje w tym ćwiczeniu');
         return res.redirect('/training/' + encodeURIComponent(req.params.trainingName));
     };
 
@@ -105,7 +105,7 @@ router.delete('/rep/:trainingName/:exerciseName/:repetitionIndex', auth.checkAut
     training.markModified('exercises'); // this may probably be improved by making the model more detailed so that less changes have to be made
     await training.save();
 
-    flash('success', 'Powtórzenie usunięte');
+    req.flash('success', 'Powtórzenie usunięte');
     return res.redirect('/training/' + encodeURIComponent(req.params.trainingName));
 });
 
@@ -113,19 +113,19 @@ router.delete('/rep/:trainingName/:exerciseName/:repetitionIndex', auth.checkAut
 router.post('/exercise/:trainingName/', auth.checkAuthenticated, async (req, res) => {
     const existingTraining = await Training.findOne({'name': req.params.trainingName});
     if (!existingTraining) {
-        flash('error', 'Taki trening nie istnieje');
-        return res.redirect('/training/');
+        req.flash('error', 'Taki trening nie istnieje');
+        return res.redirect('/training/' + encodeURIComponent(req.params.trainingName));
     };
 
-    if (req.params.trainingName.trim().length === 0) {
-        flash('error', 'Nazwa ćwiczenia nie może być pusta');
-        return res.redirect('/training/');
+    if (req.body.newExName.trim().length === 0) {
+        req.flash('error', 'Nazwa ćwiczenia nie może być pusta');
+        return res.redirect('/training/' + encodeURIComponent(req.params.trainingName));
     }
 
     const exIndex = existingTraining.exercises.map(item => item.name).indexOf(req.body.newExName)
     if (exIndex != -1) {
-        flash('error', 'Takie ćwiczenie już istnieje w tym treningu');
-        return res.redirect('/training/');
+        req.flash('error', 'Takie ćwiczenie już istnieje w tym treningu');
+        return res.redirect('/training/' + encodeURIComponent(req.params.trainingName));
     };
 
     existingTraining.exercises.push({
@@ -136,27 +136,27 @@ router.post('/exercise/:trainingName/', auth.checkAuthenticated, async (req, res
     existingTraining.markModified('exercises'); // this may probably be improved by making the model more detailed so that less changes have to be made
     await existingTraining.save();
 
-    flash('success', 'Ćwiczenie dodane');
+    req.flash('success', 'Ćwiczenie dodane');
     return res.redirect('/training/'+ encodeURIComponent(req.params.trainingName));
 });
 
 // add new repetition
 router.post('/rep/:trainingName/:exerciseName', auth.checkAuthenticated, async (req, res) => {
     if (req.body.rep.trim().length === 0) {
-        flash('info', 'Wpisz powtórzenie');
+        req.flash('info', 'Wpisz powtórzenie');
         return res.redirect('/training/' + encodeURIComponent(req.params.trainingName)); 
     };
 
 
     var training = await Training.findOne({ 'name': req.params.trainingName, 'username': req.user.username });
     if (!training) {
-        flash('error', 'Taki trening nie istnieje');
+        req.flash('error', 'Taki trening nie istnieje');
         return res.redirect('/training/' + encodeURIComponent(req.params.trainingName));
     };
 
     var exIndex = training.exercises.map(item => item.name).indexOf(req.params.exerciseName);
     if (exIndex == -1) {
-        flash('error', 'Takie ćwiczenie nie istnieje w treningu o takiej nazwie');
+        req.flash('error', 'Takie ćwiczenie nie istnieje w treningu o takiej nazwie');
         return res.redirect('/training/' + encodeURIComponent(req.params.trainingName))
     };
 
@@ -164,7 +164,7 @@ router.post('/rep/:trainingName/:exerciseName', auth.checkAuthenticated, async (
     training.markModified('exercises'); // this may probably be improved by making the model more detailed so that less changes have to be made
     await training.save();
 
-    flash('success', 'Powtórzenie dodane');
+    req.flash('success', 'Powtórzenie dodane');
     return res.redirect('/training/' + encodeURIComponent(req.params.trainingName));
 });
 

@@ -29,12 +29,12 @@ app.use(expressLayouts);
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(flash());
 app.use(session({
   secret: process.env.SECRET_KEY,
   resave: false,
   saveUninitialized: false
 }));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 

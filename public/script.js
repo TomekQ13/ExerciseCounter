@@ -179,19 +179,22 @@ var modalNewExercise = document.getElementById("modalNewExercise");
 var btnAddExercise = document.getElementById("btnAddExercise");
 var spanCloseModal = document.getElementById("modalAddExClose");
 var modalBtnAddExercise = document.getElementById("modalBtnAddExercise");
-btnAddExercise.addEventListener('click', () => {
-    modalNewExercise.style.display = "block";
-});
+try {
+    btnAddExercise.addEventListener('click', () => {
+        modalNewExercise.style.display = "block";
+    });
 
-spanCloseModal.addEventListener('click', () => {
-    modalNewExercise.style.display = "none";
-});
+    spanCloseModal.addEventListener('click', () => {
+        modalNewExercise.style.display = "none";
+    });
 
-modalBtnAddExercise.addEventListener('click', () => {
-    newEx();
-    modalNewExercise.style.display = "none";
-})
-
+    modalBtnAddExercise.addEventListener('click', () => {
+        newEx();
+        modalNewExercise.style.display = "none";
+    })
+} catch (err) {
+    console.log(err)
+};
 var modalSaveTraining = document.getElementById("modalSaveTraining");
 var btnSaveTraining = document.getElementById("btnSaveTraining");
 var spanSaveTrainingClose = document.getElementById("modalSaveTrainingClose");
@@ -202,16 +205,19 @@ if (btnSaveTraining != null) {
         modalSaveTraining.style.display = "block";
     });
 };
+try {
+    spanSaveTrainingClose.addEventListener('click', () => {
+        modalSaveTraining.style.display = "none";
+    });
 
-spanSaveTrainingClose.addEventListener('click', () => {
-    modalSaveTraining.style.display = "none";
-});
+    modalBtnSaveTraining.addEventListener('click', () => {
+        saveTraining();
+        modalSaveTraining.style.display = "none";
+    });
+    window.addEventListener('load', makeLists);
+} catch (err) {
+    console.log(err)
+};
 
-modalBtnSaveTraining.addEventListener('click', () => {
-    saveTraining();
-    modalSaveTraining.style.display = "none";
-});
-
-window.addEventListener('load', makeLists);
 
 

@@ -24,11 +24,9 @@ router.get("/:name", auth.checkAuthenticated, async (req, res) => {
         req.flash('warning', 'Exercise not found');
         return res.redirect('/exercise');        
     };
-    console.log(trainings);
     trainings.forEach(training => {
         training.exercises = training.exercises.find(el => el.nameLowerCase === reqNameLowerCase)
     });
-    console.log(trainings);
     res.render('exercise/exercise', {trainings: trainings, isAuthenticated: true});
 });
 
