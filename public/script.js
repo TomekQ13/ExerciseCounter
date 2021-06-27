@@ -219,6 +219,7 @@ try {
     console.log(err)
 };
 
+// remove messages after time with fade
 setTimeout(() => {
     let messages = document.getElementsByClassName("message")
     for (let i=0; i< messages.length; i++) {
