@@ -1,5 +1,6 @@
 const express = require('express');
 const auth = require('../auth');
+const training = require('../models/training');
 const router = express.Router()
 const Training = require('../models/training')
 
@@ -15,18 +16,19 @@ router.get("/", auth.checkAuthenticated, async (req, res) => {
     res.render('exercise/exercises', { exercises: uniqueExercises, isAuthenticated: true });
   });
 
+
 router.get("/:name", auth.checkAuthenticated, async (req, res) => {
-    var trainings = await Training.find({ 'exercises.nameLowerCase': req.params.name.toLowerCase()});
+    const reqNameLowerCase = req.params.name.toLowerCase();
+    var trainings = await Training.find({ 'exercises.nameLowerCase': reqNameLowerCase, username: req.user.username});    
     if (trainings == null) {
         req.flash('warning', 'Exercise not found');
-        res.redirect('/exercise');
-        return
+        return res.redirect('/exercise');        
     };
+    console.log(trainings);
     trainings.forEach(training => {
-        training.exercises.forEach(element => {
-            element.nameLowerCase === req.params.name.toLowerCase()
-        });
-    }); //here still the array needs to be filtered to contain only request exercise
+        training.exercises = training.exercises.find(el => el.nameLowerCase === reqNameLowerCase)
+    });
+    console.log(trainings);
     res.render('exercise/exercise', {trainings: trainings, isAuthenticated: true});
 });
 

@@ -130,6 +130,7 @@ router.post('/exercise/:trainingName/', auth.checkAuthenticated, async (req, res
 
     existingTraining.exercises.push({
         name: req.body.newExName,
+        nameLowerCase: req.body.newExName.toLowerCase(),
         count: []
     });
     existingTraining.markModified('exercises'); // this may probably be improved by making the model more detailed so that less changes have to be made
