@@ -28,12 +28,12 @@ main {
 
 h1 {
     color: var(--mainBlack);
-    font-size: 3rem;
+    font-size: 2.5rem;
 }
 
 h2 {
     color: black;
-    font-size: 1.75rem;
+    font-size: 1.5rem;
 }
 
 nav {
@@ -69,6 +69,7 @@ nav .btn {
     margin-right: 5px;
     text-decoration: none;
 }
+
 
 .message {
     border: 1px solid;
