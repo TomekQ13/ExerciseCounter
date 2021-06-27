@@ -5,6 +5,7 @@
     --button-hover: #0C63D4;
     --red: #AC3F35;
     --green: #749c75;
+    --boxShadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 body {
@@ -64,8 +65,42 @@ form {
 }
 
 nav .btn {
-    margin-left: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
     text-decoration: none;
+}
+
+.message {
+    border: 1px solid;
+    border-radius: 5px;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-weight: bold;
+    box-shadow: var(--boxShadow);
+    background-color: #ffffff;
+    position: fixed;
+    top: 0;
+    width: 50%;
+    text-align: center;
+    max-width: 500px;
+}
+
+.message-error {
+    color: var(--red);    
+}
+
+.message-info {
+    color: var(--button);    
+}
+
+.message-warning {
+    color: #FFC20A;    
+}
+
+.message-success {
+    color: var(--green);    
 }
 
 .mainHeader {
@@ -83,7 +118,7 @@ nav .btn {
     height: fit-content;
     border-radius: 25px;
     max-width: 400px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    box-shadow: var(--boxShadow);
 }
 
 .reset-button {
@@ -98,7 +133,6 @@ nav .btn {
     justify-content: center;
 }
 
-
 .btn {
     font-size: 1rem;
     font-family: Arial, Helvetica, sans-serif;
@@ -108,6 +142,7 @@ nav .btn {
     background-color: var(--button);
     color: var(--background);
     padding: 0.6rem 0.5rem 0.6rem 0.5rem;
+    text-align: center;
 }
 
 .btn:hover {
@@ -188,6 +223,15 @@ nav .btn {
 
 .input-text {
     width: 100%;
+}
+
+.show {
+    transition: opacity 1000ms;
+}
+
+.hide {
+    opacity: 0;
+    transition: opacity 400ms;
 }
 
 #btnAddExercise {

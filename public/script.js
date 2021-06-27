@@ -219,5 +219,11 @@ try {
     console.log(err)
 };
 
-
-
+setTimeout(() => {
+    let messages = document.getElementsByClassName("message")
+    for (let i=0; i< messages.length; i++) {
+        messages[i].classList.add('hide');
+        setTimeout(() => {messages[i].remove();}, 400)
+    }
+}
+, 3000);
