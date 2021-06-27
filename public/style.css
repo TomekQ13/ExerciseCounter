@@ -34,11 +34,12 @@ h1 {
 h2 {
     color: black;
     font-size: 1.5rem;
+    margin-bottom: 5px;
+    margin-top: 0px;
 }
 
 nav {
     display: flex;
-    align-self: flex-start;
 }
 
 span {
@@ -107,7 +108,10 @@ nav .btn {
 .mainHeader {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 .exercise-box {
@@ -115,11 +119,18 @@ nav .btn {
     background-color: var(--boxBackground);
     padding: 1rem 2rem 2rem 2rem;
     width: 80%;
-    margin: 1rem 1rem 1rem 1rem;
+    margin: 0.5rem 1rem 1rem 1rem;
     height: fit-content;
-    border-radius: 25px;
+    border-radius: 5px;
     max-width: 400px;
     box-shadow: var(--boxShadow);
+}
+
+.trainingList {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem 1rem 2rem;
+    align-items: center;
 }
 
 .reset-button {
@@ -261,6 +272,17 @@ nav .btn {
 .hide {
     opacity: 0;
     transition: opacity 400ms;
+}
+
+.datetime {
+    margin-top: 2px;
+}
+
+.trainingLink {
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+
 }
 
 #btnAddExercise {

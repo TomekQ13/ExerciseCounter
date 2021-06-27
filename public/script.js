@@ -228,3 +228,16 @@ setTimeout(() => {
     }
 }
 , 3000);
+
+const trainingListBoxes = document.getElementsByClassName("trainingList");
+for (let i = 0; i < trainingListBoxes.length; i++) {
+    let trainingLink = trainingListBoxes[i].children[0].href;
+    trainingListBoxes[i].addEventListener('click', () => {
+        window.location.href = trainingLink;        
+    });
+    // trainingListBoxes[i].addEventListener('mouseover', () => {
+    //     trainingListBoxes[i].style.color = 'black';
+    // }); Here maybe it makes sense to add nice mouseover and mouseout event listeners
+};
+
+

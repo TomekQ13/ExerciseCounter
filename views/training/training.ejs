@@ -1,5 +1,12 @@
 <h2><%= training.name %> </h2>
-<small><%= training.added_dttm %> </small>
+<small>Dodano: <%= training.added_dttm.toLocaleString('pl-PL', {
+    weekday: 'long',
+    day: 'numeric', 
+    year: 'numeric', 
+    month: 'long',
+    hour: 'numeric',
+    minute: 'numeric',
+}) %> </small>
 <!-- <button id="btnSaveTraining" class="btn">Zapisz trening</button> -->
 <main>
     <% for( let i = 0; i < training.exercises.length; i++ ) { %>
