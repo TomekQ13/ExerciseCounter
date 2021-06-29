@@ -6,7 +6,7 @@ const router = express.Router()
 const Training = require('../models/training')
 
 router.get("/", auth.checkAuthenticated, async (req, res) => {
-    const trainings = await Training.find({ username: req.user.username });
+    const trainings = await Training.find({ username: req.user.username }).sort({'added_dttm': 'desc'});
     res.render('training/trainings', { trainings: trainings, isAuthenticated: true });
   });
 
@@ -63,14 +63,12 @@ router.delete('/:name', auth.checkAuthenticated, async (req, res) => {
 router.delete('/exercise/:trainingName/:exerciseName', auth.checkAuthenticated, async (req, res) => {
     var training = await Training.findOne({ 'name': req.params.trainingName });
     if (req.user.username != training.username) {
-        console.log('wrong user');
         req.flash('error', 'Niewystarczające uprawnienia');
         return res.redirect('/training');
 
     };
     var removeIndex = training.exercises.map(item => item.name).indexOf(req.params.exerciseName);
     if (removeIndex == -1) {
-        console.log('wrong exercise');
         req.flash('error', 'Takie ćwiczenie nie istnieje w treningu o takiej nazwie');
         return res.redirect('/training')
     };
