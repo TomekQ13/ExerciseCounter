@@ -13,7 +13,7 @@ router.get("/", auth.checkAuthenticated, async (req, res) => {
 router.get("/:name", auth.checkAuthenticated, async (req, res) => {
     const training = await Training.findOne({ 'username': req.user.username, 'name': req.params.name});
     if (training == null) {
-        req.flash('warning', 'Taki trening nie istnieje');
+        req.flash('error', 'Taki trening nie istnieje');
         res.redirect('/training');
         return
     };
@@ -24,7 +24,7 @@ router.get("/:name", auth.checkAuthenticated, async (req, res) => {
 router.post('/', auth.checkAuthenticated, async (req, res) => {
     const existingTraining = await Training.findOne({ 'name': req.body.name, 'username': req.user.username });
     if (existingTraining) {        
-        req.flash('warning', 'Trening o takiej nazwie już istnieje');
+        req.flash('error', 'Trening o takiej nazwie już istnieje');
         return res.status(200).send('Taki trening już istnieje');
     };
     

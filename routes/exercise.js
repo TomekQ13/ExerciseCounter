@@ -9,10 +9,15 @@ router.get("/", auth.checkAuthenticated, async (req, res) => {
     let exerciseNames = [];
     trainings.forEach(element => {
         element.exercises.forEach(exercise => {
-            exerciseNames.push(exercise.nameLowerCase);
+            if (exercise.nameLowerCase){
+                // if a training is empty it does not have this prop and pushed undefined instead
+                exerciseNames.push(exercise.nameLowerCase);
+            };            
         });
     });
+    console.log(exerciseNames)
     const uniqueExercises = [...new Set(exerciseNames)].sort();
+    console.log(uniqueExercises)
     res.render('exercise/exercises', { exercises: uniqueExercises, isAuthenticated: true });
   });
 
@@ -27,6 +32,7 @@ router.get("/:name", auth.checkAuthenticated, async (req, res) => {
     trainings.forEach(training => {
         training.exercises = training.exercises.find(el => el.nameLowerCase === reqNameLowerCase)
     });
+    console.log(trainings.length)
     res.render('exercise/exercise', {trainings: trainings, isAuthenticated: true});
 });
 
