@@ -5,12 +5,12 @@ const User = require('./models/user')
 function initialize(passport, getUserByUsername) {
     const authenticateUser = async (username, password, done) => {
         const user = await getUserByUsername(username);
-        if (user == null) {return done(null, false, {message: 'No user with that username'})};
+        if (user == null) {return done(null, false, {message: 'Taki użytkownik nie istnieje'})};
         try {
             if (await bcrypt.compare(password, user.password)) {
-                return done(null, user, {message: 'Logged in successfully'});
+                return done(null, user, {message: 'Zalogowano pomyślnie'});
             } else {
-                return done(null, false, {message: 'Password incorrect'});
+                return done(null, false, {message: 'Niepoprawne hasło'});
             }
         } catch (e) {
             return done(e);

@@ -22,7 +22,7 @@ router.get("/:name", auth.checkAuthenticated, async (req, res) => {
 
 
 router.post('/', auth.checkAuthenticated, (req, res) => {
-    const existingTraining = Training.findOne({ 'name': req.body.name });
+    const existingTraining = Training.findOne({ 'name': req.body.name, 'username': req.user.username });
     if (!existingTraining) {
         req.flash('info', 'Trening o takiej nazwie już istnieje');
         return res.redirect('/');
@@ -42,6 +42,7 @@ router.post('/', auth.checkAuthenticated, (req, res) => {
             res.send(JSON.stringify({message: 'There was an error'}))
         };
     });
+    req.flash('success', 'Trening zapisany');
 });
 
 router.delete('/:name', auth.checkAuthenticated, async (req, res) => {

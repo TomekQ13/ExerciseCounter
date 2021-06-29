@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 function newExHTML(exName) {
     if (exName === undefined) {return};
     const main = document.getElementsByTagName("main")[0];
@@ -172,6 +174,10 @@ async function saveTraining() {
             exercises: exercises
         })
     });
+    // redirects to a login page if the user is not logged in
+    if (resp.redirected) {
+        window.location.href = resp.url;
+    };
     
 };
 
@@ -212,7 +218,9 @@ try {
 
     modalBtnSaveTraining.addEventListener('click', () => {
         saveTraining();
-        modalSaveTraining.style.display = "none";
+        localStorage.setItem('exercises', JSON.stringify([]));
+        window.location.reload();
+        modalSaveTraining.style.display = "none";        
     });
     window.addEventListener('load', makeLists);
 } catch (err) {
