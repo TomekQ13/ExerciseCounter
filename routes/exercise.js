@@ -15,9 +15,7 @@ router.get("/", auth.checkAuthenticated, async (req, res) => {
             };            
         });
     });
-    console.log(exerciseNames)
     const uniqueExercises = [...new Set(exerciseNames)].sort();
-    console.log(uniqueExercises)
     res.render('exercise/exercises', { exercises: uniqueExercises, isAuthenticated: true });
   });
 
@@ -32,7 +30,6 @@ router.get("/:name", auth.checkAuthenticated, async (req, res) => {
     trainings.forEach(training => {
         training.exercises = training.exercises.find(el => el.nameLowerCase === reqNameLowerCase)
     });
-    console.log(trainings.length)
     res.render('exercise/exercise', {trainings: trainings, isAuthenticated: true});
 });
 
