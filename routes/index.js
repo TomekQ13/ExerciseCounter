@@ -7,16 +7,18 @@ router.get("/", (req, res) => {
     res.render('index', { isAuthenticated: req.isAuthenticated() });
   });
 
-router.get("/db/migrate", (req, res) => {
+router.get("/db/migrate", async (req, res) => {
     var trainings = Training.find();
     trainings.forEach((el) => {
         el.exercises.forEach((elem) => {
             elem.nameLowerCase = elem.name.toLowerCase()
         })
+        el.markModified('exercises');
     })
+    await trainings.save()
     res.status(200).send('Create lower case names successfully')
 });
 
-
+    
 
 module.exports = router
