@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 function newExHTML(exName) {
     if (exName === undefined) {return};
     const main = document.getElementsByTagName("main")[0];
@@ -159,7 +157,6 @@ if (localStorage.getItem('exercises') == undefined) {
 
 async function saveTraining() {
     const saveTrainingName = document.getElementById("newTrainingName");
-    const saveTrainingUsername = document.getElementById("newTrainingUsername");
     if (saveTrainingName.value.length == 0 ) {return};
 
     const exercises = JSON.parse(localStorage.getItem('exercises'));
@@ -173,12 +170,14 @@ async function saveTraining() {
             name: saveTrainingName.value,
             exercises: exercises
         })
-    });
-    // redirects to a login page if the user is not logged in
-    if (resp.redirected) {
-        window.location.href = resp.url;
-    };
+    })
     
+    if (resp.redirected) {
+            window.location.href = resp.url;
+    };  
+
+    return resp
+
 };
 
 var modalNewExercise = document.getElementById("modalNewExercise");
@@ -216,11 +215,14 @@ try {
         modalSaveTraining.style.display = "none";
     });
 
-    modalBtnSaveTraining.addEventListener('click', () => {
-        saveTraining();
+    modalBtnSaveTraining.addEventListener('click', async () => {
+        const resp = await saveTraining();
         localStorage.setItem('exercises', JSON.stringify([]));
-        window.location.reload();
-        modalSaveTraining.style.display = "none";        
+        modalSaveTraining.style.display = "none";  
+        if (resp.redirected == false) {
+            window.location.reload(); 
+        };
+              
     });
     window.addEventListener('load', makeLists);
 } catch (err) {
