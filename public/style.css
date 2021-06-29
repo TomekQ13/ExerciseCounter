@@ -38,6 +38,10 @@ h2 {
     margin-top: 0px;
 }
 
+.form-title {
+    margin-bottom: 10px;
+}
+
 nav {
     display: flex;
 }
@@ -283,6 +287,12 @@ nav .btn {
     color: #000000;
     font-weight: bold;
 
+}
+
+.form-line {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 #btnAddExercise {
