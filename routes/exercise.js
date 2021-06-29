@@ -9,7 +9,7 @@ router.get("/", auth.checkAuthenticated, async (req, res) => {
     let exerciseNames = [];
     trainings.forEach(element => {
         element.exercises.forEach(exercise => {
-            if (exercise.nameLowerCase){
+            if (exercise.nameLowerCase) {
                 // if a training is empty it does not have this prop and pushed undefined instead
                 exerciseNames.push(exercise.nameLowerCase);
             };            
