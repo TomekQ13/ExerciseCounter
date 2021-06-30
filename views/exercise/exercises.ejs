@@ -1,7 +1,7 @@
-<ul>
-    <% for( let i = 0; i < exercises.length; i++ ) { %>
-        <li>
-            <a href="/exercise/<%= encodeURIComponent(exercises[i]) %> "><%= exercises[i] %></a>
-        </li>
-    <% } %>
-</ul>
+<div class="tags">
+<% for( let i = 0; i < exercises.length; i++ ) { %>
+    <div class="btn exTag">
+        <a class="blankLink font-white" href="/exercise/<%= encodeURIComponent(exercises[i]) %> "><%= exercises[i] %></a>
+    </div>
+<% } %>
+</div>

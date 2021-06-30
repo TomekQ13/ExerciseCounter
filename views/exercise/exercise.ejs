@@ -1,13 +1,19 @@
-<ul>
-    <% for( let i = 0; i < trainings.length; i++ ) { %>
-        <li>
-            <div>
-                <p><%= trainings[i].name %> </p>
-                <% for( let j = 0; j < trainings[i].exercises.length; j++ ) { %>
-                    <p><%= trainings[i].exercises[j].name %> </p>
-                    <p><%= trainings[i].exercises[j].count %> </p>
+<h2><%= exName %> </h2>
+<% for( let i = 0; i < trainings.length; i++ ) { %>
+        <div class="exercise-box trainingList">
+            <a class="blankLink font-black" href="/training/<%= encodeURIComponent(trainings[i].name) %>"><%= trainings[i].name %> </a>
+            <small>Dodano: <%= trainings[i].added_dttm.toLocaleString('pl-PL', {
+                weekday: 'long',
+                day: 'numeric', 
+                year: 'numeric', 
+                month: 'long',
+                hour: 'numeric',
+                minute: 'numeric',
+            } ) %></small>
+            <p>
+                <% for( let j = 0; j < trainings[i].exercises[0].count.length; j++ ) { %>
+                    <%= trainings[i].exercises[0].count[j] %> 
                 <% } %>
-            </div>
-        </li>
-    <% } %>
-    </ul>
+            </p>
+        </div>
+<% } %>

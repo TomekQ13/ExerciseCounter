@@ -75,7 +75,6 @@ nav .btn {
     text-decoration: none;
 }
 
-
 .message {
     border: 1px solid;
     border-radius: 5px;
@@ -293,6 +292,38 @@ nav .btn {
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;
+}
+
+.deleteRepForm {
+    display: inline;
+}
+
+.tags {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.exTag {
+    margin: 5px 5px 5px 5px;
+    border: 1px solid;
+    text-decoration: none;
+
+}
+
+.blankLink {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.font-white {
+    color: #ffffff;
+}
+
+.font-black {
+    color: #000000;
 }
 
 #btnAddExercise {

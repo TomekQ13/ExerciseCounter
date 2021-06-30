@@ -30,7 +30,7 @@ router.get("/:name", auth.checkAuthenticated, async (req, res) => {
     trainings.forEach(training => {
         training.exercises = training.exercises.find(el => el.nameLowerCase === reqNameLowerCase)
     });
-    res.render('exercise/exercise', {trainings: trainings, isAuthenticated: true});
+    res.render('exercise/exercise', {trainings: trainings, exName: reqNameLowerCase, isAuthenticated: true});
 });
 
 module.exports = router
