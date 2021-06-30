@@ -12,7 +12,11 @@
             } ) %></small>
             <p>
                 <% for( let j = 0; j < trainings[i].exercises[0].count.length; j++ ) { %>
-                    <%= trainings[i].exercises[0].count[j] %> 
+                    <% if (j < trainings[i].exercises[0].count.length - 1) { %>
+                        <%= trainings[i].exercises[0].count[j] %>, 
+                    <% } else { %>
+                        <%= trainings[i].exercises[0].count[j] %> 
+                    <% } %>
                 <% } %>
             </p>
         </div>
