@@ -2,7 +2,7 @@ version: '3'
 services:
     app:
         build:
-            context: /app
+            context: /app/
         volumes: 
          - ./app:/app
         ports:
@@ -10,6 +10,6 @@ services:
         restart: always
     app:
         build:
-            context: /nginx
+            context: /nginx/
         ports:
             - '80:80'
