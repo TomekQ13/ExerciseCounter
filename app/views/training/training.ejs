@@ -18,7 +18,7 @@
                 <div class='adding-menu'>
                     <form class="add-repetitions-form" method="POST" action="/training/rep/<%= encodeURIComponent(training.name) %>/<%= encodeURIComponent(training.exercises[i].name) %>">
                         <input type="text" class="input-text" id="count-<%= training.exercises[i].name %>" name="rep" required>
-                        <input type="submit" class="btn btn-add btn-add-ex" value="Dodaj">
+                        <input type="submit" class="btn btn-add-ex" value="Dodaj">
                     </form>
                 </div>
                 <div id="stored-list" class="stored-list">

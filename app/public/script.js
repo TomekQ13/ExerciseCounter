@@ -12,7 +12,7 @@ function newExHTML(exName) {
             <div class='adding-menu'>
                 <form class="add-repetitions-form">
                     <input type="text" class="input-text" id="count-${exName}" name="count-${exName}">
-                    <input type="button" class="btn btn-add btn-add-ex" value="Dodaj" onclick="saveData('${exName}')">
+                    <input type="button" class="btn btn-add-ex" value="Dodaj" onclick="saveData('${exName}')">
                 </form>
             </div>
             <div id="stored-list" class="stored-list">
@@ -186,7 +186,7 @@ var spanCloseModal = document.getElementById("modalAddExClose");
 var modalBtnAddExercise = document.getElementById("modalBtnAddExercise");
 try {
     btnAddExercise.addEventListener('click', () => {
-        modalNewExercise.style.display = "block";
+        modalNewExercise.style.display = "flex";
     });
 
     spanCloseModal.addEventListener('click', () => {
@@ -207,7 +207,7 @@ const modalBtnSaveTraining = document.getElementById("modalBtnSaveTraining");
 
 if (btnSaveTraining != null) {
     btnSaveTraining.addEventListener('click', () => {
-        modalSaveTraining.style.display = "block";
+        modalSaveTraining.style.display = "flex";
     });
 };
 try {

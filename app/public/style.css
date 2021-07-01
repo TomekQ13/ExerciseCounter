@@ -176,14 +176,17 @@ nav .btn {
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    flex-direction: column;
+    justify-content: center;
+
   }
   
 .modal-content {
     background-color: #fefefe;
     margin: 10% auto; /* 15% from the top and centered */
     padding: 20px;
-    border: 1px solid #888;
     width: 80%;
+    max-width: 500px;
   }
   
 .close {
@@ -236,9 +239,18 @@ nav .btn {
     cursor: pointer;
 }
 
-.input-text {
-    width: 100%;
+input[type="text"] {
+    height: 30px;
 }
+
+input[type="password"] {
+    height: 30px;
+}
+
+input[type="email"] {
+    height: 30px;
+}
+
 
 .show {
     animation: fadeIn 0.4s;
@@ -326,15 +338,15 @@ nav .btn {
     color: #000000;
 }
 
+.btn-add {
+    margin-top: 10px;
+}
+
 #btnAddExercise {
       width: 100%;
       height: 80px;
       font-size: 2rem;
   }
-
-#newExName {
-    width: 75%;
-}
 
 #btnSaveTraining {
     margin-top: 20px;
