@@ -250,4 +250,5 @@ for (let i = 0; i < trainingListBoxes.length; i++) {
     // }); Here maybe it makes sense to add nice mouseover and mouseout event listeners
 };
 
+var cookieConsent = new CookieConsent({privacyPolicyUrl: "/privacy-policy.html"})
 
