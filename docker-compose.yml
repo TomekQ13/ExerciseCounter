@@ -13,8 +13,3 @@ services:
             context: ./nginx/
         ports:
             - '80:80'
-        volumes:
-            - ./data/certbot/conf:/etc/letsencrypt
-            - ./data/certbot/www:/var/www/certbot
-    certbot:
-        image: certbot/certbot
