@@ -216,11 +216,11 @@ try {
     });
 
     modalBtnSaveTraining.addEventListener('click', async () => {
-        const resp = await saveTraining();
-        localStorage.setItem('exercises', JSON.stringify([]));
+        const resp = await saveTraining();        
         modalSaveTraining.style.display = "none";  
         if (resp.redirected == false) {
             window.location.reload(); 
+            localStorage.setItem('exercises', JSON.stringify([]));
         };
               
     });
