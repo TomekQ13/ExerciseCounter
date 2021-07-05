@@ -9,7 +9,11 @@ services:
             - '3000:3000'
         restart: always
     nginx:
-        build:
-            context: ./nginx/
+        image: nginx:1.15-alpine
         ports:
-            - '80:80'
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./data/nginx:/etc/nginx/conf.d
+    certbot:
+        image: certbot/certbot
