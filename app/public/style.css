@@ -353,3 +353,9 @@ input[type="email"] {
     margin-bottom: 10px;
     width: 50%;
 }
+
+@media (max-height: 500px) {
+    #btnAddExercise {
+      display: none;
+    }
+  }
