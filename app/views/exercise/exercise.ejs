@@ -1,7 +1,7 @@
 <h2><%= exName %> </h2>
 <% for( let i = 0; i < trainings.length; i++ ) { %>
         <div class="exercise-box trainingList">
-            <a class="blankLink font-black" href="/training/<%= encodeURIComponent(trainings[i].name) %>"><%= trainings[i].name %> </a>
+            <a class="blankLink font-black" href="/training/<%= encodeURIComponent(trainings[i].name) %>"><%= trainings[i].name %> </a><br>
             <small>Dodano: <%= trainings[i].added_dttm.toLocaleString('pl-PL', {
                 weekday: 'long',
                 day: 'numeric', 

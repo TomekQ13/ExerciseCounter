@@ -27,7 +27,7 @@
                             <li>
                                 <%= training.exercises[i].count[j] %>
                                 <form class = "deleteRepForm" method="POST" action="/training/rep/<%= encodeURIComponent(training.name) %>/<%= encodeURIComponent(training.exercises[i].name) %>/<%= i %>?_method=DELETE">
-                                    <button type="submit" class='close remove-rep'>x</button>
+                                    <button type="submit" class='close remove-rep'>&times;</button>
                                 </form>                     
                             </li>
                         <% } %>

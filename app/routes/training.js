@@ -47,21 +47,21 @@ router.post('/', auth.checkAuthenticated, async (req, res) => {
 });
 
 router.delete('/:name', auth.checkAuthenticated, async (req, res) => {
-    const training = await Training.findOne({ 'name': req.params.name });
-    if (req.user.username != training.username) {
-        req.flash('error', 'Niewystarczające uprawnienia');
-        return res.redirect('/');
+    const training = await Training.findOne({ 'name': req.params.name, 'username': req.user.username });
+    if (!training) {
+        req.flash('error', 'Trening nie istnieje');
+        return res.redirect('/training');
     };
 
     await training.remove();
 
     req.flash('success', 'Trening usunięty');
-    return res.redirect('/');
+    return res.redirect('/training');
 });
 
 // delete exercise from a training
 router.delete('/exercise/:trainingName/:exerciseName', auth.checkAuthenticated, async (req, res) => {
-    var training = await Training.findOne({ 'name': req.params.trainingName });
+    var training = await Training.findOne({ 'name': req.params.trainingName, 'username': req.user.username });
     if (req.user.username != training.username) {
         req.flash('error', 'Niewystarczające uprawnienia');
         return res.redirect('/training');
