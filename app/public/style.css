@@ -359,3 +359,15 @@ input[type="email"] {
       display: none;
     }
   }
+
+@media (min-width: 620px) {
+    .topnav {
+        display: none;
+    }
+}
+
+@media (max-width: 619px) {
+    .pcnav {
+        display: none;
+    }
+}
