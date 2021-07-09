@@ -1,29 +1,5 @@
 <header class="mainHeader">
     <nav>
-        <!-- Top Navigation Menu -->
-        <div class="topnav">
-            <a href="#home" class="active">Logo</a>
-            <!-- Navigation links (hidden by default) -->
-            <div id="myLinks">
-                <form action='/' method='GET'>
-                    <button type="submit" class="btn">Strona główna</button>
-                </form>
-                <% if (isAuthenticated) { %>
-                    <form action='/user/logout' method='POST'>
-                        <button type="submit" class="btn">Wyloguj</button>
-                    </form>
-                    <a href="/training" class="btn">Treningi</a>
-                    <a href="/exercise" class="btn">Ćwiczenia</a>
-                <% } else { %>
-                    <a href="/user/login" class="btn">Zaloguj się</a>
-                    <a href="/user/register" class="btn">Zarejestruj się</a>
-                <% } %>
-            </div>
-            <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
-            <a href="javascript:void(0);" class="icon" onclick="menuToggle()">
-                <i class="fa fa-bars"></i>
-            </a>
-        </div>
         <div class="pcnav">
             <form action='/' method='GET'>
                 <button type="submit" class="btn">Strona główna</button>
