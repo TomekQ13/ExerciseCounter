@@ -96,13 +96,27 @@ function appendToListHTML(element, exName) {
     ol.appendChild(li);
     li.innerHTML += element;
 
-    const rep_index = getExercise(exName).count.length - 1;
+    const rep_index = ol.children.length - 1
+    var icons = document.createElement('div')
+    icons.className = 'icons'    
+
+    var arrow_up = document.createElement('i');
+    arrow_up.className = 'arrow arrow-up';
+    arrow_up.setAttribute('onclick', `moveEx('${exName}', ${rep_index}, true)`);
+    icons.appendChild(arrow_up);
+
+    var arrow_down = document.createElement('i');
+    arrow_down.className = 'arrow arrow-down';
+    arrow_down.setAttribute('onclick', `moveEx('${exName}', ${rep_index})`);
+    icons.appendChild(arrow_down);
+
     var span = document.createElement('span');
     span.innerHTML = '&times;';
     span.className = 'close remove-rep';
     span.setAttribute('onclick', `deleteRepetition('${exName}', ${rep_index})`);
     // span.onclick = `deleteRepetition('${exName}', ${rep_index})`;
-    li.appendChild(span);
+    icons.appendChild(span);
+    li.appendChild(icons)
 };
 
 function makeList(exName) {
@@ -239,6 +253,25 @@ setTimeout(() => {
 }
 , 3000);
 
+function arraymove(arr, fromIndex, toIndex) {
+    var element = arr[fromIndex];
+    arr.splice(fromIndex, 1);
+    arr.splice(toIndex, 0, element);
+}
+
+function moveEx(exName, exIndex, up) {
+    var existingData = JSON.parse(localStorage.getItem('exercises'));
+    const index = existingData.findIndex(el => el.name === exName);
+    if (up && index < 0) {
+        arraymove(existingData[index].count, exIndex, exIndex - 1);     
+    } else if (!up && index < existingData[index].count.length) {
+        arraymove(existingData[index].count, exIndex, exIndex + 1); 
+    }    
+
+    localStorage.setItem('exercises', JSON.stringify(existingData));
+    window.location.reload();
+}
+
 const trainingListBoxes = document.getElementsByClassName("trainingList");
 for (let i = 0; i < trainingListBoxes.length; i++) {
     let trainingLink = trainingListBoxes[i].children[0].href;
@@ -251,4 +284,6 @@ for (let i = 0; i < trainingListBoxes.length; i++) {
 };
 
 var cookieConsent = new CookieConsent({privacyPolicyUrl: "/privacy-policy.html"})
+
+
 
