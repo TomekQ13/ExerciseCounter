@@ -282,6 +282,7 @@ nav .btn {
 
 input[type="text"] {
     height: 30px;
+    width: -webkit-fill-available;
 }
 
 input[type="password"] {
