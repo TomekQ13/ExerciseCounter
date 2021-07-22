@@ -262,7 +262,7 @@ function arraymove(arr, fromIndex, toIndex) {
 function moveEx(exName, exIndex, up) {
     var existingData = JSON.parse(localStorage.getItem('exercises'));
     const index = existingData.findIndex(el => el.name === exName);
-    if (up && index < 0) {
+    if (up && exIndex > 0) {
         arraymove(existingData[index].count, exIndex, exIndex - 1);     
     } else if (!up && index < existingData[index].count.length) {
         arraymove(existingData[index].count, exIndex, exIndex + 1); 
