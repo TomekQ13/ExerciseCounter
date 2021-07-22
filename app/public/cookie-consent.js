@@ -17,23 +17,12 @@ function CookieConsent(props) {
         position: "left", // position ("left" or "right"), if blockAccess is false
         postSelectionCallback: undefined, // callback, after the user has made his selection
         content: { // the content in all needed languages
-            de: {
-                title: "Cookie-Einstellungen",
-                body: "Wir nutzen Cookies, um Inhalte zu personalisieren und die Zugriffe auf unsere Website zu analysieren. " +
-                    "Sie können wählen, ob Sie nur für die Funktion der Website notwendige Cookies akzeptieren oder auch " +
-                    "Tracking-Cookies zulassen möchten. Weitere Informationen finden Sie in unserer --privacy-policy--.",
-                privacyPolicy: "Datenschutzerklärung",
-                buttonAcceptAll: "Alle Cookies akzeptieren",
-                buttonAcceptTechnical: "Nur technisch notwendige Cookies akzeptieren"
-            },
             en: {
                 title: "Cookie settings",
-                body: "We use cookies to personalize content and analyze access to our website. " +
-                    "You can choose whether you only accept cookies that are necessary for the functioning of the website " +
-                    "or whether you also want to allow tracking cookies. For more information, please refer to our --privacy-policy--.",
+                body: "We use cookies to make sure that the website is running correctly. ",
                 privacyPolicy: "privacy policy",
-                buttonAcceptAll: "Accept all cookies",
-                buttonAcceptTechnical: "Only accept technically necessary cookies"
+                buttonAcceptAll: "OK",
+                buttonAcceptTechnical: "OK"
             },
             pl: {
                 title: "Pliki cookies",
