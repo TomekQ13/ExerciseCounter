@@ -94,7 +94,11 @@ function appendToListHTML(element, exName) {
     var ol = document.getElementById('list-' + exName);
     var li = document.createElement('li');
     ol.appendChild(li);
-    li.innerHTML += element;
+    // li.innerHTML += element;
+    var p = document.createElement('p')
+    p.className = 'list-item'
+    li.appendChild(p)
+    p.innerHTML=element
 
     const rep_index = ol.children.length - 1
     var icons = document.createElement('div')

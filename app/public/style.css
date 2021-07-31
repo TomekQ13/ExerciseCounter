@@ -418,6 +418,13 @@ input[type="email"] {
     display: inline;
     position: absolute;
     right: 0;
+    top: 0;
+}
+
+.list-item {
+    margin: 0px 0px 0px 0px;
+    overflow-wrap: break-word;
+    width: 75%
 }
 
 #btnAddExercise {

@@ -25,9 +25,9 @@
                     <ol id="list-<%= training.exercises[i].name %>">
                         <% for( let j = 0; j < training.exercises[i].count.length; j++ ) { %>
                             <li>
-                                <%= training.exercises[i].count[j] %>
+                                <p class="list-item"><%= training.exercises[i].count[j] %></p>
                                 <div class="icons">
-                                    <form class = "deleteRepForm" method="POST" action="/training/rep/<%= encodeURIComponent(training.name) %>/<%= encodeURIComponent(training.exercises[i].name) %>/<%= i %>?_method=DELETE">
+                                    <form class = "deleteRepForm" method="POST" action="/training/rep/<%= encodeURIComponent(training.name) %>/<%= encodeURIComponent(training.exercises[i].name) %>/<%= j %>?_method=DELETE">
                                         <button type="submit" class='close remove-rep'>&times;</button>
                                     </form>
                                 </div>                
