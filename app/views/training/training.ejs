@@ -26,9 +26,11 @@
                         <% for( let j = 0; j < training.exercises[i].count.length; j++ ) { %>
                             <li>
                                 <%= training.exercises[i].count[j] %>
-                                <form class = "deleteRepForm" method="POST" action="/training/rep/<%= encodeURIComponent(training.name) %>/<%= encodeURIComponent(training.exercises[i].name) %>/<%= i %>?_method=DELETE">
-                                    <button type="submit" class='close remove-rep'>&times;</button>
-                                </form>                     
+                                <div class="icons">
+                                    <form class = "deleteRepForm" method="POST" action="/training/rep/<%= encodeURIComponent(training.name) %>/<%= encodeURIComponent(training.exercises[i].name) %>/<%= i %>?_method=DELETE">
+                                        <button type="submit" class='close remove-rep'>&times;</button>
+                                    </form>
+                                </div>                
                             </li>
                         <% } %>
                     </ol>
