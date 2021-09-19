@@ -22,7 +22,7 @@ router.get("/", auth.checkAuthenticated, async (req, res) => {
 
 router.get("/:name", auth.checkAuthenticated, async (req, res) => {
     const reqNameLowerCase = req.params.name.toLowerCase();
-    var trainings = await Training.find({ 'exercises.nameLowerCase': reqNameLowerCase, username: req.user.username});    
+    var trainings = await Training.find({ 'exercises.nameLowerCase': reqNameLowerCase, username: req.user.username}).sort({'added_dttm': 'desc'});;    
     if (trainings == null) {
         req.flash('warning', 'Exercise not found');
         return res.redirect('/exercise');        
