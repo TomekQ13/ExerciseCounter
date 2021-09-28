@@ -4,13 +4,18 @@
         <form>
             <label for="newExName">Nazwa ćwiczenia</label>
                 <input list="exercises" class="input-text" id="newExName" name="newExName" autocomplete="off">
-                <datalist id="exercises">
+                
                 <% if (isAuthenticated) { %>
+                    <datalist id="exercises">
                     <% exercises.forEach(element => { %>
                         <option value="<%= element %>">
                     <% }) %>
-                <% } %>
-                </datalist>
+                    </datalist>
+                <% } else { %>
+                    <small class="small-text">Zaloguj się żeby zobaczyć listę Twoich ćwiczeń</small>
+                <% }  %>
+                
+                
             <input id="modalBtnAddExercise" type="button" class="btn btn-add" value="Dodaj">
         </form>
     </div>

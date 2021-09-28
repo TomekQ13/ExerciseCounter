@@ -451,3 +451,7 @@ input[type="email"] {
       display: none;
     }
   }
+
+.small-text {
+    margin-top: 1px
+}
