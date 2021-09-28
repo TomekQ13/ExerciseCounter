@@ -3,23 +3,23 @@ const checkAuthenticated = require('../auth');
 const router = express.Router()
 const Training = require('../models/training');
 
-router.get("/", (req, res) => {
-    res.render('index', { isAuthenticated: req.isAuthenticated() });
+router.get("/", async (req, res) => {
+    if (req.isAuthenticated()) {
+        const trainings = await Training.find({'username': req.user.username});
+        let distinctExercises = []
+        trainings.forEach(el => {
+            el.exercises.forEach(exercise => {
+                distinctExercises = distinctExercises.concat(exercise.nameLowerCase)
+            });
+            
+        });
+        const uniqueExercises = [...new Set(distinctExercises)]
+        return res.render('index', { isAuthenticated: req.isAuthenticated(), exercises: uniqueExercises });
+        
+    }
+    return res.render('index', { isAuthenticated: req.isAuthenticated()});
 });
 
-// router.get("/db/migrate", async (req, res) => {
-//     var trainings = Training.find();
-//     trainings.forEach((el) => {
-//         el.exercises.forEach((elem) => {
-//             elem.nameLowerCase = elem.name.toLowerCase()
-//         })
-//         el.markModified('exercises');
-//     })
-//     console.log('asdasd')
-//     await trainings.save()
-//     res.status(200).send('Create lower case names successfully')
-// });
-
-    
+  
 
 module.exports = router
