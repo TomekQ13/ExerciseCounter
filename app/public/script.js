@@ -205,6 +205,12 @@ var modalBtnAddExercise = document.getElementById("modalBtnAddExercise");
 try {
     btnAddExercise.addEventListener('click', () => {
         modalNewExercise.style.display = "flex";
+        document.getElementById('newTrainingName').value = new Date().toLocaleString('pl-PL', {
+            weekday: 'long',
+            day: 'numeric', 
+            year: 'numeric', 
+            month: 'numeric'
+        } )
     });
 
     spanCloseModal.addEventListener('click', () => {
