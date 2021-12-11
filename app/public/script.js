@@ -205,12 +205,6 @@ var modalBtnAddExercise = document.getElementById("modalBtnAddExercise");
 try {
     btnAddExercise.addEventListener('click', () => {
         modalNewExercise.style.display = "flex";
-        document.getElementById('newTrainingName').value = new Date().toLocaleString('pl-PL', {
-            weekday: 'long',
-            day: 'numeric', 
-            year: 'numeric', 
-            month: 'numeric'
-        } )
     });
 
     spanCloseModal.addEventListener('click', () => {
@@ -231,7 +225,13 @@ const modalBtnSaveTraining = document.getElementById("modalBtnSaveTraining");
 
 if (btnSaveTraining != null) {
     btnSaveTraining.addEventListener('click', () => {
-        modalSaveTraining.style.display = "flex";
+        modalSaveTraining.style.display = "flex";        
+        document.getElementById('newTrainingName').value = new Date().toLocaleString('pl-PL', {
+            weekday: 'long',
+            day: 'numeric', 
+            year: 'numeric', 
+            month: 'numeric'
+        } )
     });
 };
 try {
