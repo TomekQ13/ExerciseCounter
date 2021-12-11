@@ -1,5 +1,4 @@
 const express = require('express');
-const checkAuthenticated = require('../auth');
 const router = express.Router()
 const Training = require('../models/training');
 
