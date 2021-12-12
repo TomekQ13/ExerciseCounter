@@ -1,9 +1,7 @@
 <header class="mainHeader">
     <nav>
         <div class="pcnav">
-            <form action='/' method='GET'>
-                <button type="submit" class="btn">Strona główna</button>
-            </form>
+            <a class="btn" href="/">Strona główna</a>
             <% if (isAuthenticated) { %>
                 <a href="/user/logout" class="btn">Wyloguj</a>
                 <a href="/training" class="btn">Treningi</a>
@@ -14,7 +12,7 @@
             <% } %>
         </div>
         
-
-        <!-- <a href="javascript:cookieConsent.reset()">Cookie settings</a> -->
+<!-- 
+        <a href="javascript:cookieConsent.reset()">Cookie settings</a> -->
     </nav>
 </header>
