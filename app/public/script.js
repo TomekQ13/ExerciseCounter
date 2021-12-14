@@ -5,7 +5,6 @@ function newExHTML(exName) {
     main.appendChild(exBox);
     exBox.className = 'exercise-box';
     exBox.innerHTML = `
-        <div class="inside-box">
             <header>
                 <h2 class="box-title">${exName}</h2>
             </header>
@@ -18,8 +17,7 @@ function newExHTML(exName) {
             <div id="stored-list" class="stored-list">
                 <ol id="list-${exName}"></ol>
             </div>
-                <button id='delete-exercise-${exName}' class='btn btn-delete' onclick="deleteExercise('${exName}')">Usuń ćwiczenie</button>
-        </div>   
+                <button id='delete-exercise-${exName}' class='btn btn-delete' onclick="deleteExercise('${exName}')">Usuń ćwiczenie</button> 
     `;
     // makeList is called to fill out the content if some exists
     // called to enable to use this also on load of the site
