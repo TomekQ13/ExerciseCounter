@@ -1,18 +1,19 @@
+"use strict";
+
 function newExHTML(exName) {
     if (exName === undefined) {return};
     const main = document.getElementsByTagName("main")[0];
-    exBox = document.createElement('div');
+    const exBox = document.createElement('div');
     main.appendChild(exBox);
     exBox.className = 'exercise-box';
     exBox.innerHTML = `
-            <header class="box-header">
-                <h2 class="box-title">${exName}</h2>
-                <button class="add-tag" data-bs-toggle="popover" title="Popover title" data-bs-content="Dodaj tag">
+            <header class="box-header" data-ex-name="${exName}">
+                <h2 class="box-title" id="h2-${exName}">${exName}</h2>
+                <button class="add-tag" data-ex-name="${exName}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                     </svg>
                 </button>
-
             </header>
             <div class='adding-menu mt-3'>
                 <form class="add-repetitions-form">
@@ -252,7 +253,11 @@ try {
         };
               
     });
-    window.addEventListener('load', makeLists);
+    // here is the main event listener for the window load
+    window.addEventListener('load', () => {
+        makeLists()
+        my_func()
+    });
 } catch (err) {
     console.log(err)
 };
@@ -299,20 +304,50 @@ for (let i = 0; i < trainingListBoxes.length; i++) {
 
 var cookieConsent = new CookieConsent({privacyPolicyUrl: "/privacy-policy.html"})
 
-function addTagAddForm() {
+Element.prototype.appendAfter = function (element) {
+    element.parentNode.insertBefore(this, element.nextSibling);
+  }, false;
 
+function addTagAddForm(exName) {
+    const boxHeader = document.getElementById('h2-' + exName)
+    console.log('h2-' + exName)
+    const newTag = document.createElement('div')
+    newTag.innerHTML = `
+    <form method="POST" action=>
+        <input type="text" class="input-text" id="count-${exName}" name="tag-${exName}">
+        <input type="button" class="btn btn-add-ex" value="Dodaj">
+    </form>
+    `
+    boxHeader.after(newTag)
 }
 
-function getTag() {
+function my_func() {
+    const addTagButtons = document.getElementsByClassName("add-tag")
+    for (let i = 0; i < addTagButtons.length; i++) {
+        addTagButtons[i].addEventListener('click', () => {
+            addTagAddForm(addTagButtons[i].getAttribute('data-ex-name'))
+            // remove the button that adds the form
+            addTagButtons[i].remove()
+
+            // add event listener to the added form submission button to remove the button and the form and refresh the page
+
+            // there needs to be functionality added to show many tags for one exercise
+        })    
+    }
+}
+
+
+
+// function getTag() {
     
-}
+// }
 
-function addTag() {
-    addTagToLocalStorage()
-    addTagToDB()
-}
+// function addTag() {
+//     addTagToLocalStorage()
+//     addTagToDB()
+// }
 
-function addTagToLocalStorage(exName) {
-    const existingEx = getExercise(exName)
+// function addTagToLocalStorage(exName) {
+//     const existingEx = getExercise(exName)
 
-}
+// }
