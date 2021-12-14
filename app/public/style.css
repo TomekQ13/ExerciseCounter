@@ -151,7 +151,7 @@ nav .btn {
 }
 
 .box-title {
-    margin: 0px 0px 15px 0px;
+    margin: 0px 3px 0px 0px;
     display: flex;
     justify-content: center;
 }
@@ -420,11 +420,10 @@ input[type="email"] {
   }
 
 @media (max-width: 991px) {
-.dropdown-menu {
-    border: none;
+    .dropdown-menu {
+        border: none;
+    }
 }
-}
-
 
 .small-text {
     margin-top: 1px
@@ -434,3 +433,8 @@ input[type="email"] {
     background: var(--boxBackground);
 }
 
+.box-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

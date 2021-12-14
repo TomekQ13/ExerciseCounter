@@ -5,10 +5,16 @@ function newExHTML(exName) {
     main.appendChild(exBox);
     exBox.className = 'exercise-box';
     exBox.innerHTML = `
-            <header>
+            <header class="box-header">
                 <h2 class="box-title">${exName}</h2>
+                <button class="add-tag" data-bs-toggle="popover" title="Popover title" data-bs-content="Dodaj tag">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                </button>
+
             </header>
-            <div class='adding-menu'>
+            <div class='adding-menu mt-3'>
                 <form class="add-repetitions-form">
                     <input type="text" class="input-text" id="count-${exName}" name="count-${exName}">
                     <input type="button" class="btn btn-add-ex" value="Dodaj" onclick="saveData('${exName}')">
@@ -293,14 +299,20 @@ for (let i = 0; i < trainingListBoxes.length; i++) {
 
 var cookieConsent = new CookieConsent({privacyPolicyUrl: "/privacy-policy.html"})
 
+function addTagAddForm() {
 
+}
 
-/* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
-function myFunction() {
-    var x = document.getElementById("myLinks");
-    if (x.style.display === "block") {
-      x.style.display = "none";
-    } else {
-      x.style.display = "block";
-    }
-  }
+function getTag() {
+    
+}
+
+function addTag() {
+    addTagToLocalStorage()
+    addTagToDB()
+}
+
+function addTagToLocalStorage(exName) {
+    const existingEx = getExercise(exName)
+
+}
