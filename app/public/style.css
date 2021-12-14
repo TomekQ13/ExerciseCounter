@@ -124,8 +124,18 @@ nav .btn {
     margin: 0.5rem 1rem 1rem 1rem;
     height: fit-content;
     border-radius: 5px;
-    max-width: 400px;
+    width: 400px;
     min-width: 275px;
+    box-shadow: var(--boxShadow);
+}
+@media (max-width: 431px) {
+    .exercise-box{
+        margin: 0.5rem 0rem 1rem 0rem;
+        width:95%;
+    }
+  }
+
+.my-shadow {
     box-shadow: var(--boxShadow);
 }
 
@@ -224,8 +234,9 @@ nav .btn {
 
 .btn-add-ex {
     width: 25%;
-    min-width: 80px;
+    min-width: 3.6rem;
     margin-left: 10px;
+    height: 2.5rem;
 }
 
 .remove-rep {
@@ -237,56 +248,13 @@ nav .btn {
     cursor: pointer;
 }
 
-/* Style the navigation menu */
-.topnav {
-    overflow: hidden;
-    background-color: #333;
-    position: relative;
-}
-  
-/* Hide the links inside the navigation menu (except for logo/home) */
-.topnav #myLinks {
-    display: none;
-}
-
-/* Style navigation menu links */
-.topnav a {
-    color: white;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-    display: block;
-}
-
-/* Style the hamburger menu */
-.topnav a.icon {
-    background: black;
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-
-/* Add a grey background color on mouse-over */
-.topnav a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-/* Style the active link (or home/logo) */
-.active {
-    background-color: #04AA6D;
-    color: white;
-}
-
 input[type="text"] {
-    height: 30px;
-    width: -webkit-fill-available;
+    height: 2.5rem;
+    width: 100%;
 }
 
 .input-text {
-    height: 30px;
-    width: -webkit-fill-available;
+    height: 2.5rem;
 }
 
 input[type="password"] {
@@ -451,6 +419,18 @@ input[type="email"] {
     }
   }
 
+@media (max-width: 991px) {
+.dropdown-menu {
+    border: none;
+}
+}
+
+
 .small-text {
     margin-top: 1px
 }
+
+.my-bg {
+    background: var(--boxBackground);
+}
+
