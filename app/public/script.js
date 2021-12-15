@@ -310,26 +310,39 @@ Element.prototype.appendAfter = function (element) {
 
 function addTagAddForm(exName) {
     const boxHeader = document.getElementById('h2-' + exName)
-    console.log('h2-' + exName)
     const newTag = document.createElement('div')
     newTag.innerHTML = `
-    <form method="POST" action=>
-        <input type="text" class="input-text" id="count-${exName}" name="tag-${exName}">
-        <input type="button" class="btn btn-add-ex" value="Dodaj">
+    <form id="tag-add-form-${exName}" method="POST" action=>
+        <input type="text" class="input-text" id="tag-${exName}" name="tag-${exName}">
+        <input type="button" class="btn btn-add-ex" value="Dodaj" id="btn-add-tag-${exName}">
     </form>
     `
     boxHeader.after(newTag)
+}
+
+function removeTagAddForm(exName) {
+    const tagAddForm = document.getElementById("tag-add-form-" + exName)
+    tagAddForm.classList.add('d-none')
 }
 
 function my_func() {
     const addTagButtons = document.getElementsByClassName("add-tag")
     for (let i = 0; i < addTagButtons.length; i++) {
         addTagButtons[i].addEventListener('click', () => {
-            addTagAddForm(addTagButtons[i].getAttribute('data-ex-name'))
+            const exName = addTagButtons[i].getAttribute('data-ex-name')
+            addTagAddForm(exName)
             // remove the button that adds the form
-            addTagButtons[i].remove()
+            addTagButtons[i].classList.add('d-none')
 
-            // add event listener to the added form submission button to remove the button and the form and refresh the page
+            // add event listener to the submit button of the newly create add tag form
+            const btnSubmitAddTagForm = document.getElementById('btn-add-tag-' + exName)
+            btnSubmitAddTagForm.addEventListener('click', () => {
+                removeTagAddForm(exName)
+                addTagButtons[i].classList.remove('d-none')
+            })
+
+            //add the tag add button back
+
 
             // there needs to be functionality added to show many tags for one exercise
         })    
@@ -338,9 +351,9 @@ function my_func() {
 
 
 
-// function getTag() {
+function getTag() {
     
-// }
+}
 
 // function addTag() {
 //     addTagToLocalStorage()
