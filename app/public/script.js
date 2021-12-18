@@ -256,7 +256,7 @@ try {
     // here is the main event listener for the window load
     window.addEventListener('load', () => {
         makeLists()
-        my_func()
+        tagAdding()
     });
 } catch (err) {
     console.log(err)
@@ -325,7 +325,7 @@ function removeTagAddForm(exName) {
     tagAddForm.classList.add('d-none')
 }
 
-function my_func() {
+function tagAdding() {
     const addTagButtons = document.getElementsByClassName("add-tag")
     for (let i = 0; i < addTagButtons.length; i++) {
         addTagButtons[i].addEventListener('click', () => {
@@ -337,6 +337,7 @@ function my_func() {
             // add event listener to the submit button of the newly create add tag form
             const btnSubmitAddTagForm = document.getElementById('btn-add-tag-' + exName)
             btnSubmitAddTagForm.addEventListener('click', () => {
+                addTagToLocalStorage(exName, getNewTagName(exName))
                 removeTagAddForm(exName)
                 addTagButtons[i].classList.remove('d-none')
             })
@@ -349,10 +350,14 @@ function my_func() {
     }
 }
 
+function getNewTagName(exName) {
+    return document.getElementById('tag-' + exName).value
+}
 
-
-function getTag() {
-    
+function addTagToLocalStorage(exName, tagName) {
+    let existingExercise = getExercise(exName)
+    existingExercise.name = [].concat(existingExercise.name).concat(tagName)
+    appendToStorage('exercises', existingExercise)
 }
 
 // function addTag() {
