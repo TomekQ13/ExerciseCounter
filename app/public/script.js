@@ -1,3 +1,86 @@
+function getAllExercisesFromLS() {
+    return JSON.parse(localStorage.getItem('exercises'))
+}
+
+function saveAllExercisesToLS(allExercises) {
+    localStorage.setItem('exercises', JSON.stringify(allExercises))
+}
+
+function getExerciseFromLS(exerciseName) {
+    const allExercises = getAllExercisesFromLS()
+    const exercise = allExercises.find(ex => ex.name === exerciseName)
+    return new Exercise(exercise.name, exercise['tags'], exercise['reps'])
+}
+
+class Exercise {
+    constructor(name, tags=undefined, reps=undefined) {
+        this.name = name
+        this.reps = reps
+        this.tags = tags
+
+    }
+    // the two below setter will save the object to local storage every time there is a change on reps or tags
+    set reps(newValue) {
+        this.reps = value
+        this.saveToLS()
+    }
+
+    set tags(value) {
+        this.tags = newValue
+        this.saveToLS()
+    }
+
+    getFromLS() {
+        // const exercises = getAllExercisesFromLS()
+        const exercise = exercises.find(ex => ex.name === exName)
+        this.reps = exercise['reps']
+        this.tags = exercise['tags']
+        this._loaded = true
+    }
+
+    saveToLS() {
+        // read all exercises from Local Storage
+        let allExercises = getAllExercisesFromLS()
+
+        //find and replace the object for the currently active exercise
+        allExercises.find((ex, i) => {
+            if (ex.name === this.name) {
+                allExercises[i] = {name: this.name, tags: this.tags, reps: this.reps}
+                return true
+            };
+        })
+
+        // save all to Local Storage
+        saveAllExercisesToLS(allExercises)
+    }
+
+    addRep(repValue) {
+        // add rep to the class
+        this.reps.push(repValue)
+
+        // add the rep to 
+        addRepToHTML(input.value, exName)
+    }
+
+    addRepToHTML(repValue) {
+        repHTML = `
+        <li>
+            <p class="list-item">${repValue}</p>
+            <div class="icons">
+                <i class="arrow arrow-up" onclick="moveEx('abcd', 2, true)"></i>
+                <i class="arrow arrow-down" onclick="moveEx('abcd', 2)"></i>
+                <span class="close remove-rep" onclick="deleteRepetition('abcd', 2)">×</span>
+            </div>
+        </li>
+        
+        
+        `
+    }
+
+
+}
+
+
 function newExHTML(exName) {
     if (exName === undefined) {return};
     const main = document.getElementsByTagName("main")[0];
