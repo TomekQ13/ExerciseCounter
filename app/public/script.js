@@ -1,3 +1,5 @@
+'user strict';
+
 function getAllExercisesFromLS() {
     return JSON.parse(localStorage.getItem('exercises'))
 }
@@ -59,22 +61,33 @@ class Exercise {
         this.reps.push(repValue)
 
         // add the rep to 
-        addRepToHTML(input.value, exName)
+        addRepToHTML(repValue)
     }
 
     addRepToHTML(repValue) {
+        const repList = document.getElementById('list-' + exName);
         repHTML = `
-        <li>
             <p class="list-item">${repValue}</p>
             <div class="icons">
                 <i class="arrow arrow-up" onclick="moveEx('abcd', 2, true)"></i>
                 <i class="arrow arrow-down" onclick="moveEx('abcd', 2)"></i>
                 <span class="close remove-rep" onclick="deleteRepetition('abcd', 2)">×</span>
-            </div>
-        </li>
-        
-        
+            </div>      
         `
+        let li = document.createElement('li')
+        li.innerHTML = repHTML
+        repList.appendChild(li)
+    }
+
+    deleteRep(repIndex) {
+        this.reps[i].splice(repIndex, 1);
+        // remove list from HTML
+        deleteRepFromHTML(repIndex)
+    }
+
+    deleteRepFromHTML(repIndex) {
+        const repList = document.getElementById('list-' + exName)
+        repList.removeChild(repList.childNodes[repIndex])
     }
 
 
