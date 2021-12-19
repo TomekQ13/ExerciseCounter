@@ -37,16 +37,20 @@ function appendToStorage(key, value) {
     localStorage.setItem(key, JSON.stringify(existingData));
 };
 
+function arraysEqual(a1,a2) {
+    return JSON.stringify(a1)==JSON.stringify(a2);
+}
+
 function getExercise(exName) {
     const exercises = JSON.parse(localStorage.getItem('exercises'));
-    const exercise = exercises.find(ex => ex.name === exName);
+    const exercise = exercises.find(ex => arraysEqual(exName, ex.name));
     return exercise;
 };
 
 function appendToCounter(exName, value=undefined, reset=false) {
     // replaces an exercise in the local storage
     if (value == undefined && reset == false) {
-        throw 'appendToCounter function requires either value to be specified or reset true.'
+        throw 'appendToCounter function requires value to be specified or reset true.'
     };
 
     var existingData = getExercise(exName).count; 
@@ -58,8 +62,8 @@ function appendToCounter(exName, value=undefined, reset=false) {
     var exercises = JSON.parse(localStorage.exercises);
 
     exercises.find((ex, i) => {
-        if (ex.name === exName) {
-            exercises[i] = {name: exName, count: existingData};
+        if (ex.name === exName || ex.name.includes(exName)) {
+            exercises[i] = {name: [exName], count: existingData};
             return true;
         };
     });
@@ -74,8 +78,8 @@ function newEx() {
     const exName = document.getElementById("newExName");
     if (exName.value.length == 0) {return};
 
-    exercise = {
-        name: exName.value,
+    let exercise = {
+        name: [exName.value],
         count: []
     };
     appendToStorage('exercises', exercise)
@@ -129,20 +133,18 @@ function appendToListHTML(element, exName) {
 };
 
 function makeList(exName) {
-    const existingData = getExercise(exName).count;
-    if (existingData == null ) {return};
-    if (existingData.length == 0 ) {return};
+    const existingCount = getExercise(exName).count;
+    if (!existingCount) {return};
 
     var ol = document.getElementById('list-' + exName);
-    
-    existingData.forEach(element => {
+    existingCount.forEach(element => {
         appendToListHTML(element, exName);
     });
 };
 
 function makeLists() {
     const  exercises = JSON.parse(localStorage.exercises);
-    for (var i in exercises) {
+    for (let i in exercises) {
         newExHTML(exercises[i].name);
     };
 };
