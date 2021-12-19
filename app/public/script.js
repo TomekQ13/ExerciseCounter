@@ -352,12 +352,17 @@ function tagAdding() {
     }
 }
 
+function ensureIsArray(value) {
+    if (typeof value == 'array') return value
+    return [value]
+}
+
 function getNewTagName(exName) {
     return document.getElementById('tag-' + exName).value
 }
 
 function addTagToLocalStorage(exName, tagName) {
-    let existingExercise = getExercise(exName)
+    let existingExercise = getExercise(ensureIsArray(exName))
     existingExercise.name = [].concat(existingExercise.name).concat(tagName)
     appendToStorage('exercises', existingExercise)
 }
