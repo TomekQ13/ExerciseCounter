@@ -88,7 +88,12 @@ form {
     bottom: 0;
     width: 50%;
     text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
     max-width: 500px;
+    min-height: 40px;
 }
 
 .message-error {
@@ -150,11 +155,11 @@ form {
     align-items: flex-end;
 }
 
-.box-title {
-    margin: 0px 0px 15px 0px;
+/* .box-title {
+    margin: 0px 0px 0px 0px;
     display: flex;
     justify-content: center;
-}
+} */
 
 /* .btn {
     font-size: 1rem;
@@ -386,17 +391,9 @@ input[type="email"] {
     margin-bottom: 5px;
 }
 
-.icons {
-    display: inline;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-
 .list-item {
-    margin: 0px 0px 0px 0px;
     overflow-wrap: break-word;
-    width: 75%
+    min-width: 0%;
 }
 
 #btnSaveTraining {
@@ -433,4 +430,8 @@ input[type="email"] {
     right: 0;
     bottom: 0;
     z-index: 1030;
+}
+
+.icon {
+    margin-left: 5px;
 }

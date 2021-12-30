@@ -66,14 +66,7 @@ class Exercise {
 
     addRepToHTML(repValue) {
         const repList = document.getElementById('list-' + exName);
-        repHTML = `
-            <p class="list-item">${repValue}</p>
-            <div class="icons">
-                <i class="arrow arrow-up" onclick="moveEx('abcd', 2, true)"></i>
-                <i class="arrow arrow-down" onclick="moveEx('abcd', 2)"></i>
-                <span class="close remove-rep" onclick="deleteRepetition('abcd', 2)">×</span>
-            </div>      
-        `
+
         let li = document.createElement('li')
         li.innerHTML = repHTML
         repList.appendChild(li)
@@ -101,19 +94,23 @@ function newExHTML(exName) {
     main.appendChild(exBox);
     exBox.className = 'exercise-box';
     exBox.innerHTML = `
-            <header>
-                <h2 class="box-title">${exName}</h2>
-            </header>
-            <div class='adding-menu'>
-                <form class="add-repetitions-form">
-                    <input type="text" class="input-text" id="count-${exName}" name="count-${exName}">
-                    <input type="button" class="btn btn-primary ms-2" value="Dodaj" onclick="saveData('${exName}')">
-                </form>
-            </div>
-            <div id="stored-list" class="stored-list">
-                <ol id="list-${exName}"></ol>
-            </div>
-                <button id='delete-exercise-${exName}' class='btn btn-outline-danger' onclick="deleteExercise('${exName}')">Usuń ćwiczenie</button> 
+        <header class="d-flex flex-row justify-content-between mb-2">
+            <h2 class="box-title">${exName}</h2>
+            <button id='delete-exercise-${exName}' class='btn btn-outline-danger' onclick="deleteExercise('${exName}')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                </svg> 
+            </button> 
+        </header>
+        <div class='adding-menu'>
+            <form class="add-repetitions-form">
+                <input type="text" class="input-text" id="count-${exName}" name="count-${exName}">
+                <input type="button" class="btn btn-primary ms-2" value="Dodaj" onclick="saveData('${exName}')">
+            </form>
+        </div>
+        <div id="stored-list" class="stored-list">
+            <ol id="list-${exName}"></ol>
+        </div>
     `;
     // makeList is called to fill out the content if some exists
     // called to enable to use this also on load of the site
@@ -180,6 +177,7 @@ function saveData(exName) {
 
     appendToCounter(exName, input.value);
     appendToListHTML(input.value, exName);
+    
 };
 
 function appendToListHTML(element, exName) {
@@ -187,34 +185,32 @@ function appendToListHTML(element, exName) {
 
     var ol = document.getElementById('list-' + exName);
     var li = document.createElement('li');
+    li.innerHTML =`
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <div class="list-item">
+                ${element}
+            </div>
+            <div class="d-flex flex-row justify-content-center">
+                <div onclick="moveEx('abcd', 2, true)" class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+                    </svg>
+                </div>
+                <div onclick="moveEx('abcd', 2)" class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+                    </svg>        
+                </div>
+                <div onclick="deleteRepetition('abcd', 2)" class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-x" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                </svg> 
+                </div>
+            </div>  
+        </div>    
+    `
     ol.appendChild(li);
-    // li.innerHTML += element;
-    var p = document.createElement('p')
-    p.className = 'list-item'
-    li.appendChild(p)
-    p.innerHTML=element
 
-    const rep_index = ol.children.length - 1
-    var icons = document.createElement('div')
-    icons.className = 'icons'    
-
-    var arrow_up = document.createElement('i');
-    arrow_up.className = 'arrow arrow-up';
-    arrow_up.setAttribute('onclick', `moveEx('${exName}', ${rep_index}, true)`);
-    icons.appendChild(arrow_up);
-
-    var arrow_down = document.createElement('i');
-    arrow_down.className = 'arrow arrow-down';
-    arrow_down.setAttribute('onclick', `moveEx('${exName}', ${rep_index})`);
-    icons.appendChild(arrow_down);
-
-    var span = document.createElement('span');
-    span.innerHTML = '&times;';
-    span.className = 'close remove-rep';
-    span.setAttribute('onclick', `deleteRepetition('${exName}', ${rep_index})`);
-    // span.onclick = `deleteRepetition('${exName}', ${rep_index})`;
-    icons.appendChild(span);
-    li.appendChild(icons)
 };
 
 function makeList(exName) {
