@@ -344,6 +344,7 @@ try {
         makeLists()
         addELToArrows()
         addELToDeleteRep()
+        removeButtonContentsOnSmallScreens()
 
     });
 } catch (err) {
@@ -422,3 +423,16 @@ function addELToDeleteRep() {
     }
 }
 
+function removeButtonContentsOnSmallScreens() {
+    let mediaQuery = '(max-width: 767px)'
+    let mql = window.matchMedia(mediaQuery).matches;
+    function removeText(elementId) {
+        let element = document.getElementById(elementId)
+        console.log(element.childNodes)
+        element.removeChild(element.childNodes[2])
+    }
+    if (mql) {
+        removeText("btnAddExercise")
+        removeText("btnSaveTraining")
+    }
+}

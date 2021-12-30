@@ -397,13 +397,13 @@ input[type="email"] {
     min-width: 0%;
 }
 
-#btnSaveTraining {
+/* #btnSaveTraining {
     margin-top: 20px;
     margin-bottom: 10px;
     width: 50%;
     min-width: 150px;
     max-width: 250px;
-}
+} */
 
 @media (max-height: 500px) {
     #btnAddExercise {
@@ -426,10 +426,12 @@ input[type="email"] {
     background: var(--boxBackground);
 }
 
-.right-fixed-bottom {
+#btnSaveTraining {
     position: fixed;
     right: 0;
     bottom: 0;
+    margin-right: 2rem;
+    margin-bottom: 2rem;
     z-index: 1030;
 }
 
