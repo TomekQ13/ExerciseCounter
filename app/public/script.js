@@ -107,13 +107,13 @@ function newExHTML(exName) {
             <div class='adding-menu'>
                 <form class="add-repetitions-form">
                     <input type="text" class="input-text" id="count-${exName}" name="count-${exName}">
-                    <input type="button" class="btn btn-add-ex" value="Dodaj" onclick="saveData('${exName}')">
+                    <input type="button" class="btn btn-primary ms-2" value="Dodaj" onclick="saveData('${exName}')">
                 </form>
             </div>
             <div id="stored-list" class="stored-list">
                 <ol id="list-${exName}"></ol>
             </div>
-                <button id='delete-exercise-${exName}' class='btn btn-delete' onclick="deleteExercise('${exName}')">Usuń ćwiczenie</button> 
+                <button id='delete-exercise-${exName}' class='btn btn-outline-danger' onclick="deleteExercise('${exName}')">Usuń ćwiczenie</button> 
     `;
     // makeList is called to fill out the content if some exists
     // called to enable to use this also on load of the site

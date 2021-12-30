@@ -68,11 +68,11 @@ form {
     flex-direction: column;
 }
 
-nav .btn {
+/* nav .btn {
     margin-left: 0.5vw;
     margin-right: 0.5vw;
     text-decoration: none;
-}
+} */
 
 .message {
     border: 1px solid;
@@ -156,7 +156,7 @@ nav .btn {
     justify-content: center;
 }
 
-.btn {
+/* .btn {
     font-size: 1rem;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
@@ -166,12 +166,12 @@ nav .btn {
     color: var(--background);
     padding: 0.6rem 0.5rem 0.6rem 0.5rem;
     text-align: center;
-}
+} */
 
-.btn:hover {
+/* .btn:hover {
     background-color: var(--button-hover);
     cursor: pointer;
-}
+} */
 
 .modal {
     display: none; /* Hidden by default */
@@ -217,10 +217,10 @@ nav .btn {
       width: 100%;
   }
 
-.btn-delete {
+/* .btn-delete {
     width: 100%;
     min-width: 100px;
-}
+} */
 
 .add-repetitions-form {
     width: 100%;
@@ -228,7 +228,7 @@ nav .btn {
     flex-direction: row;
 }
 
-.btn-count {
+/* .btn-count {
     width: 75%;
 }
 
@@ -237,7 +237,7 @@ nav .btn {
     min-width: 3.6rem;
     margin-left: 10px;
     height: 2.5rem;
-}
+} */
 
 .remove-rep {
     position: relative;
@@ -398,12 +398,6 @@ input[type="email"] {
     overflow-wrap: break-word;
     width: 75%
 }
-
-#btnAddExercise {
-      width: 100%;
-      height: 80px;
-      font-size: 2rem;
-  }
 
 #btnSaveTraining {
     margin-top: 20px;
