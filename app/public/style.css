@@ -85,7 +85,7 @@ form {
     box-shadow: var(--boxShadow);
     background-color: #ffffff;
     position: fixed;
-    top: 0;
+    bottom: 0;
     width: 50%;
     text-align: center;
     max-width: 500px;
@@ -249,11 +249,11 @@ form {
 }
 
 input[type="text"] {
-    height: 2.5rem;
+    /* height: 2.5rem; */
     width: 100%;
 }
 
-.input-text {
+/* .input-text {
     height: 2.5rem;
 }
 
@@ -263,7 +263,7 @@ input[type="password"] {
 
 input[type="email"] {
     height: 30px;
-}
+} */
 
 
 .show {
@@ -428,3 +428,9 @@ input[type="email"] {
     background: var(--boxBackground);
 }
 
+.right-fixed-bottom {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: 1030;
+}
