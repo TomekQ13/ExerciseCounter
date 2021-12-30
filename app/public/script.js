@@ -311,7 +311,7 @@ try {
 };
 var modalSaveTraining = document.getElementById("modalSaveTraining");
 var btnSaveTraining = document.getElementById("btnSaveTraining");
-var spanSaveTrainingClose = document.getElementById("modalSaveTrainingClose");
+var btnSaveTrainingClose = document.getElementById("modalSaveTrainingClose");
 const modalBtnSaveTraining = document.getElementById("modalBtnSaveTraining");
 
 if (btnSaveTraining != null) {
@@ -326,7 +326,7 @@ if (btnSaveTraining != null) {
     });
 };
 try {
-    spanSaveTrainingClose.addEventListener('click', () => {
+    btnSaveTrainingClose.addEventListener('click', () => {
         modalSaveTraining.style.display = "none";
     });
 
