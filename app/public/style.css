@@ -29,13 +29,13 @@ h1 {
     color: var(--mainBlack);
     font-size: 2.5rem;
 }
-
+/* 
 h2 {
     color: black;
     font-size: 1.5rem;
     margin-bottom: 5px;
     margin-top: 0px;
-}
+} */
 
 .form-title {
     margin-bottom: 10px;
@@ -51,6 +51,7 @@ span {
 
 ol {
     font-size: 1.5rem;
+    margin-bottom: 0;
 }
 
 li {
@@ -68,11 +69,11 @@ form {
     flex-direction: column;
 }
 
-nav .btn {
+/* nav .btn {
     margin-left: 0.5vw;
     margin-right: 0.5vw;
     text-decoration: none;
-}
+} */
 
 .message {
     border: 1px solid;
@@ -85,10 +86,15 @@ nav .btn {
     box-shadow: var(--boxShadow);
     background-color: #ffffff;
     position: fixed;
-    top: 0;
+    bottom: 0;
     width: 50%;
     text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
     max-width: 500px;
+    min-height: 40px;
 }
 
 .message-error {
@@ -119,7 +125,7 @@ nav .btn {
 .exercise-box {
     color: black;
     background-color: var(--boxBackground);
-    padding: 1rem 2rem 2rem 2rem;
+    padding: 1.5rem 2rem 1rem 2rem;
     width: 80%;
     margin: 0.5rem 1rem 1rem 1rem;
     height: fit-content;
@@ -150,13 +156,13 @@ nav .btn {
     align-items: flex-end;
 }
 
-.box-title {
-    margin: 0px 0px 15px 0px;
+/* .box-title {
+    margin: 0px 0px 0px 0px;
     display: flex;
     justify-content: center;
-}
+} */
 
-.btn {
+/* .btn {
     font-size: 1rem;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
@@ -166,12 +172,12 @@ nav .btn {
     color: var(--background);
     padding: 0.6rem 0.5rem 0.6rem 0.5rem;
     text-align: center;
-}
+} */
 
-.btn:hover {
+/* .btn:hover {
     background-color: var(--button-hover);
     cursor: pointer;
-}
+} */
 
 .modal {
     display: none; /* Hidden by default */
@@ -217,10 +223,10 @@ nav .btn {
       width: 100%;
   }
 
-.btn-delete {
+/* .btn-delete {
     width: 100%;
     min-width: 100px;
-}
+} */
 
 .add-repetitions-form {
     width: 100%;
@@ -228,7 +234,7 @@ nav .btn {
     flex-direction: row;
 }
 
-.btn-count {
+/* .btn-count {
     width: 75%;
 }
 
@@ -237,7 +243,7 @@ nav .btn {
     min-width: 3.6rem;
     margin-left: 10px;
     height: 2.5rem;
-}
+} */
 
 .remove-rep {
     position: relative;
@@ -249,11 +255,11 @@ nav .btn {
 }
 
 input[type="text"] {
-    height: 2.5rem;
+    /* height: 2.5rem; */
     width: 100%;
 }
 
-.input-text {
+/* .input-text {
     height: 2.5rem;
 }
 
@@ -263,7 +269,7 @@ input[type="password"] {
 
 input[type="email"] {
     height: 30px;
-}
+} */
 
 
 .show {
@@ -386,32 +392,18 @@ input[type="email"] {
     margin-bottom: 5px;
 }
 
-.icons {
-    display: inline;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-
 .list-item {
-    margin: 0px 0px 0px 0px;
     overflow-wrap: break-word;
-    width: 75%
+    min-width: 0%;
 }
 
-#btnAddExercise {
-      width: 100%;
-      height: 80px;
-      font-size: 2rem;
-  }
-
-#btnSaveTraining {
+/* #btnSaveTraining {
     margin-top: 20px;
     margin-bottom: 10px;
     width: 50%;
     min-width: 150px;
     max-width: 250px;
-}
+} */
 
 @media (max-height: 500px) {
     #btnAddExercise {
@@ -434,3 +426,16 @@ input[type="email"] {
     background: var(--boxBackground);
 }
 
+#btnSaveTraining {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    margin-right: 2rem;
+    margin-bottom: 2rem;
+    z-index: 1030;
+}
+
+.icon {
+    margin-left: 5px;
+    cursor: pointer;
+}
