@@ -11,11 +11,15 @@
 <%- include('./partials/modalAddEx.ejs') %>
 <div id="modalSaveTraining" class="modal">
     <div class="modal-content">
-        <span class="close" id="modalSaveTrainingClose">&times;</span>
         <form>
             <label for="newTrainingName">Nazwa treningu</label>
             <input type="text" class="" id="newTrainingName" name="newTrainingName">
-            <input type="button" id="modalBtnSaveTraining" class="btn btn-primary" value="Zapisz">
+            <div class="d-flex flex-row justify-content-end mt-2">
+                <input type="button" id="modalBtnSaveTraining" class="btn btn-primary me-2" value="Zapisz">
+                <button class='btn btn-outline-danger btn-sm' id="modalSaveTrainingClose">
+                    Anuluj
+                </button> 
+            </div>
         </form>
     </div>
 </div>
