@@ -1,4 +1,4 @@
-'user strict';
+// "use strict";
 
 function getAllExercisesFromLS() {
     return JSON.parse(localStorage.getItem('exercises'))
@@ -181,27 +181,28 @@ function saveData(exName) {
 };
 
 function appendToListHTML(element, exName) {
-    if (element.length == 0) {return};
+    if (element.length == 0) {return}
 
-    var ol = document.getElementById('list-' + exName);
-    var li = document.createElement('li');
+    var ol = document.getElementById('list-' + exName)
+    var li = document.createElement('li')
+    const repIndex = ol.children.length
     li.innerHTML =`
         <div class="d-flex flex-row justify-content-between align-items-center">
             <div class="list-item">
                 ${element}
             </div>
             <div class="d-flex flex-row justify-content-center">
-                <div onclick="moveEx('abcd', 2, true)" class="icon">
+                <div class="icon rep-place-change" my-exName="${exName}" my-repIndex="${repIndex}" my-up="true">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
                     </svg>
                 </div>
-                <div onclick="moveEx('abcd', 2)" class="icon">
+                <div class="icon rep-place-change" my-exName="${exName}" my-repIndex="${repIndex}" my-up="false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
                     </svg>        
                 </div>
-                <div onclick="deleteRepetition('abcd', 2)" class="icon">
+                <div class="icon rep-delete" my-exName="${exName}" my-repIndex="${repIndex}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-x" viewBox="0 0 16 16">
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                 </svg> 
@@ -338,7 +339,13 @@ try {
         };
               
     });
-    window.addEventListener('load', makeLists);
+    // the main listener for the page load
+    window.addEventListener('load', () => {
+        makeLists()
+        addELToArrows()
+        addELToDeleteRep()
+
+    });
 } catch (err) {
     console.log(err)
 };
@@ -359,13 +366,13 @@ function arraymove(arr, fromIndex, toIndex) {
     arr.splice(toIndex, 0, element);
 }
 
-function moveEx(exName, exIndex, up) {
+function moveEx(exName, repIndex, up) {
     var existingData = JSON.parse(localStorage.getItem('exercises'));
-    const index = existingData.findIndex(el => el.name === exName);
-    if (up && exIndex > 0) {
-        arraymove(existingData[index].count, exIndex, exIndex - 1);     
-    } else if (!up && index < existingData[index].count.length) {
-        arraymove(existingData[index].count, exIndex, exIndex + 1); 
+    const exIndex = existingData.findIndex(el => el.name === exName);
+    if (up && repIndex > 0) {
+        arraymove(existingData[exIndex].count, repIndex, repIndex - 1);     
+    } else if (!up && exIndex < existingData[exIndex].count.length) {
+        arraymove(existingData[exIndex].count, repIndex, repIndex + 1); 
     }    
 
     localStorage.setItem('exercises', JSON.stringify(existingData));
@@ -396,3 +403,22 @@ function myFunction() {
       x.style.display = "block";
     }
   }
+
+function addELToArrows() {
+    const arrows = document.getElementsByClassName('rep-place-change')
+    for (let i=0; i<arrows.length; i++) {
+        arrows[i].addEventListener('click', () => {
+            moveEx(arrows[i].getAttribute('my-exname'), Number(arrows[i].getAttribute('my-repindex')), (arrows[i].getAttribute('my-up') === 'true'))
+        })
+    }
+}
+
+function addELToDeleteRep() {
+    const deleteRepButton = document.getElementsByClassName('rep-delete')
+    for (let i=0; i<deleteRepButton.length; i++) {
+        deleteRepButton[i].addEventListener('click', () => {
+            deleteRepetition(deleteRepButton[i].getAttribute('my-exname'), Number(deleteRepButton[i].getAttribute('my-repindex')))
+        })
+    }
+}
+
