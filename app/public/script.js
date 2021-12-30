@@ -94,15 +94,15 @@ function newExHTML(exName) {
     main.appendChild(exBox);
     exBox.className = 'exercise-box';
     exBox.innerHTML = `
-        <header class="d-flex flex-row justify-content-between mb-2">
+        <header class="d-flex flex-row justify-content-between mb-3">
             <h2 class="box-title">${exName}</h2>
-            <button id='delete-exercise-${exName}' class='btn btn-outline-danger' onclick="deleteExercise('${exName}')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+            <button id='delete-exercise-${exName}' class='btn btn-outline-danger btn-sm' onclick="deleteExercise('${exName}')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                 </svg> 
             </button> 
         </header>
-        <div class='adding-menu'>
+        <div class='adding-menu mb-2'>
             <form class="add-repetitions-form">
                 <input type="text" class="input-text" id="count-${exName}" name="count-${exName}">
                 <input type="button" class="btn btn-primary ms-2" value="Dodaj" onclick="saveData('${exName}')">
