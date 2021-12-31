@@ -344,7 +344,7 @@ try {
         makeLists()
         addELToArrows()
         addELToDeleteRep()
-        removeButtonContentsOnSmallScreens()
+        mobileScreenAdjustements()
 
     });
 } catch (err) {
@@ -396,14 +396,14 @@ var cookieConsent = new CookieConsent({privacyPolicyUrl: "/privacy-policy.html"}
 
 
 /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
-function myFunction() {
-    var x = document.getElementById("myLinks");
-    if (x.style.display === "block") {
-      x.style.display = "none";
-    } else {
-      x.style.display = "block";
-    }
-  }
+// function myFunction() {
+//     var x = document.getElementById("myLinks");
+//     if (x.style.display === "block") {
+//       x.style.display = "none";
+//     } else {
+//       x.style.display = "block";
+//     }
+//   }
 
 function addELToArrows() {
     const arrows = document.getElementsByClassName('rep-place-change')
@@ -423,16 +423,27 @@ function addELToDeleteRep() {
     }
 }
 
+function mobileScreenAdjustements() {
+    let mediaQuery = '(max-width: 991px)'
+    let mql = window.matchMedia(mediaQuery).matches
+    if (mql) {
+        removeButtonContentsOnSmallScreens()
+        moveAddExerciseButton()
+    }
+}
+
 function removeButtonContentsOnSmallScreens() {
-    let mediaQuery = '(max-width: 767px)'
-    let mql = window.matchMedia(mediaQuery).matches;
     function removeText(elementId) {
         let element = document.getElementById(elementId)
         console.log(element.childNodes)
         element.removeChild(element.childNodes[2])
     }
-    if (mql) {
-        removeText("btnAddExercise")
-        removeText("btnSaveTraining")
-    }
+    removeText("btnAddExercise")
+    removeText("btnSaveTraining")
+}
+
+function moveAddExerciseButton() {
+    let liExistingButton = document.getElementById('liBtnAddExercise')
+    liExistingButton.remove()
+    document.getElementById('btn-group-right').prepend(liExistingButton.childNodes[1])    
 }
