@@ -159,6 +159,7 @@ function appendToCounter(exName, value=undefined, reset=false) {
 function newEx() {
     const exName = document.getElementById("newExName");
     if (exName.value.length == 0) {return};
+    if (getExercise(exName.value)) {return};
 
     exercise = {
         name: exName.value,
