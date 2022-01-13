@@ -5,10 +5,7 @@ const Weight = new mongoose.Schema({
         type: String,
         required: true
     },
-    weights: {
-        type: Array,
-        required: true
-    }
+    weights: [{added_dttm: Date, value: Number}]
 });
-
+ 
 module.exports = mongoose.model('weights', Weight)

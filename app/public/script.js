@@ -11,31 +11,30 @@ function saveAllExercisesToLS(allExercises) {
 function getExerciseFromLS(exerciseName) {
     const allExercises = getAllExercisesFromLS()
     const exercise = allExercises.find(ex => ex.name === exerciseName)
-    return new Exercise(exercise.name, exercise['tags'], exercise['reps'])
+    if (!exercise) {return undefined}
+    return new Exercise(exercise.name, exercise['tags'], exercise['count'])
 }
 
 class Exercise {
-    constructor(name, tags=undefined, reps=undefined) {
+    constructor(name, tags=undefined, count=undefined) {
         this.name = name
-        this.reps = reps
+        this.count = count
         this.tags = tags
 
     }
     // the two below setter will save the object to local storage every time there is a change on reps or tags
-    set reps(newValue) {
-        this.reps = value
-        this.saveToLS()
-    }
+    // set reps(newValue) {
+    //     this.saveToLS()
+    // }
 
-    set tags(value) {
-        this.tags = newValue
-        this.saveToLS()
-    }
+    // set tags(newValue) {
+    //     this.saveToLS()
+    // }
 
     getFromLS() {
-        // const exercises = getAllExercisesFromLS()
+        const exercises = getAllExercisesFromLS()
         const exercise = exercises.find(ex => ex.name === exName)
-        this.reps = exercise['reps']
+        this.count = exercise['count']
         this.tags = exercise['tags']
         this._loaded = true
     }
@@ -43,22 +42,24 @@ class Exercise {
     saveToLS() {
         // read all exercises from Local Storage
         let allExercises = getAllExercisesFromLS()
-
-        //find and replace the object for the currently active exercise
+        // find existing one and update
         allExercises.find((ex, i) => {
             if (ex.name === this.name) {
-                allExercises[i] = {name: this.name, tags: this.tags, reps: this.reps}
+                allExercises[i] = {name: this.name, tags: this.tags, count: this.count}
                 return true
             };
         })
-
+        // create a new exercise in LS
+        console.log(allExercises)
+        console.log('adding')
+        allExercises.push({name: this.name, tags: this.tags, count: []}) 
         // save all to Local Storage
         saveAllExercisesToLS(allExercises)
     }
 
     addRep(repValue) {
         // add rep to the class
-        this.reps.push(repValue)
+        this.count.push(repValue)
 
         // add the rep to 
         addRepToHTML(repValue)
@@ -68,12 +69,12 @@ class Exercise {
         const repList = document.getElementById('list-' + exName);
 
         let li = document.createElement('li')
-        li.innerHTML = repHTML
+        li.innerHTML = repValue
         repList.appendChild(li)
     }
 
     deleteRep(repIndex) {
-        this.reps[i].splice(repIndex, 1);
+        this.count[i].splice(repIndex, 1);
         // remove list from HTML
         deleteRepFromHTML(repIndex)
     }
@@ -83,7 +84,32 @@ class Exercise {
         repList.removeChild(repList.childNodes[repIndex])
     }
 
-
+    addExerciseToHTML() {
+        if (this.name === undefined) {return};
+        const main = document.getElementsByTagName("main")[0];
+        let exBox = document.createElement('div');
+        main.appendChild(exBox);
+        exBox.className = 'exercise-box';
+        exBox.innerHTML = `
+            <header class="d-flex flex-row justify-content-between mb-3">
+                <h2 class="box-title">${this.name}</h2>
+                <button id='delete-exercise-${this.name}' class='btn btn-outline-danger btn-sm' onclick="deleteExercise('${this.name}')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                    </svg> 
+                </button> 
+            </header>
+            <div class='adding-menu mb-2'>
+                <form class="add-repetitions-form">
+                    <input type="text" class="input-text" id="count-${this.name}" name="count-${this.name}">
+                    <input type="button" class="btn btn-primary ms-2" value="Dodaj" onclick="saveData('${this.name}')">
+                </form>
+            </div>
+            <div id="stored-list" class="stored-list">
+                <ol id="list-${this.name}"></ol>
+            </div>
+        `;
+    }
 }
 
 
@@ -304,7 +330,11 @@ try {
     });
 
     modalBtnAddExercise.addEventListener('click', () => {
-        newEx();
+        // newEx();
+        const exName = document.getElementById("newExName")
+        const newEx = new Exercise(exName.value)
+        newEx.addExerciseToHTML()
+        newEx.saveToLS()
         modalNewExercise.style.display = "none";
     })
 } catch (err) {
