@@ -18,18 +18,9 @@ function getExerciseFromLS(exerciseName) {
 class Exercise {
     constructor(name, tags=undefined, count=undefined) {
         this.name = name
-        this.count = count
+        this.count = count || []
         this.tags = tags
-
     }
-    // the two below setter will save the object to local storage every time there is a change on reps or tags
-    // set reps(newValue) {
-    //     this.saveToLS()
-    // }
-
-    // set tags(newValue) {
-    //     this.saveToLS()
-    // }
 
     getFromLS() {
         const exercises = getAllExercisesFromLS()
@@ -57,19 +48,62 @@ class Exercise {
         saveAllExercisesToLS(allExercises)
     }
 
+    deleteExercise() {
+        let allExercises = getAllExercisesFromLS()
+        allExercises.find((ex, i) => {
+            if (ex.name === this.name) {
+                allExercises.splice(i, 1)
+                return true
+            };
+        })
+        saveAllExercisesToLS(allExercises)
+    }
+
+    addEventListenerToDeleteExercise() {
+        const btnDeleteExercise = document.getElementById(`btn-delete-exercise-${this.name}`)
+        btnDeleteExercise.addEventListener('click', () => {
+            this.deleteExercise()
+            window.location.reload()
+        })        
+    }
+
     addRep(repValue) {
         // add rep to the class
         this.count.push(repValue)
 
-        // add the rep to 
-        addRepToHTML(repValue)
+        // add the rep to HTMl
+        this.addRepToHTML(repValue)
     }
 
     addRepToHTML(repValue) {
-        const repList = document.getElementById('list-' + exName);
-
+        const repList = document.getElementById('list-' + this.name);
+        let ol = document.getElementById('list-' + this.name)
         let li = document.createElement('li')
-        li.innerHTML = repValue
+        const repIndex = ol.children.length
+        li.innerHTML = `
+            <div class="d-flex flex-row justify-content-between align-items-center">
+                <div class="list-item">
+                    ${repValue}
+                </div>
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="icon rep-place-change" my-exName="${this.name}" my-repIndex="${repIndex}" my-up="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+                        </svg>
+                    </div>
+                    <div class="icon rep-place-change" my-exName="${this.name}" my-repIndex="${repIndex}" my-up="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+                        </svg>        
+                    </div>
+                    <div class="icon rep-delete" my-exName="${this.name}" my-repIndex="${repIndex}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-x" viewBox="0 0 16 16">
+                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                    </svg> 
+                    </div>
+                </div>  
+            </div>    
+        `
         repList.appendChild(li)
     }
 
@@ -80,9 +114,23 @@ class Exercise {
     }
 
     deleteRepFromHTML(repIndex) {
-        const repList = document.getElementById('list-' + exName)
+        const repList = document.getElementById('list-' + this.name)
         repList.removeChild(repList.childNodes[repIndex])
     }
+
+    addEventListenerToAddRep() {
+        const btnAddRep = document.getElementById(`btn-add-rep-${this.name}`)
+        btnAddRep.addEventListener('click', () => {
+            const repValue = document.getElementById(`rep-value-${this.name}`).value
+            this.addRep(repValue)
+        })
+    }
+
+    addEventListenersToDeleteAndMoveReps(){
+
+    }
+
+
 
     addExerciseToHTML() {
         if (this.name === undefined) {return};
@@ -93,7 +141,7 @@ class Exercise {
         exBox.innerHTML = `
             <header class="d-flex flex-row justify-content-between mb-3">
                 <h2 class="box-title">${this.name}</h2>
-                <button id='delete-exercise-${this.name}' class='btn btn-outline-danger btn-sm' onclick="deleteExercise('${this.name}')">
+                <button class='btn btn-outline-danger btn-sm' id="btn-delete-exercise-${this.name}" my-exname="${this.name}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                     </svg> 
@@ -101,8 +149,8 @@ class Exercise {
             </header>
             <div class='adding-menu mb-2'>
                 <form class="add-repetitions-form">
-                    <input type="text" class="input-text" id="count-${this.name}" name="count-${this.name}">
-                    <input type="button" class="btn btn-primary ms-2" value="Dodaj" onclick="saveData('${this.name}')">
+                    <input type="text" class="input-text" id="rep-value-${this.name}" name="count-${this.name}">
+                    <input type="button" class="btn btn-primary ms-2" value="Dodaj" id="btn-add-rep-${this.name}">
                 </form>
             </div>
             <div id="stored-list" class="stored-list">
@@ -334,6 +382,8 @@ try {
         const exName = document.getElementById("newExName")
         const newEx = new Exercise(exName.value)
         newEx.addExerciseToHTML()
+        newEx.addEventListenerToDeleteExercise()
+        newEx.addEventListenerToAddRep()
         newEx.saveToLS()
         modalNewExercise.style.display = "none";
     })
