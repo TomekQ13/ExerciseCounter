@@ -48,6 +48,12 @@ class Exercise {
         saveAllExercisesToLS(allExercises)
     }
 
+    addToHTML() {
+        this.addExerciseToHTML()
+        this.addEventListenerToAddRep()
+        this.addEventListenerToDeleteExercise()
+    }
+
     deleteExercise() {
         let allExercises = getAllExercisesFromLS()
         allExercises.find((ex, i) => {
@@ -73,6 +79,7 @@ class Exercise {
 
         // add the rep to HTMl
         this.addRepToHTML(repValue)
+        this.addEventListenersToDeleteAndMoveReps()
     }
 
     addRepToHTML(repValue) {
@@ -86,23 +93,23 @@ class Exercise {
                     ${repValue}
                 </div>
                 <div class="d-flex flex-row justify-content-center">
-                    <div class="icon rep-place-change" my-exName="${this.name}" my-repIndex="${repIndex}" my-up="true">
+                    <div class="icon rep-place-change" id="up-arrow-${this.name}" my-exName="${this.name}" my-repIndex="${repIndex}" my-up="true">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
                         </svg>
                     </div>
-                    <div class="icon rep-place-change" my-exName="${this.name}" my-repIndex="${repIndex}" my-up="false">
+                    <div class="icon rep-place-change" id="down-arrow-${this.name}" my-exName="${this.name}" my-repIndex="${repIndex}" my-up="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
                         </svg>        
                     </div>
-                    <div class="icon rep-delete" my-exName="${this.name}" my-repIndex="${repIndex}">
+                    <div class="icon rep-delete" id="delete-rep-${this.name}" my-exName="${this.name}" my-repIndex="${repIndex}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-x" viewBox="0 0 16 16">
                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                     </svg> 
                     </div>
                 </div>  
-            </div>    
+            </div>      
         `
         repList.appendChild(li)
     }
@@ -110,7 +117,7 @@ class Exercise {
     deleteRep(repIndex) {
         this.count[i].splice(repIndex, 1);
         // remove list from HTML
-        deleteRepFromHTML(repIndex)
+        this.deleteRepFromHTML(repIndex)
     }
 
     deleteRepFromHTML(repIndex) {
@@ -126,11 +133,31 @@ class Exercise {
         })
     }
 
-    addEventListenersToDeleteAndMoveReps(){
-
+    moveRep(repIndex, up) {
+        if (up && repIndex > 0) {
+            arraymove(this.count, repIndex, repIndex - 1)  
+        } else if (!up && repIndex < this.count.length) {
+            arraymove(this.count, repIndex, repIndex + 1)
+        }
+        window.location.reload()
     }
 
+    addEventListenersToDeleteAndMoveReps(){        
+        const upArrow = document.getElementById(`up-arrow-${this.name}`)
+        upArrow.addEventListener('click', () => {
+            this.moveRep(`${this.name}`, Number(upArrow.getAttribute('my-repindex')), true)
+        })
 
+        const downArrow = document.getElementById(`down-arrow-${this.name}`)
+        downArrow.addEventListener('click', () => {
+            this.moveRep(`${this.name}`, Number(downArrow.getAttribute('my-repindex')), false)
+        })
+
+        const deleteRepButton = document.getElementById(`delete-rep-${this.name}`)
+        deleteRepButton.addEventListener('click', () => {
+            this.deleteRep(deleteRepButton.getAttribute('my-repindex'))
+        })
+    }
 
     addExerciseToHTML() {
         if (this.name === undefined) {return};
@@ -160,6 +187,16 @@ class Exercise {
     }
 }
 
+function initializeExercisesFromLocalStorage() {
+    const exercises = getAllExercisesFromLS()
+    exercises.forEach((exercise) => {
+        const newEx = new Exercise(exercise.name, exercise.tags, exercise.count)
+        newEx.addToHTML()
+        newEx.count.forEach((rep) => {
+            newEx.addRep(rep)
+        }) 
+    })
+}
 
 function newExHTML(exName) {
     if (exName === undefined) {return};
@@ -267,17 +304,17 @@ function appendToListHTML(element, exName) {
                 ${element}
             </div>
             <div class="d-flex flex-row justify-content-center">
-                <div class="icon rep-place-change" my-exName="${exName}" my-repIndex="${repIndex}" my-up="true">
+                <div class="icon rep-place-change" id="up-arrow-${exName}" my-exName="${exName}" my-repIndex="${repIndex}" my-up="true">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
                     </svg>
                 </div>
-                <div class="icon rep-place-change" my-exName="${exName}" my-repIndex="${repIndex}" my-up="false">
+                <div class="icon rep-place-change" id="down-arrow-${exName}" my-exName="${exName}" my-repIndex="${repIndex}" my-up="false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
                     </svg>        
                 </div>
-                <div class="icon rep-delete" my-exName="${exName}" my-repIndex="${repIndex}">
+                <div class="icon rep-delete" id="delete-rep-${exName}" my-exName="${exName}" my-repIndex="${repIndex}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-x" viewBox="0 0 16 16">
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                 </svg> 
@@ -381,9 +418,7 @@ try {
         // newEx();
         const exName = document.getElementById("newExName")
         const newEx = new Exercise(exName.value)
-        newEx.addExerciseToHTML()
-        newEx.addEventListenerToDeleteExercise()
-        newEx.addEventListenerToAddRep()
+        newEx.addToHTML()
         newEx.saveToLS()
         modalNewExercise.style.display = "none";
     })
@@ -422,9 +457,10 @@ try {
     });
     // the main listener for the page load
     window.addEventListener('load', () => {
-        makeLists()
-        addELToArrows()
-        addELToDeleteRep()
+        initializeExercisesFromLocalStorage()
+        // makeLists()
+        // addELToArrows()
+        // addELToDeleteRep()
         mobileScreenAdjustements()
 
     });
@@ -474,18 +510,6 @@ for (let i = 0; i < trainingListBoxes.length; i++) {
 
 var cookieConsent = new CookieConsent({privacyPolicyUrl: "/privacy-policy.html"})
 
-
-
-/* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
-// function myFunction() {
-//     var x = document.getElementById("myLinks");
-//     if (x.style.display === "block") {
-//       x.style.display = "none";
-//     } else {
-//       x.style.display = "block";
-//     }
-//   }
-
 function addELToArrows() {
     const arrows = document.getElementsByClassName('rep-place-change')
     for (let i=0; i<arrows.length; i++) {
@@ -505,7 +529,7 @@ function addELToDeleteRep() {
 }
 
 function mobileScreenAdjustements() {
-    let mediaQuery = '(max-width: 991px)'
+    let mediaQuery = '(max-width: 991px)' 
     let mql = window.matchMedia(mediaQuery).matches
     if (mql) {
         removeButtonContentsOnSmallScreens()
