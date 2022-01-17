@@ -37,7 +37,6 @@ class Exercise {
         if (allExercises.map(exercise => exercise.name).includes(this.name)) {
             allExercises.find((ex, i) => {
                 if (ex.name === this.name) {
-                    console.log('found')
                     allExercises[i] = {name: this.name, tags: this.tags, count: this.count}
                     return true
                 };
@@ -81,9 +80,8 @@ class Exercise {
         this.count.push(Number(repValue))
         this.saveToLS()
 
-        // add the rep to HTMl
+        // add the rep to HTML
         this.addRepToHTML(repValue)
-        this.addEventListenersToDeleteAndMoveReps()
     }
 
     addRepToHTML(repValue) {
@@ -97,17 +95,17 @@ class Exercise {
                     ${repValue}
                 </div>
                 <div class="d-flex flex-row justify-content-center">
-                    <div class="icon rep-place-change" id="up-arrow-${this.name}" my-exName="${this.name}" my-repIndex="${repIndex}" my-up="true">
+                    <div class="icon rep-place-change" id="up-arrow-${this.name}-${repIndex}" my-exName="${this.name}" my-repIndex="${repIndex}" my-up="true">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
                         </svg>
                     </div>
-                    <div class="icon rep-place-change" id="down-arrow-${this.name}" my-exName="${this.name}" my-repIndex="${repIndex}" my-up="false">
+                    <div class="icon rep-place-change" id="down-arrow-${this.name}-${repIndex}" my-exName="${this.name}" my-repIndex="${repIndex}" my-up="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
                         </svg>        
                     </div>
-                    <div class="icon rep-delete" id="delete-rep-${this.name}" my-exName="${this.name}" my-repIndex="${repIndex}">
+                    <div class="icon rep-delete" id="delete-rep-${this.name}-${repIndex}" my-exName="${this.name}" my-repIndex="${repIndex}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-x" viewBox="0 0 16 16">
                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                     </svg> 
@@ -115,19 +113,25 @@ class Exercise {
                 </div>  
             </div>      
         `
+        this.addEventListenerToArrow(li.childNodes[1].childNodes[3].childNodes[0], true)
+        this.addEventListenerToArrow(li.childNodes[1].childNodes[3].childNodes[2], false)
+        this.addEventListenerToDeleteRep(li.childNodes[1].childNodes[3].childNodes[5])
         repList.appendChild(li)
     }
 
     deleteRep(repIndex) {
-        this.count[i].splice(repIndex, 1);
+        this.count.splice(repIndex, 1)
+        this.saveToLS()
+        console.log('called')
         // remove list from HTML
-        this.deleteRepFromHTML(repIndex)
+        // this.deleteRepFromHTML(repIndex)
+        window.location.reload()
     }
 
-    deleteRepFromHTML(repIndex) {
-        const repList = document.getElementById('list-' + this.name)
-        repList.removeChild(repList.childNodes[repIndex])
-    }
+    // deleteRepFromHTML(repIndex) {
+    //     const repList = document.getElementById('list-' + this.name)
+    //     repList.removeChild(repList.childNodes[repIndex])
+    // }
 
     addEventListenerToAddRep() {
         const btnAddRep = document.getElementById(`btn-add-rep-${this.name}`)
@@ -146,20 +150,15 @@ class Exercise {
         window.location.reload()
     }
 
-    addEventListenersToDeleteAndMoveReps(){        
-        const upArrow = document.getElementById(`up-arrow-${this.name}`)
-        upArrow.addEventListener('click', () => {
-            this.moveRep(`${this.name}`, Number(upArrow.getAttribute('my-repindex')), true)
+    addEventListenerToArrow(arrowIcon, up) {
+        arrowIcon.addEventListener('click', () => {
+            this.moveRep(`${this.name}`, Number(arrowIcon.getAttribute('my-repindex')), up)
         })
+    }
 
-        const downArrow = document.getElementById(`down-arrow-${this.name}`)
-        downArrow.addEventListener('click', () => {
-            this.moveRep(`${this.name}`, Number(downArrow.getAttribute('my-repindex')), false)
-        })
-
-        const deleteRepButton = document.getElementById(`delete-rep-${this.name}`)
-        deleteRepButton.addEventListener('click', () => {
-            this.deleteRep(Number(deleteRepButton.getAttribute('my-repindex')))
+    addEventListenerToDeleteRep(deleteRepIcon) {
+        deleteRepIcon.addEventListener('click', () => {
+            this.deleteRep(Number(deleteRepIcon.getAttribute('my-repindex')))
         })
     }
 
@@ -198,7 +197,6 @@ function initializeExercisesFromLocalStorage() {
         newEx.addToHTML()
         newEx.count.forEach((rep) => {
             newEx.addRepToHTML(rep)
-            newEx.addEventListenersToDeleteAndMoveReps()
         }) 
     })
 }
