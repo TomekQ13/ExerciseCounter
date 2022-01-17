@@ -123,15 +123,8 @@ class Exercise {
         this.count.splice(repIndex, 1)
         this.saveToLS()
         console.log('called')
-        // remove list from HTML
-        // this.deleteRepFromHTML(repIndex)
         window.location.reload()
     }
-
-    // deleteRepFromHTML(repIndex) {
-    //     const repList = document.getElementById('list-' + this.name)
-    //     repList.removeChild(repList.childNodes[repIndex])
-    // }
 
     addEventListenerToAddRep() {
         const btnAddRep = document.getElementById(`btn-add-rep-${this.name}`)
@@ -201,36 +194,6 @@ function initializeExercisesFromLocalStorage() {
     })
 }
 
-// function newExHTML(exName) {
-//     if (exName === undefined) {return};
-//     const main = document.getElementsByTagName("main")[0];
-//     exBox = document.createElement('div');
-//     main.appendChild(exBox);
-//     exBox.className = 'exercise-box';
-//     exBox.innerHTML = `
-//         <header class="d-flex flex-row justify-content-between mb-3">
-//             <h2 class="box-title">${exName}</h2>
-//             <button id='delete-exercise-${exName}' class='btn btn-outline-danger btn-sm' onclick="deleteExercise('${exName}')">
-//                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-//                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-//                 </svg> 
-//             </button> 
-//         </header>
-//         <div class='adding-menu mb-2'>
-//             <form class="add-repetitions-form">
-//                 <input type="text" class="input-text" id="count-${exName}" name="count-${exName}">
-//                 <input type="button" class="btn btn-primary ms-2" value="Dodaj" onclick="saveData('${exName}')">
-//             </form>
-//         </div>
-//         <div id="stored-list" class="stored-list">
-//             <ol id="list-${exName}"></ol>
-//         </div>
-//     `;
-//     // makeList is called to fill out the content if some exists
-//     // called to enable to use this also on load of the site
-//     makeList(exName);
-// };
-
 function appendToStorage(key, value) {
     var existingData = JSON.parse(localStorage.getItem(key));
     existingData.push(value);
@@ -241,33 +204,6 @@ function getExercise(exName) {
     const exercises = JSON.parse(localStorage.getItem('exercises'));
     const exercise = exercises.find(ex => ex.name === exName);
     return exercise;
-};
-
-function appendToCounter(exName, value=undefined, reset=false) {
-    // replaces an exercise in the local storage
-    if (value == undefined && reset == false) {
-        throw 'appendToCounter function requires either value to be specified or reset true.'
-    };
-
-    var existingData = getExercise(exName).count; 
-    existingData.push(value);
-    if (reset) {
-        existingData = [];
-    };
-
-    var exercises = JSON.parse(localStorage.exercises);
-
-    exercises.find((ex, i) => {
-        if (ex.name === exName) {
-            exercises[i] = {name: exName, count: existingData};
-            return true;
-        };
-    });
-
-    localStorage.setItem('exercises', JSON.stringify(exercises));
-    if (reset) {
-        resetListHTML(exName);
-    };
 };
 
 function newEx() {
