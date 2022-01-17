@@ -34,16 +34,19 @@ class Exercise {
         // read all exercises from Local Storage
         let allExercises = getAllExercisesFromLS()
         // find existing one and update
-        allExercises.find((ex, i) => {
-            if (ex.name === this.name) {
-                allExercises[i] = {name: this.name, tags: this.tags, count: this.count}
-                return true
-            };
-        })
-        // create a new exercise in LS
-        console.log(allExercises)
-        console.log('adding')
-        allExercises.push({name: this.name, tags: this.tags, count: []}) 
+        if (allExercises.map(exercise => exercise.name).includes(this.name)) {
+            allExercises.find((ex, i) => {
+                if (ex.name === this.name) {
+                    console.log('found')
+                    allExercises[i] = {name: this.name, tags: this.tags, count: this.count}
+                    return true
+                };
+            })
+        } else {
+                // create a new exercise in LS
+                console.log('adding new')
+                allExercises.push({name: this.name, tags: this.tags, count: []})
+        }
         // save all to Local Storage
         saveAllExercisesToLS(allExercises)
     }
@@ -75,7 +78,8 @@ class Exercise {
 
     addRep(repValue) {
         // add rep to the class
-        this.count.push(repValue)
+        this.count.push(Number(repValue))
+        this.saveToLS()
 
         // add the rep to HTMl
         this.addRepToHTML(repValue)
@@ -155,7 +159,7 @@ class Exercise {
 
         const deleteRepButton = document.getElementById(`delete-rep-${this.name}`)
         deleteRepButton.addEventListener('click', () => {
-            this.deleteRep(deleteRepButton.getAttribute('my-repindex'))
+            this.deleteRep(Number(deleteRepButton.getAttribute('my-repindex')))
         })
     }
 
@@ -193,40 +197,41 @@ function initializeExercisesFromLocalStorage() {
         const newEx = new Exercise(exercise.name, exercise.tags, exercise.count)
         newEx.addToHTML()
         newEx.count.forEach((rep) => {
-            newEx.addRep(rep)
+            newEx.addRepToHTML(rep)
+            newEx.addEventListenersToDeleteAndMoveReps()
         }) 
     })
 }
 
-function newExHTML(exName) {
-    if (exName === undefined) {return};
-    const main = document.getElementsByTagName("main")[0];
-    exBox = document.createElement('div');
-    main.appendChild(exBox);
-    exBox.className = 'exercise-box';
-    exBox.innerHTML = `
-        <header class="d-flex flex-row justify-content-between mb-3">
-            <h2 class="box-title">${exName}</h2>
-            <button id='delete-exercise-${exName}' class='btn btn-outline-danger btn-sm' onclick="deleteExercise('${exName}')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                </svg> 
-            </button> 
-        </header>
-        <div class='adding-menu mb-2'>
-            <form class="add-repetitions-form">
-                <input type="text" class="input-text" id="count-${exName}" name="count-${exName}">
-                <input type="button" class="btn btn-primary ms-2" value="Dodaj" onclick="saveData('${exName}')">
-            </form>
-        </div>
-        <div id="stored-list" class="stored-list">
-            <ol id="list-${exName}"></ol>
-        </div>
-    `;
-    // makeList is called to fill out the content if some exists
-    // called to enable to use this also on load of the site
-    makeList(exName);
-};
+// function newExHTML(exName) {
+//     if (exName === undefined) {return};
+//     const main = document.getElementsByTagName("main")[0];
+//     exBox = document.createElement('div');
+//     main.appendChild(exBox);
+//     exBox.className = 'exercise-box';
+//     exBox.innerHTML = `
+//         <header class="d-flex flex-row justify-content-between mb-3">
+//             <h2 class="box-title">${exName}</h2>
+//             <button id='delete-exercise-${exName}' class='btn btn-outline-danger btn-sm' onclick="deleteExercise('${exName}')">
+//                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+//                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+//                 </svg> 
+//             </button> 
+//         </header>
+//         <div class='adding-menu mb-2'>
+//             <form class="add-repetitions-form">
+//                 <input type="text" class="input-text" id="count-${exName}" name="count-${exName}">
+//                 <input type="button" class="btn btn-primary ms-2" value="Dodaj" onclick="saveData('${exName}')">
+//             </form>
+//         </div>
+//         <div id="stored-list" class="stored-list">
+//             <ol id="list-${exName}"></ol>
+//         </div>
+//     `;
+//     // makeList is called to fill out the content if some exists
+//     // called to enable to use this also on load of the site
+//     makeList(exName);
+// };
 
 function appendToStorage(key, value) {
     var existingData = JSON.parse(localStorage.getItem(key));
