@@ -221,10 +221,10 @@ async function saveTraining() {
 
 };
 
-var modalNewExercise = document.getElementById("modalNewExercise");
-var btnAddExercise = document.getElementById("btnAddExercise");
-var spanCloseModal = document.getElementById("modalAddExClose");
-var modalBtnAddExercise = document.getElementById("modalBtnAddExercise");
+let modalNewExercise = document.getElementById("modalNewExercise");
+let btnAddExercise = document.getElementById("btnAddExercise");
+let spanCloseModal = document.getElementById("modalAddExClose");
+let modalBtnAddExercise = document.getElementById("modalBtnAddExercise");
 try {
     btnAddExercise.addEventListener('click', () => {
         modalNewExercise.style.display = "flex";
@@ -245,10 +245,10 @@ try {
 } catch (err) {
     console.log(err)
 };
-var modalSaveTraining = document.getElementById("modalSaveTraining");
-var btnSaveTraining = document.getElementById("btnSaveTraining");
-var btnSaveTrainingClose = document.getElementById("modalSaveTrainingClose");
-const modalBtnSaveTraining = document.getElementById("modalBtnSaveTraining");
+let modalSaveTraining = document.getElementById("modalSaveTraining");
+let btnSaveTraining = document.getElementById("btnSaveTraining");
+let btnSaveTrainingClose = document.getElementById("modalSaveTrainingClose");
+let modalBtnSaveTraining = document.getElementById("modalBtnSaveTraining");
 
 if (btnSaveTraining != null) {
     btnSaveTraining.addEventListener('click', () => {
@@ -278,11 +278,7 @@ try {
     // the main listener for the page load
     window.addEventListener('load', () => {
         initializeExercisesFromLocalStorage()
-        // makeLists()
-        // addELToArrows()
-        // addELToDeleteRep()
         mobileScreenAdjustements()
-
     });
 } catch (err) {
     console.log(err)
@@ -304,19 +300,6 @@ function arraymove(arr, fromIndex, toIndex) {
     arr.splice(toIndex, 0, element);
 }
 
-function moveEx(exName, repIndex, up) {
-    var existingData = JSON.parse(localStorage.getItem('exercises'));
-    const exIndex = existingData.findIndex(el => el.name === exName);
-    if (up && repIndex > 0) {
-        arraymove(existingData[exIndex].count, repIndex, repIndex - 1);     
-    } else if (!up && exIndex < existingData[exIndex].count.length) {
-        arraymove(existingData[exIndex].count, repIndex, repIndex + 1); 
-    }    
-
-    localStorage.setItem('exercises', JSON.stringify(existingData));
-    window.location.reload();
-}
-
 const trainingListBoxes = document.getElementsByClassName("trainingList");
 for (let i = 0; i < trainingListBoxes.length; i++) {
     let trainingLink = trainingListBoxes[i].children[0].href;
@@ -329,24 +312,6 @@ for (let i = 0; i < trainingListBoxes.length; i++) {
 };
 
 var cookieConsent = new CookieConsent({privacyPolicyUrl: "/privacy-policy.html"})
-
-// function addELToArrows() {
-//     const arrows = document.getElementsByClassName('rep-place-change')
-//     for (let i=0; i<arrows.length; i++) {
-//         arrows[i].addEventListener('click', () => {
-//             moveEx(arrows[i].getAttribute('my-exname'), Number(arrows[i].getAttribute('my-repindex')), (arrows[i].getAttribute('my-up') === 'true'))
-//         })
-//     }
-// }
-
-// function addELToDeleteRep() {
-//     const deleteRepButton = document.getElementsByClassName('rep-delete')
-//     for (let i=0; i<deleteRepButton.length; i++) {
-//         deleteRepButton[i].addEventListener('click', () => {
-//             deleteRepetition(deleteRepButton[i].getAttribute('my-exname'), Number(deleteRepButton[i].getAttribute('my-repindex')))
-//         })
-//     }
-// }
 
 function mobileScreenAdjustements() {
     let mediaQuery = '(max-width: 991px)' 
