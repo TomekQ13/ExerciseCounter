@@ -1,4 +1,4 @@
-// "use strict";
+"use strict";
 
 function getAllExercisesFromLS() {
     return JSON.parse(localStorage.getItem('exercises'))
