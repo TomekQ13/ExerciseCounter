@@ -198,123 +198,6 @@ function initializeExercisesFromLocalStorage() {
     })
 }
 
-// function appendToStorage(key, value) {
-//     var existingData = JSON.parse(localStorage.getItem(key));
-//     existingData.push(value);
-//     localStorage.setItem(key, JSON.stringify(existingData));
-// };
-
-// function getExercise(exName) {
-//     const exercises = JSON.parse(localStorage.getItem('exercises'));
-//     const exercise = exercises.find(ex => ex.name === exName);
-//     return exercise;
-// };
-
-// function newEx() {
-//     const exName = document.getElementById("newExName");
-//     if (exName.value.length == 0) {return};
-//     if (getExercise(exName.value)) {return};
-
-//     exercise = {
-//         name: exName.value,
-//         count: []
-//     };
-//     appendToStorage('exercises', exercise)
-
-//     newExHTML(exName.value);
-    
-//     exName.value = '';
-// };
-
-// function saveData(exName) {
-//     var input = document.getElementById('count-' + exName);
-//     if (input.value.length == 0) {return};    
-
-//     appendToCounter(exName, input.value);
-//     appendToListHTML(input.value, exName);
-    
-// };
-
-// function appendToListHTML(element, exName) {
-//     if (element.length == 0) {return}
-
-//     var ol = document.getElementById('list-' + exName)
-//     var li = document.createElement('li')
-//     const repIndex = ol.children.length
-//     li.innerHTML =`
-//         <div class="d-flex flex-row justify-content-between align-items-center">
-//             <div class="list-item">
-//                 ${element}
-//             </div>
-//             <div class="d-flex flex-row justify-content-center">
-//                 <div class="icon rep-place-change" id="up-arrow-${exName}" my-exName="${exName}" my-repIndex="${repIndex}" my-up="true">
-//                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
-//                         <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
-//                     </svg>
-//                 </div>
-//                 <div class="icon rep-place-change" id="down-arrow-${exName}" my-exName="${exName}" my-repIndex="${repIndex}" my-up="false">
-//                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-//                         <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-//                     </svg>        
-//                 </div>
-//                 <div class="icon rep-delete" id="delete-rep-${exName}" my-exName="${exName}" my-repIndex="${repIndex}">
-//                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-x" viewBox="0 0 16 16">
-//                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-//                 </svg> 
-//                 </div>
-//             </div>  
-//         </div>    
-//     `
-//     ol.appendChild(li);
-
-// };
-
-// function makeList(exName) {
-//     const existingData = getExercise(exName).count;
-//     if (existingData == null ) {return};
-//     if (existingData.length == 0 ) {return};
-
-//     var ol = document.getElementById('list-' + exName);
-    
-//     existingData.forEach(element => {
-//         appendToListHTML(element, exName);
-//     });
-// };
-
-// function makeLists() {
-//     const  exercises = JSON.parse(localStorage.exercises);
-//     for (var i in exercises) {
-//         newExHTML(exercises[i].name);
-//     };
-// };
-
-// function resetListHTML(exName) {
-//     var ul = document.getElementById('list-' + exName);
-//     ul.innerHTML = '';    
-// };
-
-// function deleteExercise(exName) {
-//     var existingData = JSON.parse(localStorage.getItem('exercises'));
-//     // the callback function can get two additional parameters - index and the full array
-//     var newData = existingData.filter((value) => {
-//         return value.name !== exName;
-//     });
-//     localStorage.setItem('exercises', JSON.stringify(newData));  
-//     window.location.reload();
-// };
-
-// function deleteRepetition(exName, repIndex) {
-//     var existingData = JSON.parse(localStorage.getItem('exercises'));
-//     for (var i = 0; i < existingData.length; i++) {
-//         if (existingData[i].name === exName) {
-//             existingData[i].count.splice(repIndex, 1);
-//             break;
-//         };
-//     };
-//     localStorage.setItem('exercises', JSON.stringify(existingData));  
-//     window.location.reload();
-// };
-
 async function saveTraining() {
     const saveTrainingName = document.getElementById("newTrainingName");
     if (saveTrainingName.value.length == 0 ) {return};
@@ -386,9 +269,10 @@ try {
     });
 
     modalBtnSaveTraining.addEventListener('click', async () => {
-        const resp = await saveTraining();        
+        const resp = await saveTraining();
+        console.log(resp)
         modalSaveTraining.style.display = "none";  
-        if (resp.redirected == false) {
+        if (resp.redirected == false && resp.status === 201) {
             window.location.reload(); 
             localStorage.setItem('exercises', JSON.stringify([]));
         };

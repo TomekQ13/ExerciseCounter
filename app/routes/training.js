@@ -23,7 +23,7 @@ router.post('/', auth.checkAuthenticated, async (req, res) => {
     const existingTraining = await Training.findOne({ 'name': req.body.name, 'username': req.user.username });
     if (existingTraining) {        
         req.flash('error', 'Trening o takiej nazwie już istnieje');
-        return res.status(200).send('Taki trening już istnieje');
+        return res.status(403).send('Taki trening już istnieje');
     };
     
     let training = new Training({
