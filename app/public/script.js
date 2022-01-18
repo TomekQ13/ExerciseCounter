@@ -201,7 +201,7 @@ async function saveTraining() {
     if (saveTrainingName.value.length == 0 ) {return};
 
     const exercises = JSON.parse(localStorage.getItem('exercises'));
-    const resp = await fetch(url='/training', {
+    const resp = await fetch('/training', {
         method: "POST", 
         headers: {
             'Content-Type': 'application/json'
