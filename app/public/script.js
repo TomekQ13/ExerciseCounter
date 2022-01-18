@@ -43,7 +43,6 @@ class Exercise {
             })
         } else {
                 // create a new exercise in LS
-                console.log('adding new')
                 allExercises.push({name: this.name, tags: this.tags, count: []})
         }
         // save all to Local Storage
@@ -145,7 +144,6 @@ class Exercise {
 
     addEventListenerToArrow(arrowIcon, up) {
         arrowIcon.addEventListener('click', () => {
-            console.log('triggered')
             this.moveRep(Number(arrowIcon.getAttribute('my-repindex')), up)
         })
     }
@@ -270,7 +268,6 @@ try {
 
     modalBtnSaveTraining.addEventListener('click', async () => {
         const resp = await saveTraining();
-        console.log(resp)
         modalSaveTraining.style.display = "none";  
         if (resp.redirected == false && resp.status === 201) {
             window.location.reload(); 
@@ -363,7 +360,6 @@ function mobileScreenAdjustements() {
 function removeButtonContentsOnSmallScreens() {
     function removeText(elementId) {
         let element = document.getElementById(elementId)
-        console.log(element.childNodes)
         element.removeChild(element.childNodes[2])
     }
     removeText("btnAddExercise")
