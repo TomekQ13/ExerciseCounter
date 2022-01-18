@@ -47,8 +47,10 @@ const db = mongoose.connection
 db.on('error', error => console.error(error));
 db.once('open', error => console.log('Connected to mongoose.'));
 
+// define a middleware to be able to read the current path in EJS
+
 app.use(function (req, res, next) {
-    res.locals.url = req.url;
+    res.locals.url = req._parsedUrl.pathname;
     next();
 });
 
@@ -59,7 +61,6 @@ app.use('/training', trainingRouter)
 app.use('/user', userRouter)
 app.use('/exercise', exerciseRouter)
 
-// define a middleware to be able to read the current path in EJS
 
 
 app.listen(process.env.PORT || 3000, () => {
