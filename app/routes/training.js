@@ -4,7 +4,7 @@ const router = express.Router()
 const Training = require('../models/training')
 
 router.get("/", auth.checkAuthenticated, async (req, res) => {
-    const trainings = await Training.find({ username: req.user.username }).sort({'added_dttm': 'desc'});
+    const trainings = await Training.find({ username: req.user.username }).sort({'added_dttm': 'desc'});    
     res.render('training/trainings', { trainings: trainings, isAuthenticated: true });
   });
 

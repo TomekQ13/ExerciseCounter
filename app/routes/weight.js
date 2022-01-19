@@ -4,9 +4,9 @@ const Weight = require('../models/weight')
 const auth = require('../auth')
 const { v4: uuidv4 } = require('uuid');
 
-router.get('/', auth.checkAuthenticated, (req, res) => {
+router.get('/', auth.checkAuthenticated, async (req, res) => {
     try {
-        const weights = await Weight.find({username: req.user.username}).sort({'added_dttm': 'desc'})
+        const weights = await Weight.find({username: req.user.username}).sort({'added_dttm': 'desc'});
         return res.render('weight/weight', {weights: weights, isAuthenticated: true})
     } catch (err) {
         console.error(err)

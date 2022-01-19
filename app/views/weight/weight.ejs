@@ -13,7 +13,7 @@
     <div class="exercise-box trainingList">
         <div>
             <p><%= weights[i].weightValue %> </p>
-            <small class="datetime">Dodano: <%= trainings[i].added_dttm.toLocaleString('pl-PL', {
+            <small class="datetime">Dodano: <%= weights[i].date.toLocaleString('pl-PL', {
                 weekday: 'long',
                 day: 'numeric', 
                 year: 'numeric'
