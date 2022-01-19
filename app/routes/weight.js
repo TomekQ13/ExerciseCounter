@@ -5,7 +5,7 @@ const auth = require('../auth')
 const { v4: uuidv4 } = require('uuid');
 
 router.get('/', auth.checkAuthenticated, (req, res) => {
-    const weights = Weight.findOne({'username': req.user.username})
+    const weights = Weight.find({'username': req.user.username})
     return res.render('weight/weight', {weights: weights})
 })
 
