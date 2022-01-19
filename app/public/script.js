@@ -336,3 +336,10 @@ function moveAddExerciseButton() {
     liExistingButton.remove()
     document.getElementById('btn-group-right').prepend(liExistingButton.childNodes[1])    
 }
+
+Date.prototype.toDateInputValue = (function() {
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(0,10);
+});
+document.getElementById('datePicker').value = new Date().toDateInputValue();

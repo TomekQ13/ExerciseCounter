@@ -20,6 +20,7 @@ const indexRouter = require('./routes/index');
 const trainingRouter = require('./routes/training');
 const userRouter = require('./routes/user');
 const exerciseRouter = require('./routes/exercise');
+const weightRouter = require('./routes/weight');
 
 
 app.set('view engine', 'ejs');
@@ -60,6 +61,7 @@ app.use('/', indexRouter)
 app.use('/training', trainingRouter)
 app.use('/user', userRouter)
 app.use('/exercise', exerciseRouter)
+app.use('/weight', weightRouter)
 
 
 

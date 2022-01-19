@@ -1,18 +1,33 @@
-<% for( let i = 0; i < trainings.length; i++ ) { %>
+<div>
+    <form method="POST" action="/weight">
+        <input type="number" id="weightValue" name="weightValue" required>
+        <label for="weightValue">Weight</label>
+        <input type="date" id="date" name="date" required>
+        <label for="date">Date</label>
+        <input type="text" id="description" name="description">
+        <label for="description">Description</label>
+        <button type="submit" class=''>Dodaj</button>
+    </form>
+</div>
+<% for( let i = 0; i < weights.length; i++ ) { %>
     <div class="exercise-box trainingList">
-            <a class="trainingLink" href="/training/<%= encodeURIComponent(trainings[i].name) %> "><%= trainings[i].name %></a><br>
+        <div>
+            <p><%= weights[i].weightValue %> </p>
             <small class="datetime">Dodano: <%= trainings[i].added_dttm.toLocaleString('pl-PL', {
                 weekday: 'long',
                 day: 'numeric', 
-                year: 'numeric', 
-                month: 'long',
-                hour: 'numeric',
-                minute: 'numeric',
+                year: 'numeric'
             } ) %></small>
-        <form class = "deleteRepForm" method="POST" action="/training/<%= encodeURIComponent(trainings[i].name) %>?_method=DELETE">
-            <button type="submit" class='close remove-rep'>&times;</button>
-        </form>    
+        </div>
+        <% if (weights[i].descritpion) { %>
+            <div>
+                <p><%= weights[i].description %> </p>
+            </div>
+        <% } %>
+        <form class="" method="POST" action="/weight/<%= encodeURIComponent(weights[i].valueId) %>?_method=DELETE">
+            <button type="submit" class=''>&times;</button>
+        </form>
     </div>
-
 <% } %>
+
 
