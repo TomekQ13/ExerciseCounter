@@ -1,6 +1,5 @@
 const express = require('express');
 const auth = require('../auth');
-const training = require('../models/training');
 const router = express.Router()
 const Training = require('../models/training')
 
