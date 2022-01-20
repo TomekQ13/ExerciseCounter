@@ -76,7 +76,7 @@ class Exercise {
 
     addRep(repValue) {
         // add rep to the class
-        this.count.push(Number(repValue))
+        this.count.push(repValue)
         this.saveToLS()
 
         // add the rep to HTML
