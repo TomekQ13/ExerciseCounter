@@ -75,6 +75,10 @@ form {
     text-decoration: none;
 } */
 
+.weightForm {
+    flex-direction: row;
+}
+
 .message {
     border: 1px solid;
     border-radius: 5px;

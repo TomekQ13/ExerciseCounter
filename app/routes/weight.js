@@ -26,14 +26,14 @@ router.post('/', auth.checkAuthenticated, (req, res) => {
             description: req.body.description
         })
         weight.save()
-        req.flash('Waga dodana pomyślnie')
+        req.flash('success', 'Waga dodana pomyślnie')
     } catch (err) {
         console.error(err)
         const errorMessage = 'There has been an error while saving the weight to the database'
         console.log(errorMessage)
         req.flash('error', errorMessage + '. Please try again.')
     }
-    return res.status(201).redirect('/weight')
+    return res.redirect('/weight')
 })
 
 router.delete('/:valueId', auth.checkAuthenticated, async (req, res) => {
@@ -48,7 +48,7 @@ router.delete('/:valueId', auth.checkAuthenticated, async (req, res) => {
     }
     try {
         weightToDelete.delete()
-        req.flash('success', 'Waga dodana pomyślnie')
+        req.flash('success', 'Waga usunięta pomyślnie')
     } catch (err) {
         console.error(err)
         const errorMessage = 'There has been an error while deleting the weight value'

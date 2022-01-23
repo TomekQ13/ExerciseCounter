@@ -1,41 +1,64 @@
-<div>
-    <form method="POST" action="/weight" novalidate>
-        <div class="form-group">
-            <label for="weightValue">Waga</label>
-            <input type="number" id="weightValue" name="weightValue" required>
+<div class="container d-flex justify-content-center w-50">
+    <form class="row g-2 needs-validation weightForm" method="POST" action="/weight" novalidate>
+        <div class="col-md-6">
+            <label for="weightValue" class="form-label">Waga (kg)</label>
+            <input type="number" id="weightValue" name="weightValue" class="form-control" required>
+            <div class="invalid-feedback">
+                Podaj prawidłową wagę
+            </div>
         </div>
-        <div class="form-group">
-            <label for="date">Data</label>
-            <input type="date" id="date" name="date" required>
+        <div class="col-md-6">
+            <label for="datePicker" class="form-label">Data</label>
+            <input type="date" id="datePicker" name="date" class="form-control" required>
+            <div class="invalid-feedback">
+                Podaj prawidłową datę
+            </div>
         </div>
-        <div class="form-group">
-            <label for="description">Opis</label>
-            <input type="text" id="description" name="description">
-        </div>
-        <div class="form-group">
-            <button type="submit" class=''>Dodaj</button>
+        <!-- <div class="col-12">
+            <label for="description" class="form-label">Opis</label>
+            <textarea type="text" id="description" name="description" maxlength="256" class="form-control"></textarea>
+            <div class="invalid-feedback">
+                Maksymalna długość opisu to 256 znaków
+            </div>
+        </div> -->
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Dodaj</button>
         </div>
     </form>
 </div>
-<% for( let i = 0; i < weights.length; i++ ) { %>
-    <div class="exercise-box trainingList">
-        <div>
-            <p><%= weights[i].weightValue %> </p>
-            <small class="datetime">Dodano: <%= weights[i].date.toLocaleString('pl-PL', {
-                weekday: 'long',
-                day: 'numeric', 
-                year: 'numeric'
-            } ) %></small>
-        </div>
-        <% if (weights[i].descritpion) { %>
-            <div>
-                <p><%= weights[i].description %> </p>
+<div class="container d-flex justify-content-center mt-3 w-50">
+    <div class="col">
+    <% for( let i = 0; i < weights.length; i++ ) { %>
+        <div class="row shadow-sm p-2 mb-3 bg-white rounded align-items-center">
+                <div class="col">
+                    <div>
+                        Waga <%= weights[i].weightValue %> kg
+                    </div>
+                    <small class="datetime">Dodano: <%= weights[i].date.toLocaleString('pl-PL', {
+                        weekday: 'long',
+                        day: 'numeric', 
+                        year: 'numeric',
+                        month: 'long'
+                    } ) %></small>
+                </div>
+                <!-- <% if (weights[i].descritpion) { %>
+                    <div>
+                        <p><%= weights[i].description %> </p>
+                    </div>
+                <% } %> -->
+            <div class="col-2">
+                <form class="" method="POST" action="/weight/<%= encodeURIComponent(weights[i]._id) %>?_method=DELETE">
+                    <button type="submit" class='btn btn-outline-danger'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg>
+                    </button>
+                </form>
             </div>
-        <% } %>
-        <form class="" method="POST" action="/weight/<%= encodeURIComponent(weights[i]._id) %>?_method=DELETE">
-            <button type="submit" class=''>&times;</button>
-        </form>
-    </div>
-<% } %>
+        </div>
 
+    <% } %>
+</div>
+</div>
 
