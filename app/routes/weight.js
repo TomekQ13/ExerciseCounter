@@ -27,32 +27,35 @@ router.post('/', auth.checkAuthenticated, (req, res) => {
         })
         weight.save()
         req.flash('Waga dodana pomyślnie')
-        return res.status(201).redirect('/weight')
     } catch (err) {
         console.error(err)
         const errorMessage = 'There has been an error while saving the weight to the database'
         console.log(errorMessage)
-        return res.status(500).send(errorMessage)
+        req.flash('error', errorMessage + '. Please try again.')
     }
+    return res.status(201).redirect('/weight')
 })
 
-router.delete('/:valueId', auth.checkAuthenticated, (req, res) => {
-    const weightToDelete = Weight.findOne({'_id': req.params.valueId})
-    if (!weightToDelete) {
-        return res.status(404).send('Weigt value does not exist')
+router.delete('/:valueId', auth.checkAuthenticated, async (req, res) => {
+    const weightToDelete = await Weight.findOne({'_id': req.params.valueId})
+    if (weightToDelete === undefined) {
+        req.flash('error', 'Weigt value does not exist')
+        return res.redirect('/weight')
     }
     if (weightToDelete.username != req.user.username) {
-        return res.status(403).send('Incorrect username')
+        req.flash('error', 'Incorrect username')
+        return res.redirect('/weight')
     }
     try {
         weightToDelete.delete()
-        return res.status(200).send('Weight value deleted successfully')
+        req.flash('success', 'Waga dodana pomyślnie')
     } catch (err) {
         console.error(err)
         const errorMessage = 'There has been an error while deleting the weight value'
         console.log(errorMessage)
-        return res.status(500).send(errorMessage)
-    }    
+        req.flash('error', errorMessage + '. Please try again.')
+    }
+    return res.redirect('/weight')
 })
 
 module.exports = router

@@ -14,7 +14,7 @@ const Weight = new mongoose.Schema({
         type: Number,
         required: true
     },
-    id: {
+    _id: {
         type: String,
         required: true
     },
