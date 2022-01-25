@@ -11,10 +11,17 @@ router.get("/login", auth.checkNotAuthenticated, (req, res) => {
   });
  
 router.post("/login", auth.checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/user/login',
-    failureFlash: true
-}));
+        failureRedirect: '/user/login',
+        failureFlash: true
+}), (req, res) => {
+    if (req.session.redirectTo) {
+        return res.redirect(req.session.redirectTo)
+    }
+    return res.redirect('/')
+    
+}
+
+);
 
 router.get('/logout', auth.checkAuthenticated, (req, res) => {
   req.logOut();

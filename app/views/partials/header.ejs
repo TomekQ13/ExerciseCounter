@@ -50,19 +50,13 @@
                                 </li>                             
                             <% } %>
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Użytkownik
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <% if (isAuthenticated) { %>
-                                        <li><a href="/user/logout" class="nav-link">Wyloguj</a></li>
-                                    <% } else { %>
-                                        <li><a href="/user/login" class="nav-link">Zaloguj się</a></li>
-                                        <li><a href="/user/register" class="nav-link">Zarejestruj się</a></li>
-                                    <% } %>
-                                </ul>
-                            </li>
+                            <% if (isAuthenticated) { %>
+                                <li><a href="/user/logout" class="nav-link">Wyloguj</a></li>
+                            <% } else { %>
+                                <li><a href="/user/login" class="nav-link">Zaloguj się</a></li>
+                                <li><a href="/user/register" class="nav-link">Zarejestruj się</a></li>
+                            <% } %>
+
                         </ul>
                     </div>
                 </div>
