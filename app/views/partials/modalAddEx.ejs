@@ -1,6 +1,5 @@
 <div id="modalNewExercise" class="modal">
     <div class="modal-content">
-        <span class="close" id="modalAddExClose">&times;</span>
         <form>
             <label for="newExName">Nazwa ćwiczenia</label>
                 <input list="exercises" class="input-text" id="newExName" name="newExName" autocomplete="off">
@@ -15,8 +14,10 @@
                     <small class="small-text">Zaloguj się żeby zobaczyć listę Twoich ćwiczeń</small>
                 <% }  %>
                 
-                
-            <input id="modalBtnAddExercise" type="button" class="btn btn-primary" value="Dodaj">
+            <div class="d-flex flex-row justify-content-end mt-3">
+                <input id="modalBtnAddExercise" type="button" class="btn btn-primary mx-3" value="Dodaj">
+                <btn id="modalAddExClose" class="btn btn-outline-danger">Anuluj</btn>
+            </div>
         </form>
     </div>
 </div>

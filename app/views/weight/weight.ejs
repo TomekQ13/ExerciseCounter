@@ -40,11 +40,6 @@
                         month: 'long'
                     } ) %></small>
                 </div>
-                <!-- <% if (weights[i].descritpion) { %>
-                    <div>
-                        <p><%= weights[i].description %> </p>
-                    </div>
-                <% } %> -->
             <div class="iconBtn">
                 <form class="" method="POST" action="/weight/<%= encodeURIComponent(weights[i]._id) %>?_method=DELETE">
                     <button type="submit" class='btn btn-outline-danger'>
