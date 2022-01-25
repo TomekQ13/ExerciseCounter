@@ -443,3 +443,7 @@ input[type="email"] {
     margin-left: 5px;
     cursor: pointer;
 }
+
+.iconBtn {
+    width: 50px
+}
