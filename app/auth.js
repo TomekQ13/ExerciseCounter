@@ -3,6 +3,7 @@ function checkAuthenticated(req, res, next) {
         return next();        
     }
     // sets the variable to redirect the user after logging in to the page they were on
+    console.log(req)
     req.session.redirectTo = req.baseUrl
     res.redirect('/user/login');
 };

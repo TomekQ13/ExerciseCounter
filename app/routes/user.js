@@ -15,6 +15,7 @@ router.post("/login", auth.checkNotAuthenticated, passport.authenticate('local',
         failureFlash: true
 }), (req, res) => {
     if (req.session.redirectTo) {
+        // here needs to be a check if it's post and if yes it needs to be repeated with fetch
         return res.redirect(req.session.redirectTo)
     }
     return res.redirect('/')
