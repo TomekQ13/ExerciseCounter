@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const User = require('../models/user')
 const passport = require('passport');
 const auth = require('../auth');
-const flash = require('express-flash');
+const fetch = require('node-fetch') 
 
 router.get("/login", auth.checkNotAuthenticated, (req, res) => {
     res.render('user/login', { isAuthenticated: false });
@@ -13,9 +13,24 @@ router.get("/login", auth.checkNotAuthenticated, (req, res) => {
 router.post("/login", auth.checkNotAuthenticated, passport.authenticate('local', {
         failureRedirect: '/user/login',
         failureFlash: true
-}), (req, res) => {
+}), async (req, res) => {
     if (req.session.redirectTo) {
-        // here needs to be a check if it's post and if yes it needs to be repeated with fetch
+        // the values here need to be taken from the previous request - they need to be assigned together with redirectTo
+        
+        if (req.originalMethod === 'POST') {
+            try {
+                const response = await fetch(req.headers.origin + '/training', {
+                    method: 'post',
+                    body: JSON.stringify(req.body),
+                    headers: {'Content-Type': 'application/json'}
+                })
+                console.log('####response')
+                console.log(await response.json())
+            } catch (e) {
+                console.error(e)
+                console.error('There has been an error while saving training')
+            }
+        }
         return res.redirect(req.session.redirectTo)
     }
     return res.redirect('/')
