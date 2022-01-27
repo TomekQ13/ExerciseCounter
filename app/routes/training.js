@@ -21,6 +21,9 @@ router.get("/:name", auth.checkAuthenticated, async (req, res) => {
 
 router.post('/', auth.checkAuthenticated, async (req, res) => {
     const existingTraining = await Training.findOne({ 'name': req.body.name, 'username': req.user.username });
+    console.log('received a request to add training' + req.body)
+    console.log('request to add')
+    console.log(req)
     if (existingTraining) {        
         req.flash('error', 'Trening o takiej nazwie już istnieje');
         return res.status(403).send('Taki trening już istnieje');

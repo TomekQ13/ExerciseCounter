@@ -14,25 +14,29 @@ router.post("/login", auth.checkNotAuthenticated, passport.authenticate('local',
         failureRedirect: '/user/login',
         failureFlash: true
 }), async (req, res) => {
-    if (req.session.redirectTo) {
-        // the values here need to be taken from the previous request - they need to be assigned together with redirectTo
+    // console.log(req)
+    // if (req.session.previousRequest) {
+    //     // the values here need to be taken from the previous request - they need to be assigned together with redirectTo
         
-        if (req.originalMethod === 'POST') {
-            try {
-                const response = await fetch(req.headers.origin + '/training', {
-                    method: 'post',
-                    body: JSON.stringify(req.body),
-                    headers: {'Content-Type': 'application/json'}
-                })
-                console.log('####response')
-                console.log(await response.json())
-            } catch (e) {
-                console.error(e)
-                console.error('There has been an error while saving training')
-            }
-        }
-        return res.redirect(req.session.redirectTo)
-    }
+    //     if (req.session.previousRequest.method === 'POST') {
+    //         try {
+    //             const response = await fetch(req.session.previousRequest.serverAddress + '/training', {
+    //                 method: 'POST',
+    //                 body: JSON.stringify(req.session.previousRequest.body),
+    //                 headers: req.headers
+    //             })
+    //             console.log(req.session.previousRequest.headers)
+    //             console.log(req.headers)
+    //             console.log(await response)
+    //         } catch (e) {
+    //             console.error(e)
+    //             console.error('There has been an error while saving training')
+    //         }        
+    //     }
+    //     const url = req.session.previousRequest.url;
+    //     delete req.session.previousRequest;
+    //     return res.redirect(url)
+    // }
     return res.redirect('/')
     
 }

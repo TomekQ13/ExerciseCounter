@@ -7,7 +7,8 @@ function checkAuthenticated(req, res, next) {
         url: req.baseUrl,
         method: req.originalMethod,
         body: req.body,
-        serverAddress: req.headers.origin
+        serverAddress: req.headers.origin,
+        headers: req.headers
     }
     res.redirect('/user/login');
 };
