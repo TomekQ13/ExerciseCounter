@@ -8,13 +8,15 @@ const methodOverride= require('method-override');
 app.use(methodOverride('_method'))
 
 const passport = require('passport');
-const initializePassport = require('./passport-config');
-initializePassport(
+const passportConfig = require('./passport-config');
+passportConfig.initialize(
   passport,
-  username => User.findOne({ username: username.trim() }));
+  username => User.findOne({ username: username.trim() })
+);
 
 const flash = require('express-flash');
 const session = require('express-session');
+const cookieParser = require('cookie-parser')
 
 const indexRouter = require('./routes/index');
 const trainingRouter = require('./routes/training');
@@ -36,8 +38,10 @@ app.use(session({
   saveUninitialized: false
 }));
 app.use(flash());
+app.use(cookieParser())
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(passport.authenticate('remember-me'));
 
 const mongoose = require('mongoose');
 mongoose.connect(process.env.DATABASE_MONGO_URI, {

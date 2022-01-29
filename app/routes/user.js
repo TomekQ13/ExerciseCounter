@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt')
 const User = require('../models/user')
 const passport = require('passport');
 const auth = require('../auth');
-const fetch = require('node-fetch') 
+// const fetch = require('node-fetch')
+const initializePassport = require('../passport-config');
 
 router.get("/login", auth.checkNotAuthenticated, (req, res) => {
     res.render('user/login', { isAuthenticated: false });
@@ -13,35 +14,24 @@ router.get("/login", auth.checkNotAuthenticated, (req, res) => {
 router.post("/login", auth.checkNotAuthenticated, passport.authenticate('local', {
         failureRedirect: '/user/login',
         failureFlash: true
-}), async (req, res) => {
-    // console.log(req)
-    // if (req.session.previousRequest) {
-    //     // the values here need to be taken from the previous request - they need to be assigned together with redirectTo
-        
-    //     if (req.session.previousRequest.method === 'POST') {
-    //         try {
-    //             const response = await fetch(req.session.previousRequest.serverAddress + '/training', {
-    //                 method: 'POST',
-    //                 body: JSON.stringify(req.session.previousRequest.body),
-    //                 headers: req.headers
-    //             })
-    //             console.log(req.session.previousRequest.headers)
-    //             console.log(req.headers)
-    //             console.log(await response)
-    //         } catch (e) {
-    //             console.error(e)
-    //             console.error('There has been an error while saving training')
-    //         }        
-    //     }
-    //     const url = req.session.previousRequest.url;
-    //     delete req.session.previousRequest;
-    //     return res.redirect(url)
-    // }
-    return res.redirect('/')
-    
-}
-
-);
+}), async (req, res, next) => {
+    // this is a middleware function to issue the token
+    if (!req.body.remember_me) return next()
+    try {
+        await initializePassport.issueToken(req.user, (err, token_value) => {
+            if (err) {return next(err)}
+            res.cookie('remember_me', token_value, {path: "/", httpOnly: true, maxAge: 86400000*30})
+            return next()
+        })
+    } catch (err) {
+        console.error(err)
+        console.error('There has been an error while issuing a token')
+        req.flash('error', 'Wystąpił błąd. Spróbuj ponownie za chwilę.')
+        return res.redirect('/')
+    }
+}, (req, res) => {
+    res.redirect('/')
+});
 
 router.get('/logout', auth.checkAuthenticated, (req, res) => {
   req.logOut();
