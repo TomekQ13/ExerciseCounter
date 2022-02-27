@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 
 router.get('/', auth.checkAuthenticated, async (req, res) => {
     try {
-        const weights = await Weight.find({username: req.user.username}).sort({'added_dttm': 'desc'});
+        const weights = await Weight.find({username: req.user.username}).sort({'date': 'desc'});
         return res.render('weight/weight', {weights: weights, isAuthenticated: true})
     } catch (err) {
         console.error(err)
@@ -56,6 +56,11 @@ router.delete('/:valueId', auth.checkAuthenticated, async (req, res) => {
         req.flash('error', errorMessage + '. Please try again.')
     }
     return res.redirect('/weight')
+})
+
+router.get('/values', auth.checkAuthenticated, async (req, res) => {
+    const weights = await Weight.find({username: req.user.username}).sort({'date': 'desc'});
+    res.send(JSON.stringify(weights))
 })
 
 module.exports = router

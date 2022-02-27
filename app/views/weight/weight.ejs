@@ -1,56 +1,57 @@
-<div class="container d-flex justify-content-center">
-    <form class="row g-2 needs-validation weightForm" method="POST" action="/weight" novalidate>
-        <div class="col-md-6">
-            <label for="weightValue" class="form-label">Waga (kg)</label>
-            <input type="number" id="weightValue" name="weightValue" class="form-control" step="any" required>
-            <div class="invalid-feedback">
-                Podaj prawidłową wagę
-            </div>
-        </div>
-        <div class="col-md-6">
-            <label for="datePicker" class="form-label">Data</label>
-            <input type="date" id="datePicker" name="date" class="form-control" required>
-            <div class="invalid-feedback">
-                Podaj prawidłową datę
-            </div>
-        </div>
-        <!-- <div class="col-12">
-            <label for="description" class="form-label">Opis</label>
-            <textarea type="text" id="description" name="description" maxlength="256" class="form-control"></textarea>
-            <div class="invalid-feedback">
-                Maksymalna długość opisu to 256 znaków
-            </div>
-        </div> -->
-        <div class="col-12">
-            <button class="btn btn-primary" type="submit">Dodaj</button>
-        </div>
-    </form>
-</div>
-<div class="container-sm mt-3">
-    <% for( let i = 0; i < weights.length; i++ ) { %>
-        <div class="shadow-sm mb-3 bg-white rounded align-items-center d-flex flex-row justify-content-between p-3">
-                <div>
-                    <div>
-                        Waga <%= weights[i].weightValue %> kg
-                    </div>
-                    <small class="datetime">Dodano: <%= weights[i].date.toLocaleString('pl-PL', {
-                        weekday: 'long',
-                        day: 'numeric', 
-                        year: 'numeric',
-                        month: 'long'
-                    } ) %></small>
+<div class="weightBody">
+    <div class="container d-flex justify-content-center">
+        <form class="row g-2 needs-validation weightForm" method="POST" action="/weight" novalidate>
+            <div class="col-md-6">
+                <label for="weightValue" class="form-label">Waga (kg)</label>
+                <input type="number" id="weightValue" name="weightValue" class="form-control" step="any" required>
+                <div class="invalid-feedback">
+                    Podaj prawidłową wagę
                 </div>
-            <div class="iconBtn">
-                <form class="" method="POST" action="/weight/<%= encodeURIComponent(weights[i]._id) %>?_method=DELETE">
-                    <button type="submit" class='btn btn-outline-danger'>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                        </svg>
-                    </button>
-                </form>
             </div>
-        </div>
-    <% } %>
+            <div class="col-md-6">
+                <label for="datePicker" class="form-label">Data</label>
+                <input type="date" id="datePicker" name="date" class="form-control" required>
+                <div class="invalid-feedback">
+                    Podaj prawidłową datę
+                </div>
+            </div>
+            <!-- <div class="col-12">
+                <label for="description" class="form-label">Opis</label>
+                <textarea type="text" id="description" name="description" maxlength="256" class="form-control"></textarea>
+                <div class="invalid-feedback">
+                    Maksymalna długość opisu to 256 znaków
+                </div>
+            </div> -->
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Dodaj</button>
+            </div>
+        </form>
+    </div>
+    <div class="container-sm mt-3">
+        <% for( let i = 0; i < weights.length; i++ ) { %>
+            <div class="shadow-sm mb-3 bg-white rounded align-items-center d-flex flex-row justify-content-between p-3">
+                    <div>
+                        <div>
+                            Waga <%= weights[i].weightValue %> kg
+                        </div>
+                        <small class="datetime">Dodano: <%= weights[i].date.toLocaleString('pl-PL', {
+                            weekday: 'long',
+                            day: 'numeric', 
+                            year: 'numeric',
+                            month: 'long'
+                        } ) %></small>
+                    </div>
+                <div class="iconBtn">
+                    <form class="" method="POST" action="/weight/<%= encodeURIComponent(weights[i]._id) %>?_method=DELETE">
+                        <button type="submit" class='btn btn-outline-danger'>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        <% } %>
+    </div>
 </div>
-
