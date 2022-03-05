@@ -400,7 +400,7 @@ async function makeChart() {
         const sum = temp.reduce((a, b) => a + b, 0)
         const avg = (sum / temp.length) || 0
         aggs.push({
-            label: item,
+            [label]: item,
             avgValue: avg
         })
         }
