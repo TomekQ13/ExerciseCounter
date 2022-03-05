@@ -390,13 +390,7 @@ async function makeChart() {
     }
     let resp = await getWeights()
     let weights = resp.map(element => element.weightValue)
-    let dates = resp.map(element => element.date.toLocaleString('pl-PL', {
-        weekday: 'long',
-        day: 'numeric', 
-        year: 'numeric', 
-        month: 'numeric'
-    } ))
-    console.log(dates)
+    let dates = resp.map(element => element.date.slice(0,10))
     const myChart = new Chart(ctx, {
         type: 'line',
         data: {
