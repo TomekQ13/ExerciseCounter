@@ -373,7 +373,7 @@ if (dateInput) {
 })();
 
 const ctx = document.getElementById('myChart')
-async function makeChart() {
+async function makeChart(daysPeriodAvg) {
     function getWeights() {
         return fetch('/weight/values', {
             method: "GET", 
@@ -407,9 +407,25 @@ async function makeChart() {
         return aggs
     }
 
-    let aggregatedValues = aggregateValues(resp, 'date', 'weightValue')
-    let weights = aggregatedValues.map(element => element.avgValue)
-    let dates = aggregatedValues.map(element => element.date.slice(0,10))
+    const aggregatedValues = aggregateValues(resp, 'date', 'weightValue')
+    const weights = aggregatedValues.map(element => element.avgValue)
+    const dates = aggregatedValues.map(element => element.date.slice(0,10))
+    let periodAverages = []
+    weights.reduce((prevValue, currValue, currI, arr) => {
+        if (currI - daysPeriodAvg <= 0) {
+            const returnedValue = ((prevValue * currI) + currValue) / (currI + 1)
+            periodAverages.push(returnedValue)
+            return returnedValue
+        } else {
+            console.log(arr[currI - daysPeriodAvg])
+            console.log(prevValue)
+            console.log(currValue)
+            const returnedValue = prevValue + (currValue - arr[currI - daysPeriodAvg]) / daysPeriodAvg
+            periodAverages.push(returnedValue)
+            return returnedValue
+        }
+    }, 0)
+    console.log(periodAverages)
 
     const myChart = new Chart(ctx, {
         type: 'line',
@@ -419,26 +435,29 @@ async function makeChart() {
                 label: 'Weight',
                 data: weights,
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    '#0d6efd'
                 ],
                 borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
+                    '#0d6efd'
+                ],
+                borderWidth: 1
+            },
+            {
+                label: '7 Day Average',
+                data: periodAverages,
+                backgroundColor: [
+                    'green'
+                ],
+                borderColor: [
+                    'green'
                 ],
                 borderWidth: 1
             }]
         }
-    })    
+    })
+    
+    
 }
 if (ctx) {
-    makeChart()
+    makeChart(7)
 }
