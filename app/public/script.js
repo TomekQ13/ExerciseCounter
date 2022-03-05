@@ -389,8 +389,28 @@ async function makeChart() {
         .catch(error => console.error(error))
     }
     let resp = await getWeights()
-    let weights = resp.map(element => element.weightValue)
-    let dates = resp.map(element => element.date.slice(0,10))
+    
+    function aggregateValues(objectToAgg, label, value) {
+        const uniqueKeys = new Set(objectToAgg.map(element => element[label]))
+        let aggs = []
+        for (let item of uniqueKeys) {
+        let temp = objectToAgg
+            .filter(element => element[label] === item)
+            .map(element => element[value])
+        const sum = temp.reduce((a, b) => a + b, 0)
+        const avg = (sum / temp.length) || 0
+        aggs.push({
+            label: item,
+            avgValue: avg
+        })
+        }
+        return aggs
+    }
+
+    let aggregatedValues = aggregateValues(resp, 'date', 'weightValue')
+    let weights = aggregatedValues.map(element => element.avgValue)
+    let dates = aggregatedValues.map(element => element.date.slice(0,10))
+
     const myChart = new Chart(ctx, {
         type: 'line',
         data: {
