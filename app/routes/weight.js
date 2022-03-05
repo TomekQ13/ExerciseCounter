@@ -59,7 +59,7 @@ router.delete('/:valueId', auth.checkAuthenticated, async (req, res) => {
 })
 
 router.get('/values', auth.checkAuthenticated, async (req, res) => {
-    const weights = await Weight.find({username: req.user.username}).sort({'date': 'desc'});
+    const weights = await Weight.find({username: req.user.username}).sort({'date': 'asc'});
     res.send(JSON.stringify(weights))
 })
 
