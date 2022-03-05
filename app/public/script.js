@@ -389,14 +389,20 @@ async function makeChart() {
         .catch(error => console.error(error))
     }
     let resp = await getWeights()
-    const weights = resp.map(element => element.weightValue)
-    const dates = resp.map(element => element.date)
+    let weights = resp.map(element => element.weightValue)
+    let dates = resp.map(element => element.date.toLocaleString('pl-PL', {
+        weekday: 'long',
+        day: 'numeric', 
+        year: 'numeric', 
+        month: 'numeric'
+    } ))
+    console.log(dates)
     const myChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: dates,
             datasets: [{
-                label: 'Value',
+                label: 'Weight',
                 data: weights,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
