@@ -319,6 +319,7 @@ function mobileScreenAdjustements() {
     if (mql) {
         removeButtonContentsOnSmallScreens()
         moveAddExerciseButton()
+        setChartWidth()
     }
 }
 
@@ -335,6 +336,11 @@ function moveAddExerciseButton() {
     let liExistingButton = document.getElementById('liBtnAddExercise')
     liExistingButton.remove()
     document.getElementById('btn-group-right').prepend(liExistingButton.childNodes[1])    
+}
+
+function setChartWidth() {
+    let chart = document.querySelector('myChart')
+    myChart.setAttribute('width', `${screen.width}`)
 }
 
 Date.prototype.toDateInputValue = (function() {
@@ -364,7 +370,6 @@ if (dateInput) {
           if (!form.checkValidity()) {
             event.preventDefault()
             event.stopPropagation()
-            console.log('inside if')
           }
   
           form.classList.add('was-validated')
@@ -417,15 +422,11 @@ async function makeChart(daysPeriodAvg) {
             periodAverages.push(returnedValue)
             return returnedValue
         } else {
-            console.log(arr[currI - daysPeriodAvg])
-            console.log(prevValue)
-            console.log(currValue)
             const returnedValue = prevValue + (currValue - arr[currI - daysPeriodAvg]) / daysPeriodAvg
             periodAverages.push(returnedValue)
             return returnedValue
         }
     }, 0)
-    console.log(periodAverages)
 
     const myChart = new Chart(ctx, {
         type: 'line',
