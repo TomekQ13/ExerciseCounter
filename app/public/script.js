@@ -339,8 +339,11 @@ function moveAddExerciseButton() {
 }
 
 function setChartWidth() {
-    let chart = document.querySelector('myChart')
-    myChart.setAttribute('width', `${screen.width}`)
+    let chart = document.querySelector('chart-area')
+    const width = screen.width - 100
+    myChart.setAttribute('width', `100`)
+    console.log(chart)
+    console.log('$$$$')
 }
 
 Date.prototype.toDateInputValue = (function() {
@@ -399,14 +402,14 @@ async function makeChart(daysPeriodAvg) {
         const uniqueKeys = new Set(objectToAgg.map(element => element[label]))
         let aggs = []
         for (let item of uniqueKeys) {
-        let temp = objectToAgg
-            .filter(element => element[label] === item)
-            .map(element => element[value])
-        const sum = temp.reduce((a, b) => a + b, 0)
-        const avg = (sum / temp.length) || 0
-        aggs.push({
-            [label]: item,
-            avgValue: avg
+            let temp = objectToAgg
+                .filter(element => element[label] === item)
+                .map(element => element[value])
+            const sum = temp.reduce((a, b) => a + b, 0)
+            const avg = (sum / temp.length) || 0
+            aggs.push({
+                [label]: item,
+                avgValue: avg
         })
         }
         return aggs
