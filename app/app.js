@@ -9,7 +9,7 @@ app.use(methodOverride('_method'))
 
 const passport = require('passport');
 const passportConfig = require('./passport-config');
-passportConfig.initialize(
+passportConfig.initializePassport(
   passport,
   username => User.findOne({ username: username.trim() })
 );

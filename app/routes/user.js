@@ -5,7 +5,7 @@ const User = require('../models/user')
 const passport = require('passport');
 const auth = require('../auth');
 // const fetch = require('node-fetch')
-const initializePassport = require('../passport-config');
+const passportConfig = require('../passport-config');
 
 router.get("/login", auth.checkNotAuthenticated, (req, res) => {
     res.render('user/login', { isAuthenticated: false });
@@ -18,7 +18,7 @@ router.post("/login", auth.checkNotAuthenticated, passport.authenticate('local',
     // this is a middleware function to issue the token
     if (!req.body.remember_me) return next()
     try {
-        await initializePassport.issueToken(req.user, (err, token_value) => {
+        await passportConfig.issueToken(req.user, (err, token_value) => {
             if (err) {return next(err)}
             res.cookie('remember_me', token_value, {path: "/", httpOnly: true, maxAge: 86400000*30})
             return next()
@@ -34,8 +34,13 @@ router.post("/login", auth.checkNotAuthenticated, passport.authenticate('local',
 });
 
 router.get('/logout', auth.checkAuthenticated, (req, res) => {
-  req.logOut();
-  res.redirect('/user/login');
+    // the remember me cookie and token in db has to be invalidated
+
+    req.logOut();
+    if (req.cookies.remember_me !== undefined) {
+        passportConfig.consumeRememberMeToken(req.cookies.remember_me, () => {})
+    }
+    res.redirect('/user/login');
 });
 
 

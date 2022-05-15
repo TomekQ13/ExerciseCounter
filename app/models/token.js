@@ -28,4 +28,4 @@ const Token = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model('rememberMeTokens', Token)
+module.exports = mongoose.model('remembermetokens', Token)
