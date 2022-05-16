@@ -23,6 +23,7 @@ const trainingRouter = require('./routes/training');
 const userRouter = require('./routes/user');
 const exerciseRouter = require('./routes/exercise');
 const weightRouter = require('./routes/weight');
+const accountRouter = require('./routes/account');
 
 
 app.set('view engine', 'ejs');
@@ -56,8 +57,11 @@ db.once('open', error => console.log('Connected to mongoose.'));
 
 app.use(function (req, res, next) {
     res.locals.url = req._parsedUrl.pathname;
+    res.locals.isAuthenticated = req.isAuthenticated()
     next();
 });
+
+
 
 
 
@@ -66,6 +70,7 @@ app.use('/training', trainingRouter)
 app.use('/user', userRouter)
 app.use('/exercise', exerciseRouter)
 app.use('/weight', weightRouter)
+app.use('/account', accountRouter)
 
 
 
