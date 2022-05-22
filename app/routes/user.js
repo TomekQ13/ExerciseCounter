@@ -33,14 +33,13 @@ router.post("/login", auth.checkNotAuthenticated, passport.authenticate('local',
     res.redirect('/')
 });
 
-router.get('/logout', auth.checkAuthenticated, (req, res) => {
-    // the remember me cookie and token in db has to be invalidated
-
-    req.logOut();
+router.get('/logout', (req, res) => {    
     if (req.cookies.remember_me !== undefined) {
-        passportConfig.consumeRememberMeToken(req.cookies.remember_me, () => {})
+        passportConfig.consumeRememberMeToken(req.cookies.remember_me, () => {
+        })
     }
-    res.redirect('/user/login');
+    req.logOut();
+    res.redirect('/');
 });
 
 
