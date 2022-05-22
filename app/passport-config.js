@@ -64,16 +64,7 @@ async function consumeRememberMeToken(token_value, callback_fn) {
     // select a user_id based on a token value
     const currentDate = utils.todayPlusDays(0)
     const date = utils.todayPlusDays(-1)
-    console.log('generated date '+ date())
-    console.log('consumer called')
-    // try {
-    //     r = await Token.findOne({tokenValue: token_value, validToDttm: { $gt: currentDate() } })
-        
-    // } catch (err) {
-    //     console.error('There has been an error while selecting the user_id.')
-    //     console.error(err)
-    // }
-         
+
    // invalidate the single-use tokenand seleect
    let token
     try {
@@ -84,11 +75,8 @@ async function consumeRememberMeToken(token_value, callback_fn) {
             { new: true }
         )        
         if (token === null) {
-            console.log('token null')
             return callback_fn(null, null)
         }
-        console.log(token)
-        // token.save()
     } catch (err) {
         console.error('There has been an error while invalidating the token and selecting user_id.')
         console.error(err)
