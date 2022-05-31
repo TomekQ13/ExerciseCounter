@@ -20,15 +20,36 @@ router.get("/", auth.checkAuthenticated, async (req, res) => {
 
 
 router.get("/:name", auth.checkAuthenticated, async (req, res) => {
+    const limit = req.query.limit;
+
+
     const reqNameLowerCase = req.params.name.toLowerCase();
-    var trainings = await Training.find({ 'exercises.nameLowerCase': reqNameLowerCase, username: req.user.username}).sort({'added_dttm': 'desc'});;    
-    if (trainings == null) {
+
+    async function getTrainings() {
+        return Training.find({ 'exercises.nameLowerCase': reqNameLowerCase, username: req.user.username}).sort({'added_dttm': 'desc'});
+    }
+
+    let trainings
+    if (limit !== undefined && isNaN(+limit) === false) {
+        trainings = await Training.find({ 'exercises.nameLowerCase': reqNameLowerCase, username: req.user.username}).sort({'added_dttm': 'desc'}).limit(+limit);
+    } else {
+        trainings = await Training.find({ 'exercises.nameLowerCase': reqNameLowerCase, username: req.user.username}).sort({'added_dttm': 'desc'});
+    }
+        
+    if (trainings === null) {
         req.flash('warning', 'Exercise not found');
         return res.redirect('/exercise');        
     };
     trainings.forEach(training => {
         training.exercises = training.exercises.find(el => el.nameLowerCase === reqNameLowerCase)
     });
+
+
+    if (req.query.json === 'true') {
+        const trainingToSend = trainings[0];
+        ({ exercises, name, added_dttm } = trainingToSend)
+        return res.json({ exercises, name, added_dttm });
+    }
     res.render('exercise/exercise', {trainings: trainings, exName: reqNameLowerCase, isAuthenticated: true});
 });
 

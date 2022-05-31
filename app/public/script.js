@@ -180,6 +180,20 @@ class Exercise {
             </div>
         `;
     }
+
+    getLastOccurenceOfExercise() {
+            return fetch(`/exercise/${this.name}`, {
+                method: "GET", 
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
+            })
+            .then(responseData => {
+                return responseData.json()
+            })
+            .catch(error => console.error(error))
+    }
 }
 
 function initializeExercisesFromLocalStorage() {    
@@ -343,7 +357,6 @@ function setChartWidth() {
     const width = screen.width - 100
     myChart.setAttribute('width', `100`)
     console.log(chart)
-    console.log('$$$$')
 }
 
 Date.prototype.toDateInputValue = (function() {
