@@ -25,10 +25,6 @@ router.get("/:name", auth.checkAuthenticated, async (req, res) => {
 
     const reqNameLowerCase = req.params.name.toLowerCase();
 
-    async function getTrainings() {
-        return Training.find({ 'exercises.nameLowerCase': reqNameLowerCase, username: req.user.username}).sort({'added_dttm': 'desc'});
-    }
-
     let trainings
     if (limit !== undefined && isNaN(+limit) === false) {
         trainings = await Training.find({ 'exercises.nameLowerCase': reqNameLowerCase, username: req.user.username}).sort({'added_dttm': 'desc'}).limit(+limit);
