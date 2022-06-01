@@ -49,12 +49,15 @@ class Exercise {
         saveAllExercisesToLS(allExercises)
     }
 
-    async addToHTML() {
+    async addToHTML({ initial }) {
         this.addExerciseToHTML()
         this.addEventListenerToAddRep()
         this.addEventListenerToDeleteExercise()
-        const lastOccurence = await this.getLastOccurenceOfExercise()
-        showNotification({ text: lastOccurence, type: 'info' })
+        if (initial === false) {
+            const lastOccurence = await this.getLastOccurenceOfExercise()
+            if (lastOccurence !== undefined) showNotification({ text: lastOccurence, type: 'info' })
+        }
+
     }
 
     deleteExercise() {
@@ -184,19 +187,20 @@ class Exercise {
     }
 
     async getLastOccurenceOfExercise() {
-            try {
-            const responseData = await fetch(`/exercise/${this.name}?json=true&limit=1`, {
+        let responseData
+        try {
+            responseData = await fetch(`/exercise/${this.name}?json=true&limit=1`, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 credentials: 'include'
             });
-            console.log(responseData)
-            return await responseData.json();
+            return await responseData.json();  
         } catch (error) {
-            return console.error(error);
+            return undefined;
         }
+        
     }
 }
 
@@ -207,7 +211,7 @@ function initializeExercisesFromLocalStorage() {
     const exercises = getAllExercisesFromLS()
     exercises.forEach((exercise) => {
         const newEx = new Exercise(exercise.name, exercise.tags, exercise.count)
-        newEx.addToHTML()
+        newEx.addToHTML({ initial: true })
         newEx.count.forEach((rep) => {
             newEx.addRepToHTML(rep)
         }) 
@@ -256,7 +260,7 @@ try {
         // newEx();
         const exName = document.getElementById("newExName")
         const newEx = new Exercise(exName.value)
-        newEx.addToHTML()
+        newEx.addToHTML({ initial: false })
         newEx.saveToLS()
         modalNewExercise.style.display = "none";
     })

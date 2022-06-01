@@ -42,6 +42,7 @@ router.get("/:name", auth.checkAuthenticated, async (req, res) => {
 
 
     if (req.query.json === 'true') {
+        if (trainings.length === 0) return res.sendStatus(404)
         const trainingToSend = trainings[0];
         ({ exercises, name, added_dttm } = trainingToSend)
         return res.json({ exercises, name, added_dttm });
