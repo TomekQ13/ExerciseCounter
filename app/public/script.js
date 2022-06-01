@@ -49,10 +49,12 @@ class Exercise {
         saveAllExercisesToLS(allExercises)
     }
 
-    addToHTML() {
+    async addToHTML() {
         this.addExerciseToHTML()
         this.addEventListenerToAddRep()
         this.addEventListenerToDeleteExercise()
+        const lastOccurence = await this.getLastOccurenceOfExercise()
+        showNotification({ text: lastOccurence, type: 'info' })
     }
 
     deleteExercise() {
@@ -181,18 +183,20 @@ class Exercise {
         `;
     }
 
-    getLastOccurenceOfExercise() {
-            return fetch(`/exercise/${this.name}`, {
-                method: "GET", 
+    async getLastOccurenceOfExercise() {
+            try {
+            const responseData = await fetch(`/exercise/${this.name}?json=true&limit=1`, {
+                method: "GET",
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 credentials: 'include'
-            })
-            .then(responseData => {
-                return responseData.json()
-            })
-            .catch(error => console.error(error))
+            });
+            console.log(responseData)
+            return await responseData.json();
+        } catch (error) {
+            return console.error(error);
+        }
     }
 }
 
@@ -333,7 +337,7 @@ function mobileScreenAdjustements() {
     if (mql) {
         removeButtonContentsOnSmallScreens()
         moveAddExerciseButton()
-        setChartWidth()
+        // setChartWidth()
     }
 }
 
@@ -355,8 +359,7 @@ function moveAddExerciseButton() {
 function setChartWidth() {
     let chart = document.querySelector('chart-area')
     const width = screen.width - 100
-    myChart.setAttribute('width', `100`)
-    console.log(chart)
+    chart.setAttribute('width', `100`)
 }
 
 Date.prototype.toDateInputValue = (function() {
@@ -477,4 +480,24 @@ async function makeChart(daysPeriodAvg) {
 }
 if (ctx) {
     makeChart(7)
+}
+
+function showNotification({ text, type }) {
+    if (['error', 'info', 'success', 'warning'].includes(type) === false) return console.error('Unsuported type of notification')
+    if (text === undefined) return console.error('Text is required to display a notification')
+
+    const notification = document.createElement('div')
+    notification.classList.add('message')
+    notification.classList.add(`message-${type}`)
+    notification.classList.add('show')
+
+    notification.innerText = text
+
+    const body = document.querySelector('body')
+    body.appendChild(notification)
+
+    setTimeout(() => {
+        notification.classList.add('hide');
+        setTimeout(() => {notification.remove()}, 400)
+    }, 3000)
 }
