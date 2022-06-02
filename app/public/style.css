@@ -84,14 +84,13 @@ form {
     border-radius: 5px;
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding: 1rem 1rem 1rem 1rem;
     font-weight: bold;
     box-shadow: var(--boxShadow);
     background-color: #ffffff;
     position: fixed;
     bottom: 0;
-    width: 50%;
+    width: 95%;
     text-align: center;
     justify-content: center;
     display: flex;
@@ -99,6 +98,7 @@ form {
     flex-direction: row;
     max-width: 500px;
     min-height: 40px;
+    z-index: 1030;
 }
 
 .message-error {
@@ -116,6 +116,19 @@ form {
 .message-success {
     color: var(--green);    
 }
+/* The below are used to style last occurence of exercise */
+.message li {
+    margin: 0;
+}
+
+.message ol {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
 
 .mainHeader {
     display: flex;
@@ -428,7 +441,7 @@ input[type="email"] {
     bottom: 0;
     margin-right: 1.5rem;
     margin-bottom: 1.5rem;
-    z-index: 1030;
+    z-index: 1029;
 }
 
 .icon {
@@ -447,3 +460,4 @@ input[type="email"] {
 .chart-area {
     width: 90%
 }
+

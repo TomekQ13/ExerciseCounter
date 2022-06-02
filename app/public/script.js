@@ -55,7 +55,30 @@ class Exercise {
         this.addEventListenerToDeleteExercise()
         if (initial === false) {
             const lastOccurence = await this.getLastOccurenceOfExercise()
-            if (lastOccurence !== undefined) showNotification({ text: lastOccurence, type: 'info' })
+            // text is still to do
+            if (lastOccurence === undefined) return
+
+            console.log(lastOccurence)
+
+            const notificationContent = document.createElement('div')
+            const trainingTitleElement = document.createElement('h5')
+            trainingTitleElement.innerText = lastOccurence.name + ' - ' + lastOccurence.exercises[0].nameLowerCase
+
+            const seriesList = document.createElement('ol')
+            lastOccurence.exercises[0].count.forEach((el) => {
+                const listElement = document.createElement('li')
+                listElement.appendChild(document.createTextNode(el))
+                seriesList.appendChild(listElement)
+            })
+
+            
+            notificationContent.appendChild(trainingTitleElement)
+            notificationContent.appendChild(seriesList)
+            
+            
+
+            showNotification({ content: notificationContent, type: 'info' })
+
         }
 
     }
@@ -486,22 +509,28 @@ if (ctx) {
     makeChart(7)
 }
 
-function showNotification({ text, type }) {
+function showNotification({ content, type }) {
     if (['error', 'info', 'success', 'warning'].includes(type) === false) return console.error('Unsuported type of notification')
-    if (text === undefined) return console.error('Text is required to display a notification')
+    if (content === undefined) return console.error('Content is required to display a notification')
 
     const notification = document.createElement('div')
     notification.classList.add('message')
     notification.classList.add(`message-${type}`)
     notification.classList.add('show')
 
-    notification.innerText = text
+    if (typeof content === 'string') {
+        notification.innerText = text
+    } else if (HTMLElement.prototype.isPrototypeOf(content)) {
+        notification.appendChild(content)
+    } else {
+        console.error('Unsuppported content type of a notification')
+    }
 
     const body = document.querySelector('body')
     body.appendChild(notification)
 
-    setTimeout(() => {
-        notification.classList.add('hide');
-        setTimeout(() => {notification.remove()}, 400)
-    }, 3000)
+    // setTimeout(() => {
+    //     notification.classList.add('hide');
+    //     setTimeout(() => {notification.remove()}, 400)
+    // }, 3000)
 }
