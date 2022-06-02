@@ -55,32 +55,28 @@ class Exercise {
         this.addEventListenerToDeleteExercise()
         if (initial === false) {
             const lastOccurence = await this.getLastOccurenceOfExercise()
-            // text is still to do
             if (lastOccurence === undefined) return
-
-            console.log(lastOccurence)
-
-            const notificationContent = document.createElement('div')
-            const trainingTitleElement = document.createElement('h5')
-            trainingTitleElement.innerText = lastOccurence.name + ' - ' + lastOccurence.exercises[0].nameLowerCase
-
-            const seriesList = document.createElement('ol')
-            lastOccurence.exercises[0].count.forEach((el) => {
-                const listElement = document.createElement('li')
-                listElement.appendChild(document.createTextNode(el))
-                seriesList.appendChild(listElement)
-            })
-
-            
-            notificationContent.appendChild(trainingTitleElement)
-            notificationContent.appendChild(seriesList)
-            
-            
-
+            const notificationContent = prepareLastOccurenceNotificationContent(lastOccurence)         
             showNotification({ content: notificationContent, type: 'info' })
-
         }
+    }
 
+    prepareLastOccurenceNotificationContent(lastOccurence) {
+        const notificationContent = document.createElement('div')
+        const trainingTitleElement = document.createElement('h5')
+        trainingTitleElement.innerText = lastOccurence.name + ' - ' + lastOccurence.exercises[0].nameLowerCase
+
+        const seriesList = document.createElement('ol')
+        lastOccurence.exercises[0].count.forEach((el) => {
+            const listElement = document.createElement('li')
+            listElement.appendChild(document.createTextNode(el))
+            seriesList.appendChild(listElement)
+        })
+        
+        notificationContent.appendChild(trainingTitleElement)
+        notificationContent.appendChild(seriesList)
+
+        return notificationContent
     }
 
     deleteExercise() {
