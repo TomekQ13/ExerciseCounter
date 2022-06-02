@@ -56,7 +56,7 @@ class Exercise {
         if (initial === false) {
             const lastOccurence = await this.getLastOccurenceOfExercise()
             if (lastOccurence === undefined) return
-            const notificationContent = prepareLastOccurenceNotificationContent(lastOccurence)         
+            const notificationContent = this.prepareLastOccurenceNotificationContent(lastOccurence)         
             showNotification({ content: notificationContent, type: 'info' })
         }
     }
