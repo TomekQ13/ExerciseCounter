@@ -525,8 +525,8 @@ function showNotification({ content, type }) {
     const body = document.querySelector('body')
     body.appendChild(notification)
 
-    // setTimeout(() => {
-    //     notification.classList.add('hide');
-    //     setTimeout(() => {notification.remove()}, 400)
-    // }, 3000)
+    setTimeout(() => {
+        notification.classList.add('hide');
+        setTimeout(() => {notification.remove()}, 400)
+    }, 5000)
 }
