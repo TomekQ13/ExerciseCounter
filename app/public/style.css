@@ -173,29 +173,6 @@ form {
     align-items: flex-end;
 }
 
-/* .box-title {
-    margin: 0px 0px 0px 0px;
-    display: flex;
-    justify-content: center;
-} */
-
-/* .btn {
-    font-size: 1rem;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    border-radius: 5px;
-    border: none;
-    background-color: var(--button);
-    color: var(--background);
-    padding: 0.6rem 0.5rem 0.6rem 0.5rem;
-    text-align: center;
-} */
-
-/* .btn:hover {
-    background-color: var(--button-hover);
-    cursor: pointer;
-} */
-
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -240,27 +217,11 @@ form {
       width: 100%;
   }
 
-/* .btn-delete {
-    width: 100%;
-    min-width: 100px;
-} */
-
 .add-repetitions-form {
     width: 100%;
     justify-content: center;
     flex-direction: row;
 }
-
-/* .btn-count {
-    width: 75%;
-}
-
-.btn-add-ex {
-    width: 25%;
-    min-width: 3.6rem;
-    margin-left: 10px;
-    height: 2.5rem;
-} */
 
 .remove-rep {
     position: relative;
@@ -275,18 +236,6 @@ input[type="text"] {
     /* height: 2.5rem; */
     width: 100%;
 }
-
-/* .input-text {
-    height: 2.5rem;
-}
-
-input[type="password"] {
-    height: 30px;
-}
-
-input[type="email"] {
-    height: 30px;
-} */
 
 
 .show {
@@ -417,6 +366,10 @@ input[type="email"] {
 @media (max-height: 500px) {
     #btnSaveTraining {
       display: none;
+    }
+
+    .message {
+        display: none;
     }
   }
 

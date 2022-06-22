@@ -528,5 +528,5 @@ function showNotification({ content, type }) {
     setTimeout(() => {
         notification.classList.add('hide');
         setTimeout(() => {notification.remove()}, 400)
-    }, 5000)
+    }, 4000)
 }
